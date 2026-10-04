@@ -961,16 +961,22 @@ body.nav-open{ overflow:hidden; }
   z-index:1;
   border-bottom:1px solid var(--line);
 }
-.page-hero .eyebrow{ justify-content:flex-start; }
+@keyframes fadeInUp{
+  from{ opacity:0; transform:translateY(14px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+.page-hero .eyebrow{ justify-content:flex-start; animation:fadeInUp 0.7s ease both; }
 .page-hero h1{
   font-size:clamp(32px, 4.6vw, 52px);
   max-width:20ch;
+  animation:fadeInUp 0.7s ease 0.08s both;
 }
 .page-hero p{
   margin-top:22px;
   max-width:60ch;
   font-size:17.5px;
   color:var(--paper-dim);
+  animation:fadeInUp 0.7s ease 0.16s both;
 }
 
 section{
@@ -1181,6 +1187,7 @@ EXTRA_CSS = r"""
 }
 .disclaimer-block b{ color:var(--paper); }
 .disclaimer-block.teal{ border-left-color:var(--teal); }
+.disclaimer-small{ margin-top:20px; font-size:12px; color:var(--paper-faint); line-height:1.5; }
 .databadge-row{ display:flex; align-items:center; gap:16px; flex-wrap:wrap; margin-top:28px; }
 .databadge-row p{ font-size:13px; color:var(--paper-faint); margin:0; max-width:60ch; }
 
@@ -1360,7 +1367,7 @@ body.photo-topbar header:not(.scrolled) .nav-toggle{ border-color:rgba(245,243,2
 
   <section class="page-hero photo-hero">
     <div class="hero-media">
-      <img src="img/hero-risultati.jpg" alt="Grafico di andamento in crescita su schermo laptop" loading="eager" width="2000" height="1333">
+      <img src="img/hero-benchmark.jpg" alt="Scrivania con smartphone, calcolatrice e grafici di un report finanziario" loading="eager" width="2000" height="1333">
       <div class="wrap">
       <div class="eyebrow">Benchmark &amp; Analisi di Bilancio</div>
       <h1>30 PMI italiane a confronto con il miglior quartile del loro settore</h1>
@@ -1517,6 +1524,8 @@ body.photo-topbar header:not(.scrolled) .nav-toggle{ border-color:rgba(245,243,2
       <div class="disclaimer-block" data-reveal>
         <b>Nota metodologica.</b> L'obiettivo di settore è calcolato sul miglior quartile (75° percentile per le metriche "più alto è meglio"; 25° percentile sul rapporto costi/ricavi per il costo ipotetico) tra le aziende con storico di bilancio completo dello stesso settore, nello stesso anno relativo — mai un dato futuro rispetto all'anno osservato. I costi e il capitale investito "ipotetici" sono stime, ottenute applicando il rapporto di efficienza del miglior quartile ai ricavi reali dell'azienda: non sono una previsione, ma un termine di paragone. ___SETTORI_ESCLUSI_NOTE___
       </div>
+
+      <p class="disclaimer-small" data-reveal><b>Avvertenza.</b> I rendimenti passati non sono indicativi di quelli futuri.</p>
     </div>
   </section>
 

@@ -3,7 +3,7 @@
 """
 scarica_immagini.py
 -------------------
-Scarica in ../img le 8 foto Unsplash usate dal sito, cosi' vengono servite
+Scarica in ../img le 9 foto Unsplash usate dal sito, cosi' vengono servite
 dal tuo dominio (nessuna richiesta a terzi quando un utente visita il sito).
 Serve una connessione internet. Licenza Unsplash: uso libero, anche commerciale.
 
@@ -25,6 +25,7 @@ FOTO = [
     ("hero-risultati.jpg",   "photo-1591696205602-2f950c417cb9", 1920),
     ("soluzioni-blocco.jpg", "photo-1526628953301-3e589a6a8b74", 1800),
     ("hero-soluzioni.jpg",   "photo-1666875753105-c63a6f3bdc86", 1920),
+    ("hero-benchmark.jpg",   "photo-1707157284454-553ef0a4ed0d", 1920),  # Jakub Zerdzicki, Unsplash
 ]
 
 for nome, pid, w in FOTO:
