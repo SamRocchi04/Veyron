@@ -1826,3 +1826,103 @@ body{font-size:16px;line-height:1.65}
   .hero-net::after{background:radial-gradient(ellipse 85% 42% at 50% 50%,rgba(245,243,238,.45) 30%,rgba(245,243,238,0) 100%);
     background:radial-gradient(ellipse 85% 42% at 50% 50%,color-mix(in srgb,var(--ink) 45%,transparent) 30%,transparent 100%)}
 }
+
+/* ==== Restyling grafico (ottobre 2026) ==== */
+:root{--radius:6px;--shadow-card:0 1px 2px rgba(21,26,33,.05),0 12px 28px -14px rgba(21,26,33,.18)}
+
+/* Logo più presente */
+.logo-mark{width:34px;height:34px;border-radius:8px}
+.logo span{font-size:12px;color:var(--paper);font-weight:500}
+
+/* Hero a due colonne con mockup */
+.hero.hero-net{min-height:auto;padding:152px 0 96px}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:56px;align-items:center}
+.hero-net .hero-content{margin:0;max-width:none;text-align:left}
+.hero-net .hero-sub{margin:24px 0 0}
+.hero-net .hero-actions{justify-content:flex-start}
+.hero-net .net-canvas{opacity:.5}
+.hero-net .net-label{display:none}
+.hero-net::after{background:linear-gradient(90deg,color-mix(in srgb,var(--ink) 94%,transparent) 0%,color-mix(in srgb,var(--ink) 80%,transparent) 48%,transparent 82%)}
+.hero-visual{position:relative;z-index:2;filter:drop-shadow(0 24px 40px rgba(21,26,33,.16))}
+.hero-visual svg{display:block;width:100%;height:auto}
+.hv-frame{fill:#FBFAF7;stroke:var(--line-strong)}
+.hv-tile{fill:#fff;stroke:var(--line)}
+.hv-dot{fill:var(--line-strong)}
+.hv-small{font:500 10.5px var(--sans);fill:var(--paper-dim)}
+.hv-gold{fill:var(--gold);font-weight:600}
+.hv-bar-ink{fill:var(--teal)}
+.hv-grid{stroke:var(--line);stroke-width:1}
+.hv-band{fill:var(--gold-dim)}
+.hv-line{fill:none;stroke:var(--teal);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
+.hv-forecast{fill:none;stroke:#C8921A;stroke-width:2.5;stroke-dasharray:6 6;stroke-linecap:round}
+.hv-pt{fill:#fff;stroke:var(--teal);stroke-width:2.5}
+.hv-bars rect{fill:var(--teal-dim);}
+@media (max-width:980px){
+  .hero-grid{grid-template-columns:1fr;gap:44px}
+  .hero.hero-net{padding:120px 0 64px}
+  .hero-net::after{background:linear-gradient(180deg,color-mix(in srgb,var(--ink) 85%,transparent) 0%,color-mix(in srgb,var(--ink) 60%,transparent) 60%,transparent 100%)}
+}
+
+/* Striscia di credibilità */
+.proof{position:relative;z-index:1;background:var(--ink-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.proof-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.proof-grid>div{padding:26px 24px;border-left:1px solid var(--line);display:flex;flex-direction:column;gap:4px}
+.proof-grid>div:first-child{border-left:none;padding-left:0}
+.proof-grid strong{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:18px;color:var(--paper)}
+.proof-grid span{font-size:14px;color:var(--paper-dim);line-height:1.45}
+@media (max-width:860px){
+  .proof-grid{grid-template-columns:1fr 1fr}
+  .proof-grid>div{padding:20px 16px;border-left:none;border-top:1px solid var(--line)}
+  .proof-grid>div:nth-child(-n+2){border-top:none}
+  .proof-grid>div:first-child{padding-left:16px}
+}
+@media (max-width:480px){.proof-grid{grid-template-columns:1fr}.proof-grid>div:nth-child(2){border-top:1px solid var(--line)}}
+
+/* Sezione "dati ogni giorno": testo + percorso verticale */
+.home .split{display:grid;grid-template-columns:1.15fr .85fr;gap:72px;align-items:center}
+.home .split .flow-statement{max-width:20ch}
+.home .split .flow-chips{margin-top:0;flex-direction:column;align-items:stretch;gap:0}
+.home .split .flow-chips .chip{display:block;padding:22px 26px;font-family:'Fraunces',Georgia,serif;font-size:22px;border-radius:var(--radius);box-shadow:var(--shadow-card);background:var(--ink)}
+.home .split .flow-arrow{align-self:center;transform:rotate(90deg);padding:6px 0;font-size:20px}
+@media (max-width:860px){.home .split{grid-template-columns:1fr;gap:40px}}
+
+/* Intestazioni di sezione bilanciate (home) */
+.home .method-head{max-width:none;display:grid;grid-template-columns:1.1fr 1fr;column-gap:72px;align-items:end;margin-bottom:64px}
+.home .method-head .eyebrow,.home .method-head h2{grid-column:1}
+.home .method-head p{grid-column:2;grid-row:1 / span 2;margin:0;max-width:52ch}
+.home .method-head h2{max-width:20ch}
+@media (max-width:860px){.home .method-head{display:block}.home .method-head p{margin-top:16px}}
+
+/* Card tempo: bordi leggibili sul navy */
+.time-flow .value-card{border-color:var(--line-strong);border-radius:var(--radius)}
+.time-flow .value-card h3{font-size:22px}
+.time-flow .value-card p{font-size:16px}
+
+/* Quattro livelli: nodi più grandi, collegati */
+.levels.flat{gap:0 40px}
+.levels.flat .level-row{position:relative;padding-top:32px}
+.levels.flat .level-node{width:56px;height:56px;font-size:20px;border-radius:var(--radius);background:var(--ink-2)}
+.levels.flat .level-row:not(:last-child)::after{content:"";position:absolute;top:61px;left:70px;right:-26px;height:1px;background:var(--line-strong)}
+.levels.flat .level-body h3{font-size:24px}
+.levels.flat .level-body p{font-size:16px;line-height:1.6}
+@media (max-width:980px){.levels.flat .level-row:not(:last-child)::after{display:none}}
+
+/* Blocco foto più luminoso e titolo leggibile */
+.photo-block{border-radius:10px;min-height:460px}
+.photo-block img{filter:grayscale(100%) contrast(1.08) brightness(.78)}
+.photo-block::before{background:linear-gradient(180deg,rgba(21,26,33,0) 0%,rgba(21,26,33,.25) 50%,rgba(8,20,36,.82) 100%)}
+.photo-block-content{padding:52px 56px;max-width:700px}
+.photo-block-content h2,.photo-block-content h3{font-size:clamp(26px,3.2vw,38px);line-height:1.18}
+
+/* Sicurezza: griglia 2x2 con icone grandi */
+.security-list{display:grid;grid-template-columns:1fr 1fr;gap:20px;border-top:none}
+.security-row{display:block;padding:32px;border:1px solid var(--line);border-radius:var(--radius);background:var(--ink-2)}
+.security-row svg{width:36px;height:36px;margin-bottom:18px}
+.security-row h3{font-size:20px;margin-bottom:8px}
+.security-row p{font-size:15.5px}
+@media (max-width:860px){.security-list{grid-template-columns:1fr}.security-row{display:block}}
+
+/* Card e pulsanti: raggio e ombre più morbidi */
+.value-card,.sol-card,.stat-cell,.security-card,.res-card,.contact-card{border-radius:var(--radius)}
+.btn{border-radius:var(--radius)}
+.btn-primary{box-shadow:0 1px 0 rgba(255,255,255,.08) inset,0 8px 20px -8px rgba(14,58,95,.45)}

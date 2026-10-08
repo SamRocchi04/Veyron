@@ -39,7 +39,7 @@
 </script>
 <noscript><style>[data-reveal],[data-reveal] > *{opacity:1 !important; transform:none !important;}</style></noscript>
 </head>
-<body>
+<body class="home">
 
 <a class="skip-link" href="#main-content">Vai al contenuto</a>
 
@@ -82,7 +82,7 @@
     <canvas class="net-canvas" id="netCanvas" aria-hidden="true"></canvas>
     <span class="net-label" id="netL" aria-hidden="true">Passato</span>
     <span class="net-label" id="netR" aria-hidden="true">Futuro</span>
-    <div class="wrap">
+    <div class="wrap hero-grid">
       <div class="hero-content">
         <h1>Trasformiamo i dati della tua azienda in decisioni migliori.</h1>
         <p class="hero-sub">Veyron è una società di consulenza data &amp; AI: analizziamo i dati che generi ogni giorno, li mettiamo in relazione e costruiamo gli strumenti — dashboard, previsioni, automazioni — che ti permettono di decidere con più sicurezza.</p>
@@ -91,18 +91,46 @@
           <a href="contatti.html" class="btn btn-ghost">Prenota una call</a>
         </div>
       </div>
+      <div class="hero-visual" aria-hidden="true">
+        <svg viewBox="0 0 480 340" focusable="false">
+          <rect x="1" y="1" width="478" height="338" rx="12" class="hv-frame"/>
+          <circle cx="22" cy="20" r="4" class="hv-dot"/><circle cx="36" cy="20" r="4" class="hv-dot"/><circle cx="50" cy="20" r="4" class="hv-dot"/>
+          <text x="458" y="24" text-anchor="end" class="hv-small">Esempio illustrativo</text>
+          <rect x="20" y="42" width="136" height="58" rx="6" class="hv-tile"/><text x="32" y="63" class="hv-small">Ricavi</text><rect x="32" y="74" width="62" height="10" rx="3" class="hv-bar-ink"/>
+          <rect x="172" y="42" width="136" height="58" rx="6" class="hv-tile"/><text x="184" y="63" class="hv-small">Marginalità</text><rect x="184" y="74" width="48" height="10" rx="3" class="hv-bar-ink"/>
+          <rect x="324" y="42" width="136" height="58" rx="6" class="hv-tile"/><text x="336" y="63" class="hv-small">Scorte</text><rect x="336" y="74" width="70" height="10" rx="3" class="hv-bar-ink"/>
+          <rect x="20" y="114" width="440" height="206" rx="8" class="hv-tile"/>
+          <text x="34" y="136" class="hv-small">Andamento e previsione</text>
+          <line x1="34" y1="170" x2="446" y2="170" class="hv-grid"/><line x1="34" y1="210" x2="446" y2="210" class="hv-grid"/><line x1="34" y1="250" x2="446" y2="250" class="hv-grid"/>
+          <rect x="300" y="146" width="146" height="124" class="hv-band"/>
+          <polyline points="34,250 80,236 126,242 172,214 218,222 264,190 300,196" class="hv-line"/>
+          <polyline points="300,196 342,176 384,168 426,152 446,146" class="hv-forecast"/>
+          <circle cx="300" cy="196" r="5" class="hv-pt"/>
+          <text x="34" y="296" class="hv-small">Passato</text><text x="300" y="296" class="hv-small hv-gold">Futuro</text>
+        </svg>
+      </div>
     </div>
   </section>
+  <div class="proof">
+    <div class="wrap proof-grid">
+      <div><strong>Call da 30 minuti</strong><span>Conoscitiva e senza impegno</span></div>
+      <div><strong>NDA su richiesta</strong><span>Firmato prima di ricevere dati</span></div>
+      <div><strong>Accessi in sola lettura</strong><span>Revocabili in qualsiasi momento</span></div>
+      <div><strong>Approccio GDPR</strong><span>Infrastrutture in UE, dove possibile</span></div>
+    </div>
+  </div>
 
   <!-- FLOW STATEMENT -->
   <section>
-    <div class="wrap" data-reveal>
+    <div class="wrap split" data-reveal>
+      <div>
       <p class="flow-statement">
         La tua azienda produce dati ogni giorno. <span class="dim">Ma avere dati non significa saperli utilizzare.</span>
       </p>
       <p style="margin-top:22px; color:var(--paper-dim); max-width:52ch; font-size:16px;">
         Veyron collega ciò che è successo, ciò che sta succedendo e ciò che potrebbe succedere, per aiutarti a decidere meglio, oggi.
       </p>
+      </div>
       <div class="flow-chips">
         <span class="chip past">Passato</span>
         <span class="flow-arrow">→</span>
@@ -118,7 +146,7 @@
     <div class="wrap">
       <div class="method-head" data-reveal>
         <div class="eyebrow">Come lavoriamo</div>
-        <h2>Un percorso in quattro tappe, non un progetto isolato</h2>
+        <h2>Dal passato al futuro: un percorso, non un progetto isolato</h2>
         <p>Ogni intervento segue lo stesso ordine: prima capiamo, poi costruiamo. Non partiamo mai da uno strumento, ma da una domanda concreta della tua azienda.</p>
       </div>
       <div class="value-grid time-flow" data-reveal>
