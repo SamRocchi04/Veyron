@@ -138,7 +138,7 @@
       <div class="faq-list" data-reveal>
         <div class="faq-item">
           <h3>Lavorate solo con aziende che hanno già un ERP o un CRM strutturato?</h3>
-          <p>No. Molte aziende con cui lavoriamo partono da fogli Excel e sistemi non collegati tra loro: è esattamente il punto di partenza più comune per un Audit.</p>
+          <p>No. Molte PMI italiane partono da fogli Excel e sistemi non collegati tra loro: è esattamente il punto di partenza più comune per un Audit.</p>
         </div>
         <div class="faq-item">
           <h3>Quanto dura un percorso Veyron?</h3>
@@ -146,7 +146,7 @@
         </div>
         <div class="faq-item">
           <h3>Serve già sapere cosa vogliamo costruire?</h3>
-          <p>No. La maggior parte dei clienti arriva con una domanda di business, non con una soluzione tecnica in mente. È il nostro lavoro individuare lo strumento giusto.</p>
+          <p>No. Chi ci contatta spesso arriva con una domanda di business, non con una soluzione tecnica in mente. È il nostro lavoro individuare lo strumento giusto.</p>
         </div>
         <div class="faq-item">
           <h3>Lavorate anche su progetti di sola automazione, senza AI?</h3>
@@ -293,7 +293,14 @@ if (navToggle && mobileNav) {
     var box = document.getElementById('calendlyConsent');
     var host = document.getElementById('calendlyFrame');
     var f = document.createElement('iframe');
-    f.src = 'https://calendly.com/veyron-it/call-conoscitiva?embed_domain=www.veyron.it&embed_type=Inline&background_color=151a21&text_color=f5f3ee&primary_color=9c6b12';
+    var src = 'https://calendly.com/veyron-it/call-conoscitiva?embed_domain=www.veyron.it&embed_type=Inline&background_color=151a21&text_color=f5f3ee&primary_color=9c6b12';
+    // Inoltra a Calendly gli UTM presenti nell'URL, solo dopo il consenso (click su «Carica il calendario»)
+    var here = new URLSearchParams(location.search);
+    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach(function (k) {
+      var v = here.get(k);
+      if (v) src += '&' + k + '=' + encodeURIComponent(v.slice(0, 100));
+    });
+    f.src = src;
     f.title = 'Calendario per prenotare una call conoscitiva con Veyron';
     f.setAttribute('frameborder', '0');
     host.appendChild(f);
@@ -302,5 +309,6 @@ if (navToggle && mobileNav) {
   });
 })();
 </script>
+<script src="utm.js" defer></script>
 </body>
 </html>

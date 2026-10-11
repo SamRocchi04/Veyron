@@ -1202,6 +1202,11 @@ body.photo-topbar header:not(.scrolled) .nav-toggle{ border-color:rgba(245,243,2
     `;
   }
 
+  // Slug breve del settore per i link diretti: #settore=alimentare, #settore=packaging, ...
+  function sectorSlug(name){
+    return name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().split(/[^a-z0-9]+/)[0];
+  }
+
   // ==================== SELEZIONE AZIENDA/SETTORE =========================
   function selectRecord(key, opts){
     opts = opts || {};
@@ -1219,6 +1224,7 @@ body.photo-topbar header:not(.scrolled) .nav-toggle{ border-color:rgba(245,243,2
     }
     if (!opts.skipHash) {
       if (key === '__ALL__') history.replaceState(null, '', location.pathname + location.search);
+      else if (key.indexOf('SETTORE::') === 0) history.replaceState(null, '', location.pathname + location.search + '#settore=' + sectorSlug(key.slice(9)));
       else history.replaceState(null, '', '#azienda=' + encodeURIComponent(key));
     }
     renderDetailCharts(rec);
@@ -1260,7 +1266,10 @@ body.photo-topbar header:not(.scrolled) .nav-toggle{ border-color:rgba(245,243,2
   (function initSelection(){
     const m = location.hash.match(/azienda=([^&]+)/);
     const raw = m ? decodeURIComponent(m[1]) : null;
-    const initial = (raw && DATA.companies[raw]) ? raw : '__ALL__';
+    const ms = location.hash.match(/settore=([^&]+)/);
+    const slug = ms ? decodeURIComponent(ms[1]).toLowerCase() : null;
+    const sec = slug ? DATA.sectors.find(x => sectorSlug(x) === slug) : null;
+    const initial = (raw && DATA.companies[raw]) ? raw : (sec ? 'SETTORE::' + sec : '__ALL__');
     selectRecord(initial, { skipHash: true });
   })();
   } catch (err) {
@@ -1269,5 +1278,6 @@ body.photo-topbar header:not(.scrolled) .nav-toggle{ border-color:rgba(245,243,2
 })();
 
 </script>
+<script src="utm.js" defer></script>
 </body>
 </html>
