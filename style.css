@@ -1809,22 +1809,14 @@ body{font-size:16px;line-height:1.65}
 .calendly-inline-widget iframe{ border:0; display:block; width:100%; height:100%; }
 
 
-/* hero: rete di punti Passato -> Futuro */
+/* hero: layout base */
 .hero.hero-net{min-height:92vh;padding:140px 0 96px;align-items:center}
 .hero-net .wrap{position:relative;z-index:2;width:100%}
 .hero-net .hero-content{max-width:760px;margin:0 auto;text-align:center}
 .hero-net .hero-sub{margin:24px auto 0;max-width:54ch}
 .hero-net .hero-actions{justify-content:center}
-.net-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
-.hero-net::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:radial-gradient(ellipse 50% 46% at 50% 50%,rgba(245,243,238,.45) 28%,rgba(245,243,238,0) 100%);
-  background:radial-gradient(ellipse 50% 46% at 50% 50%,color-mix(in srgb,var(--ink) 45%,transparent) 28%,transparent 100%)}
-.net-label{position:absolute;z-index:2;transform:translateX(-50%);font-family:var(--mono);font-size:13px;font-weight:500;
-  letter-spacing:.06em;color:var(--teal);pointer-events:none}
 @media (max-width:860px){
   .hero.hero-net{padding:118px 0 72px;min-height:88vh}
-  .hero-net::after{background:radial-gradient(ellipse 85% 42% at 50% 50%,rgba(245,243,238,.45) 30%,rgba(245,243,238,0) 100%);
-    background:radial-gradient(ellipse 85% 42% at 50% 50%,color-mix(in srgb,var(--ink) 45%,transparent) 30%,transparent 100%)}
 }
 
 /* ==== Restyling grafico (ottobre 2026) ==== */
@@ -1840,10 +1832,7 @@ body{font-size:16px;line-height:1.65}
 .hero-net .hero-content{margin:0;max-width:none;text-align:left}
 .hero-net .hero-sub{margin:24px 0 0}
 .hero-net .hero-actions{justify-content:flex-start}
-.hero-net .net-canvas{opacity:.5}
-.hero-net .net-label{display:none}
-.hero-net::after{background:linear-gradient(90deg,color-mix(in srgb,var(--ink) 94%,transparent) 0%,color-mix(in srgb,var(--ink) 80%,transparent) 48%,transparent 82%)}
-.hero-visual{position:relative;z-index:2;filter:drop-shadow(0 24px 40px rgba(21,26,33,.16))}
+.hero-net .hero-net.hero-visual{position:relative;z-index:2;filter:drop-shadow(0 24px 40px rgba(21,26,33,.16))}
 .hero-visual svg{display:block;width:100%;height:auto}
 .hv-frame{fill:#FBFAF7;stroke:var(--line-strong)}
 .hv-tile{fill:#fff;stroke:var(--line)}
@@ -1860,7 +1849,6 @@ body{font-size:16px;line-height:1.65}
 @media (max-width:980px){
   .hero-grid{grid-template-columns:1fr;gap:44px}
   .hero.hero-net{padding:120px 0 64px}
-  .hero-net::after{background:linear-gradient(180deg,color-mix(in srgb,var(--ink) 85%,transparent) 0%,color-mix(in srgb,var(--ink) 60%,transparent) 60%,transparent 100%)}
 }
 
 /* Striscia di credibilità */
