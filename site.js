@@ -85,3 +85,43 @@ if (navToggle && mobileNav) {
     if (window.innerWidth > 860) closeNav();
   });
 }
+
+
+// Banda dati a scorrimento (home): duplica il gruppo per il loop continuo,
+// calcola la durata per mantenere una velocita' costante, offre pausa/riprendi.
+(function tickerSetup() {
+  var ticker = document.querySelector('[data-ticker]');
+  if (!ticker) return;
+  var track = ticker.querySelector('.ticker-track');
+  var group = ticker.querySelector('.ticker-group');
+  var btn = ticker.querySelector('.ticker-toggle');
+  if (!track || !group) return;
+
+  var clone = group.cloneNode(true);
+  clone.setAttribute('aria-hidden', 'true');
+  track.appendChild(clone);
+
+  var SPEED = 45; // px al secondo
+  var setDuration = function () {
+    var w = group.getBoundingClientRect().width;
+    if (w) track.style.setProperty('--tk-dur', (w / SPEED).toFixed(1) + 's');
+  };
+  setDuration();
+  if ('ResizeObserver' in window) new ResizeObserver(setDuration).observe(group);
+  else window.addEventListener('resize', setDuration, { passive: true });
+
+  var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var sync = function () { ticker.classList.toggle('is-ready', !mq.matches); };
+  sync();
+  if (mq.addEventListener) mq.addEventListener('change', sync);
+
+  if (btn) {
+    btn.addEventListener('click', function () {
+      var paused = ticker.classList.toggle('is-paused');
+      btn.setAttribute('aria-pressed', String(paused));
+      btn.setAttribute('aria-label', paused
+        ? 'Riprendi lo scorrimento dei dati'
+        : 'Metti in pausa lo scorrimento dei dati');
+    });
+  }
+})();

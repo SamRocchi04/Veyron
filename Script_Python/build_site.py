@@ -42,7 +42,7 @@ Segnaposto disponibili nei file sorgente
     {{footer_class}}        ' class="..."' per il <footer>, oppure nulla
     {{asset:percorso}}      percorso + ?v=<hash del file> (cache-busting)
     {{meta:chiave|formato}} numero preso da data/benchmark.json -> meta
-                            formati: pct1 (6,8%), int (1.582), dec1 (6,8)
+                            formati: pct1 (6,8%), int (1.582), dec1 (6,8), dec2 (1,52), sdec1 (+7,1)
 
 Immagini
 --------
@@ -96,8 +96,17 @@ def load_meta():
     if not os.path.exists(path):
         return {}
     with open(path, encoding="utf-8") as f:
-        meta = json.load(f).get("meta", {})
+        data = json.load(f)
+    meta = data.get("meta", {})
     meta["nSettori"] = len(meta.get("settoriInclusi", []))
+    # Valori derivati (usati, ad esempio, dalla banda a scorrimento della home)
+    meta["gapEbitdaT0"] = meta["ebitdaMarginObiettivoT0"] - meta["ebitdaMarginRealeT0"]
+    meta["gapRoeT0"] = meta["roeObiettivoT0"] - meta["roeRealeT0"]
+    meta["gapRotazioneT0"] = meta["rotazioneObiettivoT0"] - meta["rotazioneRealeT0"]
+    try:
+        meta["ebitdaMarginRealeInizio"] = data["companies"]["__ALL__"]["ebitda_margin"]["reale"][0]
+    except (KeyError, IndexError):
+        pass
     return meta
 
 
@@ -110,6 +119,9 @@ FORMATS = {
     "pct1": lambda v: it_number(v, 1) + "%",
     "dec1": lambda v: it_number(v, 1),
     "int": lambda v: it_number(v, 0),
+    "dec2": lambda v: it_number(v, 2),
+    "sdec1": lambda v: ("+" if v >= 0 else "\u2212") + it_number(abs(v), 1),  # +7,1 / \u22122,0
+    "sdec2": lambda v: ("+" if v >= 0 else "\u2212") + it_number(abs(v), 2),
 }
 
 
