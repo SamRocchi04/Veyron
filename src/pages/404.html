@@ -1,0 +1,50 @@
+<!-- page: active= footer=- base=/ -->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pagina non trovata — Veyron</title>
+{{> head-icons}}
+<meta name="description" content="La pagina che cerchi non esiste o è stata spostata. Torna alla home di Veyron o prenota una call conoscitiva.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Veyron">
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#F5F3EE">
+<!-- Typefaces: Fraunces (titoli) + Inter (testo e UI) + IBM Plex Mono (solo numeri), self-hosted in /fonts -->
+<link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:image" content="https://www.veyron.it/og-image.png">
+<meta name="twitter:image" content="https://www.veyron.it/og-image.png">
+<link rel="stylesheet" href="{{asset:style.css}}">
+<noscript><style>[data-reveal],[data-reveal] > *{opacity:1 !important; transform:none !important;}</style></noscript>
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Vai al contenuto</a>
+
+{{> header}}
+
+<main id="main-content">
+
+  <section class="page-hero t-light">
+    <div class="wrap">
+      <div class="eyebrow">Errore 404</div>
+      <h1>Questa pagina non esiste.</h1>
+      <p>L'indirizzo potrebbe contenere un errore oppure la pagina è stata spostata. Da qui puoi tornare alla home o andare direttamente a una delle sezioni principali.</p>
+      <div class="hero-actions" style="margin-top:28px">
+        <a href="/index.html" class="btn btn-primary">Torna alla home</a>
+        <a href="/contatti.html" class="btn btn-ghost">Prenota una call</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+{{> footer}}
+
+<script src="{{asset:site.js}}" defer></script>
+</body>
+</html>

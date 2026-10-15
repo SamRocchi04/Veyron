@@ -4,8 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Veyron — Consulenza Data & AI per PMI</title>
-<link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABqElEQVR42u2WPWsUURSGn3PvOJtxd5Nooe6KISZE0F4QCYJaRNbKwt8gKJbiL7CwDFgZE7AQ/BXBwiBpLBXcQsJGEPwIoruzd+Z+WES2n1l2VZi3vM157nvvec+Rnz++BudyQghMUwIoHRHl+ZAQ/J+jaSrgvEMd3nzaxRnVVPxlVQAVQAXwfwJ473HO4b0/zLQQcM5RJs2jMgCzzSY60hiTkaYpcRyTJDP0f/Wx3hfK1UIOiAi5tTx6vM6dew/Y2HpBkiRsv9rh7v2HfNzrUYvjQoOtEIC1juPzc9QbdTY3nvL94ICjjSbH5mdBhLOLCxhjEJHJACglmCzj9q2bnDi9xJvdtxA8+58+07lxnWajPvoXE3uC4dDQbp/iyuolXu/s0v3QZa+3z7mVZfqDAUqpyXZBCAGtNZ21awzTlM3nL5mp1Vg408aYrJD9pQCUUqSDlNXLF2m1W6w/ecby0iLxkbjUVlW4DUWELM9ptU7SWbvKu/ddLpxfwWSmsP0A8u1Lr/QyqLVGiWCdK71TRuPEqLV25EpZjQUwTuFqGlYAFUAF8M8A/Ab5J5o+kBkxeQAAAABJRU5ErkJggg==">
-<link rel="apple-touch-icon" sizes="180x180" href="data:image/png;base64,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">
+<link rel="icon" href="favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <meta name="description" content="Veyron è uno studio di consulenza data & AI per PMI: analisi, intelligence, intelligenza artificiale e automazione al servizio delle decisioni.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Veyron">
@@ -22,7 +23,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:image" content="https://www.veyron.it/og-image.png">
 <meta name="twitter:image" content="https://www.veyron.it/og-image.png">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=6ecffbfa">
 
 <script type="application/ld+json">
 {
@@ -47,7 +48,7 @@
 <header id="siteHeader">
   <div class="wrap">
     <nav>
-      <a class="logo" href="index.html"><img class="logo-mark" src="data:image/png;base64,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" alt="Veyron" width="26" height="26">VEYRON<span class="dot">.</span> <span>Consulenza Data &amp; AI</span></a>
+      <a class="logo" href="index.html"><img class="logo-mark" src="img/logo-mark.png" alt="Veyron" width="26" height="26">VEYRON<span class="dot">.</span> <span>Consulenza Data &amp; AI</span></a>
       <div class="nav-links">
         <a href="chi-siamo.html">Chi Siamo</a>
         <a href="metodo.html">Metodo</a>
@@ -217,6 +218,35 @@
     </div>
   </section>
 
+  <!-- BENCHMARK (dati letti da data/benchmark.json) -->
+  <section class="t-navy bench-teaser">
+    <div class="wrap">
+      <div class="method-head" data-reveal>
+        <div class="eyebrow">Benchmark su bilanci reali</div>
+        <h2>Quanto margine c'è tra una PMI e il miglior quartile del suo settore?</h2>
+        <p>Abbiamo confrontato 5 anni di bilancio di 30 PMI italiane (dati AIDA, anonimizzati) con la soglia del miglior quartile dei loro settori. È lo stesso confronto che facciamo sui dati di un cliente.</p>
+      </div>
+      <div class="stat-row bench-row" data-reveal>
+        <div class="stat-cell">
+          <div class="bench-num">6,8%</div>
+          <div class="stat-label">EBITDA/Vendite medio delle 30 PMI analizzate (ultimo anno)</div>
+        </div>
+        <div class="stat-cell">
+          <div class="bench-num gold">13,9%</div>
+          <div class="stat-label">Soglia media del miglior quartile (75° percentile) dei rispettivi settori</div>
+        </div>
+        <div class="stat-cell">
+          <div class="bench-num">30</div>
+          <div class="stat-label">PMI in 6 settori, 5 anni di bilanci</div>
+        </div>
+      </div>
+      <p class="bench-note" data-reveal><strong>Come leggere il dato.</strong> Il campione è piccolo e non casuale: sono le 5 PMI con più ricavi in ciascuno dei 6 settori, scelte tra 1.582 aziende con storico completo, e la soglia del miglior quartile è calcolata su tutte le 1.582. È un riferimento ambizioso, non un obiettivo garantito né una stima valida per la tua azienda: indica un ordine di grandezza.</p>
+      <div class="mt-44" data-reveal>
+        <a href="backtest.html" class="btn btn-ghost">Vedi il benchmark completo →</a>
+      </div>
+    </div>
+  </section>
+
   <!-- CONVERGE -->
   <section class="t-light">
     <div class="wrap converge">
@@ -232,7 +262,7 @@
     </div>
     <div class="wrap mt-56" data-reveal>
       <div class="photo-block">
-        <img src="img/home-team.jpg" alt="Team al lavoro attorno a un tavolo durante una sessione di analisi" loading="lazy" width="1800" height="900">
+        <picture><source type="image/avif" srcset="img/home-team-640.avif 640w, img/home-team-1024.avif 1024w, img/home-team-1600.avif 1600w, img/home-team-1800.avif 1800w" sizes="(min-width:1180px) 1116px, 100vw"><source type="image/webp" srcset="img/home-team-640.webp 640w, img/home-team-1024.webp 1024w, img/home-team-1600.webp 1600w, img/home-team-1800.webp 1800w" sizes="(min-width:1180px) 1116px, 100vw"><img src="img/home-team.jpg" alt="Team al lavoro attorno a un tavolo durante una sessione di analisi" loading="lazy" decoding="async" width="1800" height="1200"></picture>
         <span class="photo-block-mark" aria-hidden="true"></span>
         <div class="photo-block-content">
           <div class="eyebrow">Come lavoriamo</div>
@@ -291,7 +321,7 @@
   <div class="wrap">
     <div class="footer-top">
       <div class="footer-brand">
-        <a class="logo" href="index.html"><img class="logo-mark" src="data:image/png;base64,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" alt="Veyron" width="26" height="26">VEYRON<span class="dot">.</span></a>
+        <a class="logo" href="index.html"><img class="logo-mark" src="img/logo-mark.png" alt="Veyron" width="26" height="26">VEYRON<span class="dot">.</span></a>
         <p>Consulenza data &amp; AI per piccole e medie imprese. Analizziamo, preveniamo, automatizziamo.</p>
       </div>
       <div class="footer-col">
@@ -324,95 +354,7 @@
   </div>
 </footer>
 
-<script>
-const header = document.getElementById('siteHeader');
-if (header) {
-  window.addEventListener('scroll', () => {
-    header.classList.toggle('scrolled', window.scrollY > 20);
-  }, { passive: true });
-}
-
-(function revealSetup() {
-  var reveals = document.querySelectorAll('[data-reveal]');
-  if (!reveals.length) return;
-  var showAll = function () {
-    reveals.forEach(function (el) { el.classList.add('in-view'); });
-  };
-  try {
-    if (!('IntersectionObserver' in window)) {
-      showAll();
-      return;
-    }
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) {
-          e.target.classList.add('in-view');
-          io.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.15 });
-    reveals.forEach(function (el) { io.observe(el); });
-  } catch (err) {
-    showAll();
-  }
-})();
-
-
-const statNums = document.querySelectorAll('.stat-num');
-if (statNums.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  const animateNum = (el) => {
-    const target = parseInt(el.textContent, 10);
-    if (isNaN(target)) return;
-    const dur = 900;
-    const start = performance.now();
-    const step = (now) => {
-      const p = Math.min((now - start) / dur, 1);
-      const eased = 1 - Math.pow(1 - p, 3);
-      el.textContent = Math.round(eased * target);
-      if (p < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  };
-  const numIo = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        animateNum(e.target);
-        numIo.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.6 });
-  statNums.forEach(el => numIo.observe(el));
-}
-
-
-
-const navToggle = document.getElementById('navToggle');
-const mobileNav = document.getElementById('mobileNav');
-if (navToggle && mobileNav) {
-  const closeNav = () => {
-    navToggle.setAttribute('aria-expanded', 'false');
-    navToggle.setAttribute('aria-label', 'Apri il menu');
-    mobileNav.classList.remove('open');
-    mobileNav.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('nav-open');
-  };
-  navToggle.addEventListener('click', () => {
-    const isOpen = navToggle.getAttribute('aria-expanded') === 'true';
-    navToggle.setAttribute('aria-expanded', String(!isOpen));
-    navToggle.setAttribute('aria-label', isOpen ? 'Apri il menu' : 'Chiudi il menu');
-    mobileNav.classList.toggle('open', !isOpen);
-    mobileNav.setAttribute('aria-hidden', String(isOpen));
-    document.body.classList.toggle('nav-open', !isOpen);
-  });
-  mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeNav();
-  });
-  window.addEventListener('resize', () => {
-    if (window.innerWidth > 860) closeNav();
-  });
-}
-</script>
+<script src="site.js?v=e5fd487e" defer></script>
 <script src="utm.js" defer></script>
 </body>
 </html>

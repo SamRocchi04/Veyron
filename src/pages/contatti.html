@@ -1,0 +1,161 @@
+<!-- page: active=contatti footer=t-navy base=- -->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contatti — Veyron</title>
+{{> head-icons}}
+<meta name="description" content="Parla con Veyron: prenota una call conoscitiva di 30 minuti, senza impegno, per capire da dove partire con i dati della tua azienda.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Veyron">
+<meta property="og:title" content="Contatti — Veyron">
+<meta property="og:description" content="Parla con Veyron: prenota una call conoscitiva di 30 minuti, senza impegno, per capire da dove partire con i dati della tua azienda.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.veyron.it/contatti.html">
+<meta name="theme-color" content="#F5F3EE">
+<meta property="og:url" content="https://www.veyron.it/contatti.html">
+<!-- Typefaces: Fraunces (titoli) + Inter (testo e UI) + IBM Plex Mono (solo numeri), self-hosted in /fonts -->
+<link rel="preload" href="fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts/fonts.css">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:image" content="https://www.veyron.it/og-image.png">
+<meta name="twitter:image" content="https://www.veyron.it/og-image.png">
+<link rel="stylesheet" href="{{asset:style.css}}">
+<noscript><style>[data-reveal],[data-reveal] > *{opacity:1 !important; transform:none !important;}</style></noscript>
+</head>
+<body class="photo-topbar">
+
+<a class="skip-link" href="#main-content">Vai al contenuto</a>
+
+{{> header}}
+
+<main id="main-content">
+
+  <section class="page-hero photo-hero">
+    <div class="hero-media">
+      <img src="img/hero-contatti.jpg" alt="Videochiamata di lavoro con laptop e caffè sulla scrivania" loading="eager" width="2000" height="1333">
+      <div class="wrap">
+        <div class="eyebrow">Contatti</div>
+        <h1>Parliamo dei dati della tua azienda</h1>
+        <p>Scrivici o prenota direttamente una call conoscitiva di 30 minuti, senza impegno: è il primo passo del Veyron Audit.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="contact-grid" data-reveal>
+        <div class="contact-card">
+          <h3>Scrivici</h3>
+          <p>Rispondiamo entro un giorno lavorativo. Raccontaci in poche righe qual è la domanda che vorresti rispondere con i tuoi dati.</p>
+          <div class="contact-line"><span>Email</span><span>info@veyron.it</span></div>
+          <div class="contact-line"><span>Risposta</span><span>Entro 24h lavorative</span></div>
+          <div class="mt-26">
+            <a href="mailto:info@veyron.it" class="btn btn-primary">Scrivi a info@veyron.it</a>
+          </div>
+        </div>
+        <div class="contact-card">
+          <h3>Cosa succede dopo</h3>
+          <p>Ogni primo contatto segue lo stesso percorso, pensato per non farti perdere tempo.</p>
+          <div class="step-list">
+            <div class="step-row">
+              <div class="step-n">01</div>
+              <p><b>Call conoscitiva di 30 minuti.</b> Capiamo il contesto della tua azienda e dove nascono le tue domande sui dati.</p>
+            </div>
+            <div class="step-row">
+              <div class="step-n">02</div>
+              <p><b>Proposta di Audit.</b> Se ha senso proseguire, ti proponiamo un AI &amp; Business Audit su misura, con tempi e ambito chiari.</p>
+            </div>
+            <div class="step-row">
+              <div class="step-n">03</div>
+              <p><b>Opportunity Map.</b> Ricevi una mappa concreta di criticità e opportunità, da cui partire — con noi o in autonomia.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="booking-card" data-reveal>
+        <div class="booking-head">
+          <div class="eyebrow">Calendario</div>
+          <h2>Scegli tu giorno e orario</h2>
+          <p>Niente avanti e indietro di email: seleziona uno slot da 30 minuti direttamente qui sotto, riceverai la conferma via email con il link per la videochiamata.</p>
+        </div>
+        <div class="calendly-consent" id="calendlyConsent">
+          <p><strong>Calendario di prenotazione</strong></p>
+          <p>Per prenotare uno slot usiamo Calendly, un servizio di terze parti con sede negli Stati Uniti. Se carichi il calendario, Calendly riceverà il tuo indirizzo IP e potrà impostare cookie propri. Finché non lo carichi, nessun dato viene inviato a Calendly. Dettagli nella nostra <a href="privacy.html#cookie">Privacy Policy</a> e nell'<a href="https://calendly.com/privacy" target="_blank" rel="noopener noreferrer">informativa di Calendly</a>.</p>
+          <div class="calendly-consent-actions">
+            <button type="button" class="btn btn-primary" id="loadCalendly">Carica il calendario</button>
+            <a class="btn btn-ghost" href="mailto:info@veyron.it?subject=Richiesta%20call%20conoscitiva">Preferisco scrivere via email</a>
+          </div>
+        </div>
+        <div class="calendly-inline-widget" id="calendlyFrame" hidden></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="t-navy">
+    <div class="wrap">
+      <div class="method-head" data-reveal>
+        <div class="eyebrow">Domande frequenti</div>
+        <h2>Prima di scriverci</h2>
+      </div>
+      <div class="faq-list" data-reveal>
+        <div class="faq-item">
+          <h3>Lavorate solo con aziende che hanno già un ERP o un CRM strutturato?</h3>
+          <p>No. Molte PMI italiane partono da fogli Excel e sistemi non collegati tra loro: è esattamente il punto di partenza più comune per un Audit.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Quanto dura un percorso Veyron?</h3>
+          <p>L'Audit richiede 5-7 giorni lavorativi. I passi successivi variano in base a cosa emerge dal report: da un intervento di Ottimizzazione mirato, fino a un affiancamento continuativo con l'AI Business Monitoring.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Serve già sapere cosa vogliamo costruire?</h3>
+          <p>No. Chi ci contatta spesso arriva con una domanda di business, non con una soluzione tecnica in mente. È il nostro lavoro individuare lo strumento giusto.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Lavorate anche su progetti di sola automazione, senza AI?</h3>
+          <p>Sì. Automazione e intelligenza artificiale sono due dei quattro livelli in cui lavoriamo: puoi partire da uno solo, in base a ciò che emerge dall'Audit.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+{{> footer}}
+
+<script src="{{asset:site.js}}" defer></script>
+
+<script>
+(function () {
+  var btn = document.getElementById('loadCalendly');
+  if (!btn) return;
+  btn.addEventListener('click', function () {
+    var box = document.getElementById('calendlyConsent');
+    var host = document.getElementById('calendlyFrame');
+    var f = document.createElement('iframe');
+    var src = 'https://calendly.com/veyron-it/call-conoscitiva?embed_domain=www.veyron.it&embed_type=Inline&background_color=151a21&text_color=f5f3ee&primary_color=9c6b12';
+    // Inoltra a Calendly gli UTM presenti nell'URL, solo dopo il consenso (click su «Carica il calendario»)
+    var here = new URLSearchParams(location.search);
+    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach(function (k) {
+      var v = here.get(k);
+      if (v) src += '&' + k + '=' + encodeURIComponent(v.slice(0, 100));
+    });
+    f.src = src;
+    f.title = 'Calendario per prenotare una call conoscitiva con Veyron';
+    f.setAttribute('frameborder', '0');
+    host.appendChild(f);
+    host.hidden = false;
+    box.hidden = true;
+  });
+})();
+</script>
+<script src="utm.js" defer></script>
+</body>
+</html>

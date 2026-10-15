@@ -1,0 +1,218 @@
+<!-- page: active=backtest footer=- base=- -->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Benchmark &amp; Analisi di Bilancio — Veyron</title>
+<meta name="description" content="Benchmark su bilanci reali di PMI italiane: confronto tra risultati effettivi e obiettivo di settore, azienda per azienda, con dati AIDA anonimizzati.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Veyron">
+<meta property="og:title" content="Benchmark &amp; Analisi di Bilancio — Veyron">
+<meta property="og:description" content="Benchmark su bilanci reali di PMI italiane: risultati effettivi vs obiettivo di settore, azienda per azienda.">
+<meta name="twitter:card" content="summary">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.veyron.it/backtest.html">
+<meta name="theme-color" content="#F5F3EE">
+<meta property="og:url" content="https://www.veyron.it/backtest.html">
+<meta property="og:image" content="https://www.veyron.it/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.veyron.it/og-image.png">
+{{> head-icons}}
+<link rel="preload" href="fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="{{asset:style.css}}">
+<link rel="stylesheet" href="{{asset:backtest.css}}">
+</head>
+<body class="photo-topbar">
+
+<a class="skip-link" href="#main-content">Vai al contenuto</a>
+
+{{> header}}
+
+<main id="main-content">
+
+  <section class="page-hero photo-hero">
+    <div class="hero-media">
+      <img src="img/dashboard-schermo.jpg" alt="Schermo con una dashboard di monitoraggio: grafici e indicatori" loading="eager" width="2000" height="1333">
+      <div class="wrap">
+      <div class="eyebrow">Benchmark &amp; Analisi di Bilancio</div>
+      <h1>30 PMI italiane a confronto con il miglior quartile del loro settore</h1>
+      <p>La stessa domanda che ci poniamo per una PMI cliente — su quali voci di bilancio può migliorare, e quanto — qui la testiamo su 30 PMI italiane reali (dati AIDA/Bureau van Dijk), confrontando ogni azienda con il miglior quartile del proprio settore negli ultimi 5 anni. Nessun nome d’azienda è pubblicato: solo etichette anonime.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bench-tools">
+    <div class="wrap">
+      <div class="databadge-row">
+        <span class="chip now">DATI REALI — BILANCI AIDA</span>
+        <p>30 PMI italiane reali (bilanci AIDA/Bureau van Dijk, ultimi 5 anni) su 6 settori, confrontate con il miglior quartile del proprio settore. Anonimizzate: mai il nome dell’azienda, solo “Azienda N”.</p>
+      </div>
+
+      <div class="control-bar" data-reveal>
+        <div class="control-field">
+          <label for="companySelect">Esplora azienda</label>
+          <select id="companySelect" class="veyron-select" aria-label="Scegli un'azienda anonimizzata da esplorare"></select>
+        </div>
+        <div class="control-field">
+          <label for="sectorSelect">Media per settore</label>
+          <select id="sectorSelect" class="veyron-select" aria-label="Scegli un settore per vedere la sua media"></select>
+        </div>
+        <span id="companyHint">Scegli un'azienda o un settore; lascia "Media di tutte le PMI" per la vista aggregata.</span>
+      </div>
+      <div class="company-summary" id="companySummary" hidden></div>
+    </div>
+  </section>
+
+  <!-- ===================== FATTORI CHIAVE ===================== -->
+  <section>
+    <div class="wrap">
+      <div class="fin-section-head" data-reveal>
+        <div class="eyebrow">Fattori chiave</div>
+        <h2>Cosa misura questo benchmark</h2>
+        <p>30 PMI italiane reali, 6 settori, storico di bilancio completo sugli ultimi 5 anni. Per ogni azienda e ogni anno confrontiamo il risultato reale con l’“obiettivo”: il valore del miglior quartile (75°/25° percentile) tra le aziende comparabili dello stesso settore e dello stesso anno relativo — nessun dato futuro, nessun look-ahead.</p>
+      </div>
+      <div class="kpi-grid" data-reveal>
+        <div class="kpi-card"><div class="kpi-label">EBITDA/Vendite — reale</div><div class="kpi-num">+6.8%</div><div class="kpi-sub">media di tutte le PMI, ultimo anno</div></div>
+        <div class="kpi-card"><div class="kpi-label">EBITDA/Vendite — obiettivo</div><div class="kpi-num gold">+13.9%</div><div class="kpi-sub">miglior quartile di settore</div></div>
+        <div class="kpi-card"><div class="kpi-label">ROE — reale</div><div class="kpi-num">+14.8%</div><div class="kpi-sub">media di tutte le PMI, ultimo anno</div></div>
+        <div class="kpi-card"><div class="kpi-label">ROE — obiettivo</div><div class="kpi-num gold">+21.4%</div><div class="kpi-sub">miglior quartile di settore</div></div>
+        <div class="kpi-card"><div class="kpi-label">Rotazione capitale investito</div><div class="kpi-num" style="color:var(--paper-dim); text-shadow:none;">1.52×</div><div class="kpi-sub">media di tutte le PMI, ultimo anno</div></div>
+        <div class="kpi-card"><div class="kpi-label">Divario sui costi vs benchmark (media)</div><div class="kpi-num rose">3.164 k€</div><div class="kpi-sub">migliaia EUR/anno — stima teorica, non un risparmio garantito</div></div>
+        <div class="kpi-card"><div class="kpi-label">Capitale investito vs obiettivo (media)</div><div class="kpi-num ">-8.680 k€</div><div class="kpi-sub">negativo: in media già sotto il livello del benchmark</div></div>
+        <div class="kpi-card"><div class="kpi-label">Fonte dati</div><div class="kpi-num" style="font-size:15.5px; color:var(--paper-dim); text-shadow:none;">AIDA · Bureau van Dijk</div><div class="kpi-sub">bilanci ufficiali, PMI anonimizzate</div></div>
+      </div>
+
+      <div class="chart-row wide" data-reveal>
+        <div class="chart-card">
+          <h3>Composizione per settore</h3>
+          <div class="chart-sub">PMI con storico di bilancio completo, per settore — passa il mouse per i dettagli</div>
+          <div class="donut-wrap"><div class="chart-canvas-wrap tall" style="width:260px;"><canvas id="chartSectorDonut"></canvas></div></div>
+          <div class="legend-row" id="legendSector"></div>
+        </div>
+        <div class="chart-card">
+          <h3>Dal perimetro alle PMI mostrate</h3>
+          <div class="chart-sub">quante aziende nei 6 settori target hanno uno storico di bilancio completo, e quante vengono mostrate qui</div>
+          <div class="chart-canvas-wrap tall"><canvas id="chartFunnel"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ANALISI DI BILANCIO ===================== -->
+  <section class="alt">
+    <div class="wrap">
+      <div class="fin-section-head" data-reveal>
+        <div class="eyebrow">Analisi di Bilancio</div>
+        <h2>Reale vs obiettivo di settore, anno per anno</h2>
+        <p>Il divario tra risultato reale e obiettivo di settore è persistente nel tempo, non un caso isolato di un singolo anno. Qui sotto la media di tutte le PMI analizzate; più in basso puoi esplorare azienda per azienda o settore per settore con il selettore in cima alla pagina.</p>
+      </div>
+      <div class="chart-row featured" data-reveal>
+        <div class="chart-card">
+          <h3>EBITDA/Vendite: reale vs obiettivo</h3>
+          <div class="chart-sub">media di tutte le PMI analizzate, per anno (obiettivo = miglior quartile del settore)</div>
+          <div class="chart-canvas-wrap"><canvas id="chartFeaturedEbitda"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h3>ROE: reale vs obiettivo</h3>
+          <div class="chart-sub">stesso confronto sulla redditività del capitale proprio</div>
+          <div class="chart-canvas-wrap"><canvas id="chartFeaturedRoe"></canvas></div>
+        </div>
+      </div>
+      <div class="disclaimer-block teal" data-reveal>
+        <b>Perché conta per una PMI.</b> Lo stesso principio — confrontare i bilanci storici con il miglior quartile di aziende comparabili, per capire quali voci hanno più margine di miglioramento — è quello che applichiamo ai dati di una singola azienda cliente: non per confrontarla con l'intero mercato, ma per indicare su quali metriche intervenire per prime.
+      </div>
+      <div class="disclaimer-block" data-reveal>
+        <b>Metodo e limiti.</b> Questo è un benchmark, non una previsione: confrontiamo i bilanci storici di ciascuna azienda con il miglior quartile del suo settore, senza testare modelli predittivi. Il campione è di 30 PMI in 6 settori e non è casuale: sono le 5 PMI con più ricavi in ciascun settore, scelte tra le 1.582 aziende con storico completo (il miglior quartile è calcolato su tutte). Indica un ordine di grandezza, non una stima valida per ogni azienda. Le medie sono sensibili ai valori estremi e il miglior quartile è un riferimento ambizioso, non un obiettivo realistico per tutte. Un valore negativo di capitale investito indica che l'azienda usa già meno capitale del livello richiesto dal benchmark. Il divario sui costi è una stima teorica, non un risparmio garantito, e non tiene conto di vincoli operativi.
+      </div>
+
+      <div class="fin-section-head" data-reveal style="margin-top:56px; margin-bottom:0;">
+        <h3 id="detailTitle" style="font-size:20px; font-weight:500;">Le tre metriche di bilancio, azienda per azienda</h3>
+        <p id="detailSub" style="margin-top:8px; font-size:14.5px;">Media di tutte le PMI analizzate — usa il selettore in cima alla pagina per vedere una singola azienda o la media di un settore.</p>
+      </div>
+      <div class="chart-row triple" data-reveal style="margin-top:24px;">
+        <div class="chart-card">
+          <h3 style="font-size:14.5px;">EBITDA/Vendite</h3>
+          <div class="chart-canvas-wrap short"><canvas id="chartDetailEbitda"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h3 style="font-size:14.5px;">ROE</h3>
+          <div class="chart-canvas-wrap short"><canvas id="chartDetailRoe"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h3 style="font-size:14.5px;">Rotazione capitale investito</h3>
+          <div class="chart-canvas-wrap short"><canvas id="chartDetailRotazione"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== IMPATTO POTENZIALE ===================== -->
+  <section>
+    <div class="wrap">
+      <div class="fin-section-head" data-reveal>
+        <div class="eyebrow">Impatto Potenziale</div>
+        <h2 id="impattoTitle">Quanto vale, in euro, colmare il divario</h2>
+        <p id="impattoDesc">Le stesse due metriche tradotte in euro: quanto costerebbe operare come il miglior quartile del settore (costi operativi), e quanto capitale investito netto servirebbe per generare lo stesso fatturato con la stessa efficienza. Valori per l'azienda o il settore selezionato in cima alla pagina, o per la media di tutte le PMI.</p>
+      </div>
+      <div class="chart-row" data-reveal>
+        <div class="chart-card">
+          <h3>Costi operativi: reale vs ipotetico</h3>
+          <div class="chart-sub" id="costiSub">media di tutte le PMI — migliaia di EUR, per anno</div>
+          <div class="chart-canvas-wrap"><canvas id="chartCosti"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <h3>Capitale investito netto: reale vs ipotetico</h3>
+          <div class="chart-sub" id="capitaleSub">migliaia di EUR, per anno</div>
+          <div class="chart-canvas-wrap"><canvas id="chartCapitale"></canvas></div>
+        </div>
+      </div>
+
+      <div class="chart-row wide" data-reveal style="margin-top:1px;">
+        <div class="chart-card ring-card">
+          <h3 id="ringTitle">Divario teorico sui costi</h3>
+          <div class="chart-sub" id="ringSub">% di differenza dei costi operativi rispetto al benchmark, ultimo anno (stima teorica)</div>
+          <svg class="ring-svg" viewBox="0 0 190 190" width="190" height="190" role="img" aria-label="divario teorico percentuale sui costi">
+            <circle cx="95" cy="95" r="87" fill="none" stroke="rgba(21,26,33,0.10)" stroke-width="16"/>
+            <circle id="ringProgress" cx="95" cy="95" r="87" fill="none" stroke="#2E7D46" stroke-width="16"
+              stroke-dasharray="0 1000" stroke-linecap="round" transform="rotate(-90 95 95)"/>
+            <text id="ringText" x="95" y="103" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-weight="600" font-size="34" fill="#2E7D46">0%</text>
+          </svg>
+          <div class="summary-list" id="summaryList"></div>
+        </div>
+        <div class="chart-card">
+          <h3>Rotazione del capitale investito: reale vs obiettivo</h3>
+          <div class="chart-sub">quante volte il capitale investito si "gira" in ricavi — più alto è meglio</div>
+          <div class="chart-canvas-wrap"><canvas id="chartRotazioneWide"></canvas></div>
+        </div>
+      </div>
+
+      <div class="disclaimer-block" data-reveal>
+        <b>Nota metodologica.</b> L'obiettivo di settore è calcolato sul miglior quartile (75° percentile per le metriche "più alto è meglio"; 25° percentile sul rapporto costi/ricavi per il costo ipotetico) tra le aziende con storico di bilancio completo dello stesso settore, nello stesso anno relativo — mai un dato futuro rispetto all'anno osservato. I costi e il capitale investito "ipotetici" sono stime, ottenute applicando il rapporto di efficienza del miglior quartile ai ricavi reali dell'azienda: non sono una previsione, ma un termine di paragone. Tutti i 6 settori target hanno superato la soglia minima di aziende con storico di bilancio completo.
+      </div>
+
+      <p class="disclaimer-small" data-reveal><b>Avvertenza.</b> I rendimenti passati non sono indicativi di quelli futuri.</p>
+    </div>
+  </section>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <div class="eyebrow" style="justify-content:center;">Parliamone</div>
+      <h2 data-reveal>Vuoi lo stesso rigore sui dati della tua azienda?</h2>
+      <p>Una call conoscitiva di 30 minuti, senza impegno, per capire da dove partire.</p>
+      <a href="contatti.html" class="btn btn-primary" style="padding:14px 28px; font-size:14px;">Parla con Veyron</a>
+    </div>
+  </section>
+
+</main>
+
+{{> footer}}
+
+<script src="{{asset:site.js}}" defer></script>
+<script src="{{asset:vendor/chart.umd.js}}" defer></script>
+<script src="{{asset:backtest.js}}" data-json="{{asset:data/benchmark.json}}" defer></script>
+<script src="utm.js" defer></script>
+</body>
+</html>

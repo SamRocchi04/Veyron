@@ -72,13 +72,13 @@ file generato, la pagina funziona anche offline.
 """
 
 import os
+import sys
 import re
 import json
 import numpy as np
 import pandas as pd
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-OUT_PATH = os.path.join(SCRIPT_DIR, "backtest.html")
 # NOTA: 4.4.4 esiste su npm ma NON e' mai stata pubblicata su cdnjs (li'
 # le versioni disponibili saltano da 4.4.1 a 4.5.0) — usare un numero non
 # presente su cdnjs qui sotto fa fallire con 404 il download automatico di
@@ -89,7 +89,8 @@ CHARTJS_VERSION = "4.4.1"
 CHARTJS_CDN_URL = f"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/{CHARTJS_VERSION}/chart.umd.js"
 # Percorso "ufficiale" dove va tenuto il file (consegnato insieme allo
 # script): una sottocartella vendor/ accanto allo script.
-CHARTJS_VENDOR_PATH = os.path.join(SCRIPT_DIR, "vendor", "chart.umd.js")
+SITE_ROOT = os.path.dirname(SCRIPT_DIR)
+CHARTJS_VENDOR_PATH = os.path.join(SITE_ROOT, "vendor", "chart.umd.js")
 # Percorsi alternativi accettati per tolleranza: capita che chi rigenera la
 # pagina tenga lo script DENTRO una cartella gia' chiamata "vendor" (in tal
 # caso il percorso "ufficiale" sopra punterebbe a un doppio vendor/vendor/
@@ -146,6 +147,10 @@ def load_chartjs_source():
 
 
 CHARTJS_SOURCE = load_chartjs_source()
+if not os.path.exists(CHARTJS_VENDOR_PATH):
+    os.makedirs(os.path.dirname(CHARTJS_VENDOR_PATH), exist_ok=True)
+    with open(CHARTJS_VENDOR_PATH, "w", encoding="utf-8") as _f:
+        _f.write(CHARTJS_SOURCE)
 
 # =========================================================================
 # 1. CONFIGURAZIONE STRATEGIA (mirror di CONFIG in backtest_aida_PMI_3.R)
@@ -487,166 +492,190 @@ def costruisci_dataset_demo():
 # =========================================================================
 # 4. SELEZIONE DATI: reali (export AIDA) con fallback al dataset di esempio
 # =========================================================================
-AIDA_PATH = find_aida_file()
-USING_REAL_DATA = False
-if AIDA_PATH:
-    try:
-        DATASET = costruisci_dataset_reale(AIDA_PATH)
-        USING_REAL_DATA = True
-        print(f"[i] Dati REALI caricati da: {AIDA_PATH}")
-    except Exception as e:
-        print(f"[!] File AIDA trovato ({AIDA_PATH}) ma non elaborabile: {e}")
-        print("[!] Uso il dataset di esempio (demo).")
-        DATASET = costruisci_dataset_demo()
+FROM_JSON = "--from-json" in sys.argv   # rigenera la pagina dal JSON esistente, senza export AIDA
+if FROM_JSON:
+    with open(os.path.join(SITE_ROOT, "data", "benchmark.json"), encoding="utf-8") as _f:
+        payload = json.load(_f)
+    meta = payload["meta"]
+    USING_REAL_DATA = meta["usingRealData"]
+    settori_ok = meta["settoriInclusi"]
+    settori_scartati = meta["settoriEsclusi"]
+    funnel = dict(mostrate=meta["mostrate"])
+    PAYLOAD_JSON = json.dumps(payload, ensure_ascii=False)
 else:
-    print("[!] Nessun export AIDA trovato accanto allo script (ne' nella cartella superiore).")
-    print(f"[!] Nomi cercati: {', '.join(CONFIG['aida_filename_candidates'])} (o qualsiasi *.xls con 'aida' nel nome)")
-    print("[!] Uso il dataset di esempio (demo) — la pagina generata mostrera' dati sintetici.")
-    DATASET = costruisci_dataset_demo()
+    AIDA_PATH = find_aida_file()
+    USING_REAL_DATA = False
+    if AIDA_PATH:
+        try:
+            DATASET = costruisci_dataset_reale(AIDA_PATH)
+            USING_REAL_DATA = True
+            print(f"[i] Dati REALI caricati da: {AIDA_PATH}")
+        except Exception as e:
+            print(f"[!] File AIDA trovato ({AIDA_PATH}) ma non elaborabile: {e}")
+            print("[!] Uso il dataset di esempio (demo).")
+            DATASET = costruisci_dataset_demo()
+    else:
+        print("[!] Nessun export AIDA trovato accanto allo script (ne' nella cartella superiore).")
+        print(f"[!] Nomi cercati: {', '.join(CONFIG['aida_filename_candidates'])} (o qualsiasi *.xls con 'aida' nel nome)")
+        print("[!] Uso il dataset di esempio (demo) — la pagina generata mostrera' dati sintetici.")
+        DATASET = costruisci_dataset_demo()
 
-print(f"Dati usati per la pagina: {'REALI (export AIDA)' if USING_REAL_DATA else 'DI ESEMPIO (nessun export AIDA trovato o elaborabile)'}")
+    print(f"Dati usati per la pagina: {'REALI (export AIDA)' if USING_REAL_DATA else 'DI ESEMPIO (nessun export AIDA trovato o elaborabile)'}")
 
-fin_full = DATASET["fin_full"]
-settori_ok = DATASET["settori_ok"]
-settori_scartati = DATASET["settori_scartati"]
-n_per_settore = DATASET["n_per_settore"]
-pmi_sel = DATASET["pmi_sel"]
-funnel = DATASET["funnel"]
+    fin_full = DATASET["fin_full"]
+    settori_ok = DATASET["settori_ok"]
+    settori_scartati = DATASET["settori_scartati"]
+    n_per_settore = DATASET["n_per_settore"]
+    pmi_sel = DATASET["pmi_sel"]
+    funnel = DATASET["funnel"]
 
-# IMPORTANTE — privacy: le ragioni sociali reali vengono stampate SOLO qui,
-# in console, per riferimento interno dell'utente. Non entrano mai nella
-# pagina HTML ne' nel JSON incorporato: la dashboard pubblica usa solo
-# etichette anonime ("Azienda N" per settore), come richiesto esplicitamente
-# nei commenti dello script R di riferimento.
-if USING_REAL_DATA:
-    print("\n[i] PMI selezionate — SOLO per riferimento interno, MAI pubblicate sulla pagina:")
-    for _, r in pmi_sel.iterrows():
-        print(f"    {r['settore']} — Azienda {r['anon_label']}: {r['ragione_sociale']}  (ricavi t0 ≈ {r['ricavi']:.0f} migl EUR)")
-    print()
+    # IMPORTANTE — privacy: le ragioni sociali reali vengono stampate SOLO qui,
+    # in console, per riferimento interno dell'utente. Non entrano mai nella
+    # pagina HTML ne' nel JSON incorporato: la dashboard pubblica usa solo
+    # etichette anonime ("Azienda N" per settore), come richiesto esplicitamente
+    # nei commenti dello script R di riferimento.
+    if USING_REAL_DATA:
+        print("\n[i] PMI selezionate — SOLO per riferimento interno, MAI pubblicate sulla pagina:")
+        for _, r in pmi_sel.iterrows():
+            print(f"    {r['settore']} — Azienda {r['anon_label']}: {r['ragione_sociale']}  (ricavi t0 ≈ {r['ricavi']:.0f} migl EUR)")
+        print()
 
 
-# =========================================================================
-# 5. COSTRUZIONE DEL PAYLOAD JSON PER LA DASHBOARD
-# =========================================================================
-OBIETTIVO_COL = {
-    "ebitda_margin": "ebitda_margin_obiettivo",
-    "roe": "roe_obiettivo",
-    "rotazione_ci": "rotazione_obiettivo",
-    "costi_operativi": "costi_ipotetici",
-    "capitale_investito_netto": "capitale_investito_ipotetico",
-}
+    # =========================================================================
+    # 5. COSTRUZIONE DEL PAYLOAD JSON PER LA DASHBOARD
+    # =========================================================================
+    OBIETTIVO_COL = {
+        "ebitda_margin": "ebitda_margin_obiettivo",
+        "roe": "roe_obiettivo",
+        "rotazione_ci": "rotazione_obiettivo",
+        "costi_operativi": "costi_ipotetici",
+        "capitale_investito_netto": "capitale_investito_ipotetico",
+    }
 
-def _clean(v):
-    if v is None:
-        return None
-    try:
-        if pd.isna(v):
+    def _clean(v):
+        if v is None:
             return None
-    except (TypeError, ValueError):
-        pass
-    return round(float(v), 4)
+        try:
+            if pd.isna(v):
+                return None
+        except (TypeError, ValueError):
+            pass
+        return round(float(v), 4)
 
-def metric_series(df_t_indexed, metric_id):
-    """Ritorna (reale, obiettivo): due liste allineate a T_RANGE (None dove manca)."""
-    obiettivo_col = OBIETTIVO_COL[metric_id]
-    reale, obiettivo = [], []
-    for t in T_RANGE:
-        if t in df_t_indexed.index:
-            row = df_t_indexed.loc[t]
-            reale.append(_clean(row.get(metric_id)))
-            obiettivo.append(_clean(row.get(obiettivo_col)))
-        else:
-            reale.append(None)
-            obiettivo.append(None)
-    return reale, obiettivo
+    def metric_series(df_t_indexed, metric_id):
+        """Ritorna (reale, obiettivo): due liste allineate a T_RANGE (None dove manca)."""
+        obiettivo_col = OBIETTIVO_COL[metric_id]
+        reale, obiettivo = [], []
+        for t in T_RANGE:
+            if t in df_t_indexed.index:
+                row = df_t_indexed.loc[t]
+                reale.append(_clean(row.get(metric_id)))
+                obiettivo.append(_clean(row.get(obiettivo_col)))
+            else:
+                reale.append(None)
+                obiettivo.append(None)
+        return reale, obiettivo
 
-def build_record(df, label, settore, is_aggregate, anno_ultimo=None):
-    df_t = df.set_index("t")
-    rec = dict(displayName=label, settore=settore, isAggregate=is_aggregate)
-    if anno_ultimo is not None:
-        rec["annoUltimo"] = int(anno_ultimo)
-    for metric_id in METRIC_IDS:
-        reale, obiettivo = metric_series(df_t, metric_id)
-        rec[metric_id] = dict(reale=reale, obiettivo=obiettivo)
-    return rec
+    def build_record(df, label, settore, is_aggregate, anno_ultimo=None):
+        df_t = df.set_index("t")
+        rec = dict(displayName=label, settore=settore, isAggregate=is_aggregate)
+        if anno_ultimo is not None:
+            rec["annoUltimo"] = int(anno_ultimo)
+        for metric_id in METRIC_IDS:
+            reale, obiettivo = metric_series(df_t, metric_id)
+            rec[metric_id] = dict(reale=reale, obiettivo=obiettivo)
+        return rec
 
-companies = {}
-company_order = []
+    companies = {}
+    company_order = []
 
-pmi_ids = pmi_sel["company_id"]
+    pmi_ids = pmi_sel["company_id"]
 
-overall_df = fin_full[fin_full["company_id"].isin(pmi_ids)].groupby("t").mean(numeric_only=True).reset_index()
-companies["__ALL__"] = build_record(overall_df, "Media di tutte le PMI analizzate", None, True)
+    overall_df = fin_full[fin_full["company_id"].isin(pmi_ids)].groupby("t").mean(numeric_only=True).reset_index()
+    companies["__ALL__"] = build_record(overall_df, "Media di tutte le PMI analizzate", None, True)
 
-for settore in settori_ok:
-    ids_s = pmi_sel[pmi_sel["settore"] == settore]["company_id"]
-    df_s = fin_full[fin_full["company_id"].isin(ids_s)].groupby("t").mean(numeric_only=True).reset_index()
-    companies[f"SETTORE::{settore}"] = build_record(df_s, f"Media settore — {settore}", settore, True)
+    for settore in settori_ok:
+        ids_s = pmi_sel[pmi_sel["settore"] == settore]["company_id"]
+        df_s = fin_full[fin_full["company_id"].isin(ids_s)].groupby("t").mean(numeric_only=True).reset_index()
+        companies[f"SETTORE::{settore}"] = build_record(df_s, f"Media settore — {settore}", settore, True)
 
-for _, row in pmi_sel.iterrows():
-    key = f"PMI::{row['settore']}::{row['anon_label']}"
-    df_c = fin_full[fin_full["company_id"] == row["company_id"]]
-    anno_ultimo = None
-    if "anno" in df_c.columns:
-        r0 = df_c[df_c["t"] == 0]
-        if len(r0):
-            anno_ultimo = r0.iloc[0]["anno"]
-    label = f"Azienda {row['anon_label']}"
-    companies[key] = build_record(df_c, label, row["settore"], False, anno_ultimo)
-    company_order.append(key)
+    for _, row in pmi_sel.iterrows():
+        key = f"PMI::{row['settore']}::{row['anon_label']}"
+        df_c = fin_full[fin_full["company_id"] == row["company_id"]]
+        anno_ultimo = None
+        if "anno" in df_c.columns:
+            r0 = df_c[df_c["t"] == 0]
+            if len(r0):
+                anno_ultimo = r0.iloc[0]["anno"]
+        label = f"Azienda {row['anon_label']}"
+        companies[key] = build_record(df_c, label, row["settore"], False, anno_ultimo)
+        company_order.append(key)
 
-def val_at0(rec, metric_id, field):
-    return rec[metric_id][field][-1]  # T_RANGE termina con t=0
+    def val_at0(rec, metric_id, field):
+        return rec[metric_id][field][-1]  # T_RANGE termina con t=0
 
-t0_sel = fin_full[(fin_full["t"] == 0) & (fin_full["company_id"].isin(pmi_ids))]
-risparmio_medio_t0 = float((t0_sel["costi_operativi"] - t0_sel["costi_ipotetici"]).mean())
-capitale_liberabile_medio_t0 = float((t0_sel["capitale_investito_netto"] - t0_sel["capitale_investito_ipotetico"]).mean())
+    t0_sel = fin_full[(fin_full["t"] == 0) & (fin_full["company_id"].isin(pmi_ids))]
+    risparmio_medio_t0 = float((t0_sel["costi_operativi"] - t0_sel["costi_ipotetici"]).mean())
+    capitale_liberabile_medio_t0 = float((t0_sel["capitale_investito_netto"] - t0_sel["capitale_investito_ipotetico"]).mean())
 
-overall_rec = companies["__ALL__"]
-meta = dict(
-    settoriInclusi=settori_ok,
-    settoriEsclusi=settori_scartati,
-    criterioSelezione=CONFIG["criterio_selezione"],
-    quantileTop=CONFIG["quantile_top"],
-    quantileCosto=CONFIG["quantile_costo_migliore"],
-    orizzonteAnni=CONFIG["orizzonte_anni"],
-    minAziendePerSettore=CONFIG["min_aziende_per_settore"],
-    nPmiPerSettore=CONFIG["n_pmi_per_settore"],
-    perimetro=int(funnel["nel_perimetro"]),
-    storicoCompleto=int(funnel["storico_completo"]),
-    mostrate=int(funnel["mostrate"]),
-    usingRealData=USING_REAL_DATA,
-    ebitdaMarginRealeT0=val_at0(overall_rec, "ebitda_margin", "reale"),
-    ebitdaMarginObiettivoT0=val_at0(overall_rec, "ebitda_margin", "obiettivo"),
-    roeRealeT0=val_at0(overall_rec, "roe", "reale"),
-    roeObiettivoT0=val_at0(overall_rec, "roe", "obiettivo"),
-    rotazioneRealeT0=val_at0(overall_rec, "rotazione_ci", "reale"),
-    rotazioneObiettivoT0=val_at0(overall_rec, "rotazione_ci", "obiettivo"),
-    risparmioMedioT0=round(risparmio_medio_t0, 1),
-    capitaleLiberabileMedioT0=round(capitale_liberabile_medio_t0, 1),
-)
+    overall_rec = companies["__ALL__"]
+    meta = dict(
+        settoriInclusi=settori_ok,
+        settoriEsclusi=settori_scartati,
+        criterioSelezione=CONFIG["criterio_selezione"],
+        quantileTop=CONFIG["quantile_top"],
+        quantileCosto=CONFIG["quantile_costo_migliore"],
+        orizzonteAnni=CONFIG["orizzonte_anni"],
+        minAziendePerSettore=CONFIG["min_aziende_per_settore"],
+        nPmiPerSettore=CONFIG["n_pmi_per_settore"],
+        perimetro=int(funnel["nel_perimetro"]),
+        storicoCompleto=int(funnel["storico_completo"]),
+        mostrate=int(funnel["mostrate"]),
+        usingRealData=USING_REAL_DATA,
+        ebitdaMarginRealeT0=val_at0(overall_rec, "ebitda_margin", "reale"),
+        ebitdaMarginObiettivoT0=val_at0(overall_rec, "ebitda_margin", "obiettivo"),
+        roeRealeT0=val_at0(overall_rec, "roe", "reale"),
+        roeObiettivoT0=val_at0(overall_rec, "roe", "obiettivo"),
+        rotazioneRealeT0=val_at0(overall_rec, "rotazione_ci", "reale"),
+        rotazioneObiettivoT0=val_at0(overall_rec, "rotazione_ci", "obiettivo"),
+        risparmioMedioT0=round(risparmio_medio_t0, 1),
+        capitaleLiberabileMedioT0=round(capitale_liberabile_medio_t0, 1),
+    )
 
-metrics_payload = [
-    {k: m[k] for k in ("id", "titolo", "titoloBreve", "unita", "isPct", "migliore", "sezione")}
-    for m in METRICHE
-]
+    metrics_payload = [
+        {k: m[k] for k in ("id", "titolo", "titoloBreve", "unita", "isPct", "migliore", "sezione")}
+        for m in METRICHE
+    ]
 
-payload = dict(
-    meta=meta,
-    sectors=settori_ok,
-    sectorColors=[SETTORE_COLOR_MAP[s] for s in settori_ok],
-    sectorCounts=[int(n_per_settore.get(s, 0)) for s in settori_ok],
-    metrics=metrics_payload,
-    tRange=T_RANGE,
-    tLabels=T_LABELS,
-    funnel=dict(
-        labels=["Nel perimetro (6 settori)", "Storico 5 anni completo", "PMI mostrate"],
-        values=[int(funnel["nel_perimetro"]), int(funnel["storico_completo"]), int(funnel["mostrate"])],
-    ),
-    companies=companies,
-    companyOrder=company_order,
-)
-PAYLOAD_JSON = json.dumps(payload, ensure_ascii=False)
+    payload = dict(
+        meta=meta,
+        sectors=settori_ok,
+        sectorColors=[SETTORE_COLOR_MAP[s] for s in settori_ok],
+        sectorCounts=[int(n_per_settore.get(s, 0)) for s in settori_ok],
+        metrics=metrics_payload,
+        tRange=T_RANGE,
+        tLabels=T_LABELS,
+        funnel=dict(
+            labels=["Nel perimetro (6 settori)", "Storico 5 anni completo", "PMI mostrate"],
+            values=[int(funnel["nel_perimetro"]), int(funnel["storico_completo"]), int(funnel["mostrate"])],
+        ),
+        companies=companies,
+        companyOrder=company_order,
+    )
+    PAYLOAD_JSON = json.dumps(payload, ensure_ascii=False)
+
+    def fmt_pct(x, sign=True):
+        if x is None:
+            return "n.d."
+        s = "+" if (sign and x >= 0) else ""
+        return f"{s}{x*100:.1f}%"
+
+    def fmt_num(x, decimals=1):
+        if x is None:
+            return "n.d."
+        return f"{x:,.{decimals}f}".replace(",", " ")
+
+
 
 N_SETTORI = len(settori_ok)
 N_MOSTRATE = int(funnel["mostrate"])
@@ -661,477 +690,10 @@ DATA_NOTE = (
     "Nessun export AIDA trovato accanto allo script: questa è una versione dimostrativa con dati sintetici plausibili, solo per visionare la pagina prima di collegare i dati reali."
 )
 
-def fmt_pct(x, sign=True):
-    if x is None:
-        return "n.d."
-    s = "+" if (sign and x >= 0) else ""
-    return f"{s}{x*100:.1f}%"
-
-def fmt_num(x, decimals=1):
-    if x is None:
-        return "n.d."
-    return f"{x:,.{decimals}f}".replace(",", " ")
-
 
 # =========================================================================
 # 6. STILI CSS (design system Veyron — riutilizzati verbatim dalla v3.1)
 # =========================================================================
-BASE_CSS = r"""/* =========================================================
-   VEYRON — Consulenza Data & AI per PMI
-   Design system: enterprise tech / security-grade dark theme
-   Display: Fraunces · UI/Body: Inter · Dati/Label: IBM Plex Mono
-   ========================================================= */
-
-:root{
-  --ink:#F5F3EE;
-  --ink-2:#EDEBE3;
-  --ink-3:#E6E3D9;
-  --paper:#151A21;
-  --paper-dim:#5B6270;
-  --paper-faint:#666C7E;
-  --line:rgba(21,26,33,0.11);
-  --line-strong:rgba(21,26,33,0.20);
-  --teal:#0E3A5F;
-  --teal-dim:rgba(14,58,95,0.12);
-  --gold:#875C0E;
-  --gold-dim:rgba(156,107,18,0.13);
-  --secure:#2E7D46;
-  --secure-dim:rgba(46,125,70,0.12);
-  --mono:'IBM Plex Mono', 'SF Mono', monospace;
-  --radius:3px;
-  --teal-vivid:#1A62B0;
-  --gold-vivid:#C27D0E;
-  --maxw:1180px;
-}
-
-*{box-sizing:border-box; margin:0; padding:0;}
-
-html{scroll-behavior:smooth;}
-@media (prefers-reduced-motion: reduce){
-  html{scroll-behavior:auto;}
-  *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
-}
-
-body{
-  background:
-    radial-gradient(ellipse 1000px 560px at 18% -8%, rgba(156,107,18,0.09), transparent 60%),
-    radial-gradient(ellipse 1000px 620px at 100% 6%, rgba(14,58,95,0.1), transparent 55%),
-    radial-gradient(ellipse 900px 700px at 50% 100%, rgba(156,107,18,0.045), transparent 60%),
-    var(--ink);
-  color:var(--paper);
-  font-family:'Inter', -apple-system, "Segoe UI", sans-serif;
-  font-size:16.5px;
-  line-height:1.65;
-  -webkit-font-smoothing:antialiased;
-}
-
-::selection{ background:var(--teal); color:var(--ink); }
-a{ color:inherit; text-decoration:none; }
-
-h1,h2,h3,.display{
-  font-family:'Fraunces', Arial, sans-serif;
-  font-weight:500;
-  letter-spacing:-0.005em;
-  line-height:1.14;
-}
-
-.label{
-  font-family:'Inter', sans-serif;
-  font-weight:600;
-  font-size:12px;
-  letter-spacing:0.14em;
-  text-transform:uppercase;
-}
-
-.wrap{
-  max-width:var(--maxw);
-  margin:0 auto;
-  padding:0 32px;
-}
-
-.eyebrow{
-  font-family:'Inter', sans-serif;
-  font-weight:600;
-  font-size:12px;
-  letter-spacing:0.16em;
-  text-transform:uppercase;
-  color:var(--gold);
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin-bottom:20px;
-}
-.eyebrow::before{
-  content:"";
-  width:22px;
-  height:1px;
-  background:var(--gold);
-  display:inline-block;
-}
-
-:focus-visible{
-  outline:2px solid var(--teal);
-  outline-offset:3px;
-}
-
-.grid-veil{
-  position:fixed; inset:0;
-  background-image:
-    linear-gradient(rgba(21,26,33,0.028) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(21,26,33,0.028) 1px, transparent 1px);
-  background-size:64px 64px;
-  -webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, black, transparent 75%);
-  mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, black, transparent 75%);
-  pointer-events:none;
-  z-index:0;
-}
-
-header{
-  position:fixed;
-  top:0; left:0; right:0;
-  z-index:100;
-  padding:24px 0;
-  transition:background 0.3s ease, padding 0.3s ease, border-color 0.3s ease;
-  border-bottom:1px solid transparent;
-}
-header.scrolled{
-  background:rgba(245,243,238,0.92);
-  backdrop-filter:blur(14px);
-  padding:16px 0;
-  border-bottom:1px solid var(--line);
-  box-shadow:0 12px 32px -16px rgba(0,0,0,0.55);
-}
-nav{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-.logo{
-  font-family:'Fraunces', sans-serif;
-  font-weight:600;
-  font-size:20px;
-  letter-spacing:0.01em;
-  display:flex;
-  align-items:baseline;
-  gap:10px;
-}
-.logo .dot{ color:var(--teal); }
-.logo span{
-  font-family:'Inter', sans-serif;
-  font-weight:500;
-  font-size:11px;
-  letter-spacing:0.09em;
-  color:var(--paper-dim);
-  text-transform:uppercase;
-}
-.nav-links{
-  display:flex;
-  align-items:center;
-  gap:34px;
-  font-family:'Inter', sans-serif;
-  font-weight:500;
-  font-size:13.5px;
-  letter-spacing:0.01em;
-}
-.nav-links a{
-  color:var(--paper-dim);
-  position:relative;
-  padding:4px 0;
-  transition:color 0.2s ease;
-}
-.nav-links a:hover, .nav-links a[aria-current="page"]{ color:var(--paper); }
-.nav-links a::after{
-  content:"";
-  position:absolute; left:0; right:0; bottom:0;
-  height:1px;
-  background:var(--teal);
-  transform:scaleX(0);
-  transform-origin:left;
-  transition:transform 0.25s ease;
-}
-.nav-links a:hover::after, .nav-links a[aria-current="page"]::after{ transform:scaleX(1); }
-
-.nav-trailing{ display:flex; align-items:center; }
-
-.btn{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  font-family:'Inter', sans-serif;
-  font-weight:600;
-  font-size:13.5px;
-  letter-spacing:0.01em;
-  padding:12px 22px;
-  border-radius:var(--radius);
-  border:1px solid var(--line-strong);
-  cursor:pointer;
-  transition:transform 0.3s cubic-bezier(.16,1,.3,1), box-shadow 0.3s cubic-bezier(.16,1,.3,1), background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
-  white-space:nowrap;
-}
-.btn-primary{
-  background:var(--teal);
-  color:var(--ink);
-  border-color:var(--teal);
-  box-shadow:0 1px 0 rgba(255,255,255,0.08) inset, 0 4px 14px -6px rgba(14,58,95,0.35);
-}
-.btn-primary:hover{ background:#164E7E; transform:translateY(-2px); box-shadow:0 1px 0 rgba(255,255,255,0.1) inset, 0 14px 30px -10px rgba(14,58,95,0.5); }
-.btn-primary:active{ transform:translateY(0); }
-.btn-ghost{
-  color:var(--paper);
-  border-color:var(--line-strong);
-}
-.btn-ghost:hover{ border-color:var(--teal); color:var(--teal); transform:translateY(-2px); }
-
-.skip-link{
-  position:absolute; left:16px; top:-60px;
-  background:var(--teal); color:var(--ink);
-  padding:10px 18px; border-radius:var(--radius);
-  font-family:'Inter', sans-serif; font-weight:600; font-size:13px;
-  z-index:300; transition:top 0.2s ease;
-}
-.skip-link:focus{ top:16px; }
-
-.nav-toggle{
-  display:none;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:5px;
-  width:42px; height:42px;
-  background:none;
-  border:1px solid var(--line-strong);
-  border-radius:var(--radius);
-  cursor:pointer;
-  padding:0;
-  position:relative;
-  z-index:210;
-  flex:none;
-}
-.nav-toggle span{
-  display:block;
-  width:18px; height:1.5px;
-  background:var(--paper);
-  transition:transform 0.25s ease, opacity 0.2s ease;
-}
-.nav-toggle[aria-expanded="true"] span:nth-child(1){ transform:translateY(6.5px) rotate(45deg); }
-.nav-toggle[aria-expanded="true"] span:nth-child(2){ opacity:0; }
-.nav-toggle[aria-expanded="true"] span:nth-child(3){ transform:translateY(-6.5px) rotate(-45deg); }
-
-.mobile-nav{
-  position:fixed; inset:0;
-  background:rgba(245,243,238,0.98);
-  backdrop-filter:blur(14px);
-  z-index:200;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  opacity:0;
-  visibility:hidden;
-  transform:translateY(-10px);
-  transition:opacity 0.25s ease, transform 0.25s ease, visibility 0s linear 0.25s;
-}
-.mobile-nav nav{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:6px;
-}
-.mobile-nav.open{
-  opacity:1; visibility:visible; transform:translateY(0);
-  transition:opacity 0.25s ease, transform 0.25s ease;
-}
-.mobile-nav a{
-  font-family:'Fraunces', sans-serif;
-  font-size:26px;
-  font-weight:500;
-  color:var(--paper);
-  padding:12px 0;
-}
-.mobile-nav a[aria-current="page"]{ color:var(--teal); }
-.mobile-nav .btn-primary{ margin-top:28px; }
-body.nav-open{ overflow:hidden; }
-
-@media (max-width: 860px){
-  .nav-toggle{ display:flex; }
-}
-
-.page-hero{
-  position:relative;
-  padding:172px 0 96px;
-  z-index:1;
-  border-bottom:1px solid var(--line);
-}
-@keyframes fadeInUp{
-  from{ opacity:0; transform:translateY(14px); }
-  to{ opacity:1; transform:translateY(0); }
-}
-.page-hero .eyebrow{ justify-content:flex-start; animation:fadeInUp 0.7s ease both; }
-.page-hero h1{
-  font-size:clamp(32px, 4.6vw, 52px);
-  max-width:20ch;
-  animation:fadeInUp 0.7s ease 0.08s both;
-}
-.page-hero p{
-  margin-top:22px;
-  max-width:60ch;
-  font-size:17.5px;
-  color:var(--paper-dim);
-  animation:fadeInUp 0.7s ease 0.16s both;
-}
-
-section{
-  padding:120px 0;
-  position:relative;
-  z-index:1;
-}
-section.alt{ background:var(--ink-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
-section.tight{ padding:88px 0; }
-
-[data-reveal]{
-  opacity:0;
-  transform:translateY(22px);
-  transition:opacity 0.7s ease, transform 0.7s ease;
-}
-[data-reveal].in-view{ opacity:1; transform:translateY(0); }
-
-.chip{
-  font-family:'Inter', sans-serif;
-  font-weight:600;
-  font-size:12.5px;
-  letter-spacing:0.07em;
-  text-transform:uppercase;
-  padding:10px 18px;
-  border:1px solid var(--line-strong);
-  border-radius:var(--radius);
-}
-.chip.past{ border-color:rgba(91,98,112,0.5); color:var(--paper-dim); }
-.chip.now{ border-color:rgba(14,58,95,0.5); color:var(--teal); }
-.chip.future{ border-color:rgba(156,107,18,0.5); color:var(--gold); }
-
-.final-cta{ text-align:center; padding:150px 0; }
-.final-cta h2{ font-size:clamp(30px, 4.6vw, 50px); font-weight:500; max-width:18ch; margin:0 auto 18px; }
-.final-cta p{ color:var(--paper-dim); max-width:44ch; margin:0 auto 40px; }
-
-footer{ border-top:1px solid var(--line); padding:56px 0 40px; position:relative; z-index:1; }
-.footer-top{
-  display:grid;
-  grid-template-columns:1.4fr 1fr 1fr 1fr;
-  gap:40px;
-  padding-bottom:40px;
-  margin-bottom:32px;
-  border-bottom:1px solid var(--line);
-}
-.footer-brand .logo{ margin-bottom:14px; }
-.footer-brand p{ color:var(--paper-dim); font-size:14px; max-width:32ch; }
-.footer-col .label{ color:var(--paper-dim); margin-bottom:16px; display:block; }
-.footer-col a{
-  display:block;
-  color:var(--paper-dim);
-  font-size:14px;
-  padding:6px 0;
-  transition:color 0.2s ease;
-}
-.footer-col a:hover{ color:var(--teal); }
-.footer-legal-links{ display:flex; gap:18px; }
-.footer-legal-links a:hover{ color:var(--teal); }
-.footer-row{
-  display:flex; justify-content:space-between; align-items:center;
-  font-family:'Inter', sans-serif; font-size:13px; color:var(--paper-faint); letter-spacing:0.01em;
-}
-.placeholder{background:var(--gold-dim);color:var(--gold);padding:1px 6px;border-radius:2px;font-size:0.92em}
-.footer-company{font-family:'Inter', sans-serif;font-size:12.5px;color:var(--paper-faint);margin-top:18px;line-height:1.7}
-
-
-.status-indicator{
-  display:flex; align-items:center; gap:9px;
-  font-family:var(--mono);
-  font-size:11px;
-  letter-spacing:0.03em;
-  color:var(--paper-faint);
-  padding-right:22px;
-  margin-right:6px;
-  border-right:1px solid var(--line-strong);
-}
-.status-dot{
-  width:7px; height:7px;
-  border-radius:50%;
-  background:var(--secure);
-  flex:none;
-  box-shadow:0 0 0 0 rgba(46,125,70,0.5);
-  animation:statusPulse 2.4s ease-in-out infinite;
-}
-@keyframes statusPulse{
-  0%{ box-shadow:0 0 0 0 rgba(46,125,70,0.45); }
-  70%{ box-shadow:0 0 0 6px rgba(46,125,70,0); }
-  100%{ box-shadow:0 0 0 0 rgba(46,125,70,0); }
-}
-@media (max-width: 1080px){ .status-indicator{ display:none; } }
-
-.grain-veil{
-  position:fixed; inset:0;
-  z-index:0;
-  pointer-events:none;
-  opacity:0.035;
-  mix-blend-mode:overlay;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-.scroll-progress{
-  position:fixed; top:0; left:0;
-  height:2px; width:0%;
-  background:linear-gradient(90deg, var(--teal), var(--gold));
-  z-index:400;
-  box-shadow:0 0 12px rgba(14,58,95,0.5);
-}
-
-.value-card, .stat-cell, .security-card, .kpi-card, .chart-card{ position:relative; }
-.value-card::before, .stat-cell::before, .security-card::before{
-  content:"";
-  position:absolute; top:0; left:0;
-  width:12px; height:12px;
-  border-top:1.5px solid var(--teal);
-  border-left:1.5px solid var(--teal);
-  opacity:0.5;
-}
-
-.kpi-card, .chart-card{
-  transition:transform 0.45s cubic-bezier(.16,1,.3,1), box-shadow 0.45s cubic-bezier(.16,1,.3,1), background 0.3s ease;
-}
-.kpi-card:hover, .chart-card:hover{
-  transform:translateY(-4px);
-  box-shadow:0 22px 44px -18px rgba(0,0,0,0.55), 0 0 0 1px rgba(14,58,95,0.16);
-  z-index:2;
-}
-
-html{ overflow-x:hidden; }
-body{ overflow-x:hidden; -webkit-text-size-adjust:100%; }
-img, svg{ max-width:100%; }
-
-@media (max-width: 1080px){
-  .wrap{ padding:0 28px; }
-}
-@media (max-width: 860px){
-  .wrap{ padding:0 22px; }
-  .nav-links{ display:none; }
-  .nav-trailing .btn-ghost{ display:none; }
-  .logo span{ display:none; }
-  .hero{ min-height:auto; padding-top:126px; padding-bottom:64px; }
-  .final-cta{ padding:110px 0; }
-}
-@media (max-width: 640px){
-  body{ font-size:16px; }
-  section{ padding:72px 0; }
-  section.tight{ padding:56px 0; }
-  .page-hero{ padding:130px 0 56px; }
-  .page-hero h1{ max-width:none; }
-  .final-cta{ padding:88px 0; }
-}
-@media (max-width: 400px){
-  .wrap{ padding:0 18px; }
-  .btn{ padding:12px 18px; font-size:13px; }
-}
-"""
-
 EXTRA_CSS = r"""
 /* =========================================================
    BACKTEST / ANALISI DI BILANCIO / IMPATTO POTENZIALE — stili aggiuntivi
@@ -1258,32 +820,7 @@ select.veyron-select:focus{ outline:2px solid var(--teal); outline-offset:2px; }
 # =========================================================================
 # 7. TEMPLATE HTML
 # =========================================================================
-HTML_TEMPLATE = """<!DOCTYPE html>
-<html lang="it">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Benchmark &amp; Analisi di Bilancio — Veyron</title>
-<meta name="description" content="Benchmark su bilanci reali di PMI italiane: confronto tra risultati effettivi e obiettivo di settore, azienda per azienda, con dati AIDA anonimizzati.">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Veyron">
-<meta property="og:title" content="Benchmark &amp; Analisi di Bilancio — Veyron">
-<meta property="og:description" content="Benchmark su bilanci reali di PMI italiane: risultati effettivi vs obiettivo di settore, azienda per azienda.">
-<meta name="twitter:card" content="summary">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="https://www.veyron.it/backtest.html">
-<meta name="theme-color" content="#F5F3EE">
-<meta property="og:url" content="https://www.veyron.it/backtest.html">
-<meta property="og:image" content="https://www.veyron.it/og-image.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://www.veyron.it/og-image.png">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%273%27 fill=%27%23151A21%27/%3E%3Crect x=%271%27 y=%271%27 width=%2730%27 height=%2730%27 rx=%272%27 fill=%27none%27 stroke=%27%232FC6B8%27 stroke-opacity=%270.4%27/%3E%3Ctext x=%2716%27 y=%2722%27 font-family=%27Arial,sans-serif%27 font-size=%2717%27 font-weight=%27700%27 text-anchor=%27middle%27 fill=%27%232FC6B8%27%3EV%3C/text%3E%3C/svg%3E">
-<link rel="preload" href="fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="fonts/fonts.css">
-<style>
-___BASE_CSS___
-___EXTRA_CSS___
+HERO_CSS = r"""
 
 /* ---- Hero con foto su sfondo blu (come le altre pagine) ---- */
 .page-hero.photo-hero{ padding:0; border-bottom:none; }
@@ -1322,52 +859,45 @@ body.photo-topbar header:not(.scrolled) .nav-toggle{ border-color:rgba(245,243,2
   .page-hero.photo-hero .hero-media{ padding:126px 0 64px; }
   .bench-tools{ padding:32px 0 56px; }
 }
-</style>
+"""
+
+HTML_TEMPLATE = """<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Benchmark &amp; Analisi di Bilancio — Veyron</title>
+<meta name="description" content="Benchmark su bilanci reali di PMI italiane: confronto tra risultati effettivi e obiettivo di settore, azienda per azienda, con dati AIDA anonimizzati.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Veyron">
+<meta property="og:title" content="Benchmark &amp; Analisi di Bilancio — Veyron">
+<meta property="og:description" content="Benchmark su bilanci reali di PMI italiane: risultati effettivi vs obiettivo di settore, azienda per azienda.">
+<meta name="twitter:card" content="summary">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.veyron.it/backtest.html">
+<meta name="theme-color" content="#F5F3EE">
+<meta property="og:url" content="https://www.veyron.it/backtest.html">
+<meta property="og:image" content="https://www.veyron.it/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.veyron.it/og-image.png">
+{{> head-icons}}
+<link rel="preload" href="fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="{{asset:style.css}}">
+<link rel="stylesheet" href="{{asset:backtest.css}}">
 </head>
 <body class="photo-topbar">
 
-<div class="scroll-progress" aria-hidden="true"></div>
-<div class="grid-veil" aria-hidden="true"></div>
-<div class="grain-veil" aria-hidden="true"></div>
 <a class="skip-link" href="#main-content">Vai al contenuto</a>
 
-<header id="siteHeader">
-  <div class="wrap">
-    <nav>
-      <a class="logo" href="index.html">VEYRON<span class="dot">.</span> <span>Consulenza Data &amp; AI</span></a>
-      <div class="nav-links">
-        <a href="chi-siamo.html">Chi Siamo</a>
-        <a href="metodo.html">Metodo</a>
-        <a href="soluzioni.html">Soluzioni</a>
-        <a href="risultati.html">Risultati</a>
-        <a href="backtest.html" aria-current="page">Backtest</a>
-        <a href="contatti.html">Contatti</a>
-      </div>
-      <button class="nav-toggle" id="navToggle" type="button" aria-label="Apri il menu" aria-expanded="false" aria-controls="mobileNav"><span></span><span></span><span></span></button>
-      <div class="nav-trailing">
-        <a href="contatti.html" class="btn btn-ghost">Prenota una call</a>
-      </div>
-    </nav>
-  </div>
-</header>
-
-<div class="mobile-nav" id="mobileNav" aria-hidden="true">
-  <nav aria-label="Menu mobile">
-    <a href="chi-siamo.html">Chi Siamo</a>
-      <a href="metodo.html">Metodo</a>
-      <a href="soluzioni.html">Soluzioni</a>
-      <a href="risultati.html">Risultati</a>
-      <a href="backtest.html" aria-current="page">Backtest</a>
-      <a href="contatti.html">Contatti</a>
-    <a href="contatti.html" class="btn btn-primary">Prenota una call</a>
-  </nav>
-</div>
+{{> header}}
 
 <main id="main-content">
 
   <section class="page-hero photo-hero">
     <div class="hero-media">
-      <img src="img/hero-benchmark.jpg" alt="Scrivania con smartphone, calcolatrice e grafici di un report finanziario" loading="eager" width="2000" height="1333">
+      <img src="img/dashboard-schermo.jpg" alt="Schermo con una dashboard di monitoraggio: grafici e indicatori" loading="eager" width="2000" height="1333">
       <div class="wrap">
       <div class="eyebrow">Benchmark &amp; Analisi di Bilancio</div>
       <h1>30 PMI italiane a confronto con il miglior quartile del loro settore</h1>
@@ -1412,7 +942,7 @@ body.photo-topbar header:not(.scrolled) .nav-toggle{ border-color:rgba(245,243,2
         <div class="kpi-card"><div class="kpi-label">ROE — reale</div><div class="kpi-num">___KPI_ROE_REALE___</div><div class="kpi-sub">media di tutte le PMI, ultimo anno</div></div>
         <div class="kpi-card"><div class="kpi-label">ROE — obiettivo</div><div class="kpi-num gold">___KPI_ROE_OBIETTIVO___</div><div class="kpi-sub">miglior quartile di settore</div></div>
         <div class="kpi-card"><div class="kpi-label">Rotazione capitale investito</div><div class="kpi-num" style="color:var(--paper-dim); text-shadow:none;">___KPI_ROTAZIONE_REALE___</div><div class="kpi-sub">media di tutte le PMI, ultimo anno</div></div>
-        <div class="kpi-card"><div class="kpi-label">Costi riducibili in teoria (media)</div><div class="kpi-num ___KPI_RISPARMIO_CLASS___">___KPI_RISPARMIO___</div><div class="kpi-sub">___KPI_RISPARMIO_SUB___</div></div>
+        <div class="kpi-card"><div class="kpi-label">Divario sui costi vs benchmark (media)</div><div class="kpi-num ___KPI_RISPARMIO_CLASS___">___KPI_RISPARMIO___</div><div class="kpi-sub">___KPI_RISPARMIO_SUB___</div></div>
         <div class="kpi-card"><div class="kpi-label">Capitale investito vs obiettivo (media)</div><div class="kpi-num ___KPI_CAPITALE_CLASS___">___KPI_CAPITALE___</div><div class="kpi-sub">___KPI_CAPITALE_SUB___</div></div>
         <div class="kpi-card"><div class="kpi-label">Fonte dati</div><div class="kpi-num" style="font-size:15.5px; color:var(--paper-dim); text-shadow:none;">AIDA · Bureau van Dijk</div><div class="kpi-sub">bilanci ufficiali, PMI anonimizzate</div></div>
       </div>
@@ -1457,7 +987,7 @@ body.photo-topbar header:not(.scrolled) .nav-toggle{ border-color:rgba(245,243,2
         <b>Perché conta per una PMI.</b> Lo stesso principio — confrontare i bilanci storici con il miglior quartile di aziende comparabili, per capire quali voci hanno più margine di miglioramento — è quello che applichiamo ai dati di una singola azienda cliente: non per confrontarla con l'intero mercato, ma per indicare su quali metriche intervenire per prime.
       </div>
       <div class="disclaimer-block" data-reveal>
-        <b>Metodo e limiti.</b> Questo è un benchmark, non una previsione: confrontiamo i bilanci storici di ciascuna azienda con il miglior quartile del suo settore, senza testare modelli predittivi. Il campione è di 30 PMI in 6 settori: indica un ordine di grandezza, non una stima valida per ogni azienda. Le medie sono sensibili ai valori estremi e il miglior quartile è un riferimento ambizioso, non un obiettivo realistico per tutte. Un valore negativo di capitale investito indica che l'azienda usa già meno capitale del livello richiesto dal benchmark. Il risparmio sui costi è un potenziale teorico e non tiene conto di vincoli operativi.
+        <b>Metodo e limiti.</b> Questo è un benchmark, non una previsione: confrontiamo i bilanci storici di ciascuna azienda con il miglior quartile del suo settore, senza testare modelli predittivi. Il campione è di ___N_MOSTRATE___ PMI in ___N_SETTORI___ settori e non è casuale: sono le ___N_PER_SETTORE___ PMI con più ricavi in ciascun settore, scelte tra le ___STORICO___ aziende con storico completo (il miglior quartile è calcolato su tutte). Indica un ordine di grandezza, non una stima valida per ogni azienda. Le medie sono sensibili ai valori estremi e il miglior quartile è un riferimento ambizioso, non un obiettivo realistico per tutte. Un valore negativo di capitale investito indica che l'azienda usa già meno capitale del livello richiesto dal benchmark. Il divario sui costi è una stima teorica, non un risparmio garantito, e non tiene conto di vincoli operativi.
       </div>
 
       <div class="fin-section-head" data-reveal style="margin-top:56px; margin-bottom:0;">
@@ -1504,9 +1034,9 @@ body.photo-topbar header:not(.scrolled) .nav-toggle{ border-color:rgba(245,243,2
 
       <div class="chart-row wide" data-reveal style="margin-top:1px;">
         <div class="chart-card ring-card">
-          <h3 id="ringTitle">Risparmio potenziale sui costi</h3>
-          <div class="chart-sub" id="ringSub">% di riduzione dei costi operativi verso l'obiettivo, ultimo anno</div>
-          <svg class="ring-svg" viewBox="0 0 190 190" width="190" height="190" role="img" aria-label="percentuale di risparmio potenziale">
+          <h3 id="ringTitle">Divario teorico sui costi</h3>
+          <div class="chart-sub" id="ringSub">% di differenza dei costi operativi rispetto al benchmark, ultimo anno (stima teorica)</div>
+          <svg class="ring-svg" viewBox="0 0 190 190" width="190" height="190" role="img" aria-label="divario teorico percentuale sui costi">
             <circle cx="95" cy="95" r="87" fill="none" stroke="rgba(21,26,33,0.10)" stroke-width="16"/>
             <circle id="ringProgress" cx="95" cy="95" r="87" fill="none" stroke="#2E7D46" stroke-width="16"
               stroke-dasharray="0 1000" stroke-linecap="round" transform="rotate(-90 95 95)"/>
@@ -1540,100 +1070,12 @@ body.photo-topbar header:not(.scrolled) .nav-toggle{ border-color:rgba(245,243,2
 
 </main>
 
-<footer>
-  <div class="wrap">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <a class="logo" href="index.html">VEYRON<span class="dot">.</span></a>
-        <p>Consulenza data &amp; AI per piccole e medie imprese. Analizziamo, preveniamo, automatizziamo.</p>
-      </div>
-      <div class="footer-col">
-        <span class="label">Azienda</span>
-        <a href="chi-siamo.html">Chi Siamo</a>
-        <a href="metodo.html">Metodo</a>
-        <a href="risultati.html">Risultati</a>
-      </div>
-      <div class="footer-col">
-        <span class="label">Soluzioni</span>
-        <a href="soluzioni.html">Dati &amp; Intelligence</a>
-        <a href="soluzioni.html">Intelligenza Artificiale</a>
-        <a href="backtest.html">Backtest &amp; Analisi</a>
-      </div>
-      <div class="footer-col">
-        <span class="label">Contatti</span>
-        <a href="contatti.html">Prenota una call</a>
-        <a href="mailto:info@veyron.it">info@veyron.it</a>
-      </div>
-    </div>
-    <div class="footer-row">
-      <span>© 2026 Veyron — Consulenza Data &amp; AI</span>
-      <div class="footer-legal-links">
-        <a href="privacy.html">Privacy</a>
-        <a href="termini.html">Termini</a>
-      </div>
-      <span>www.veyron.it</span>
-    </div>
-  </div>
-</footer>
+{{> footer}}
 
-<!-- ==================== CHROME DI PAGINA ====================
-     Header/nav/scroll-reveal/progress-bar: NON dipendono dai dati o da
-     Chart.js e girano per primi e sempre, cosi' anche se la dashboard piu'
-     sotto dovesse fallire per qualche motivo, il resto della pagina (testi,
-     KPI, nav mobile) resta comunque visibile e funzionante. -->
-<script>
-(function(){
-  "use strict";
-  const header = document.getElementById('siteHeader');
-  if (header) {
-    window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 20), { passive: true });
-  }
-  const reveals = document.querySelectorAll('[data-reveal]');
-  if (reveals.length) {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); } });
-    }, { threshold: 0.12 });
-    reveals.forEach(el => io.observe(el));
-  }
-  const scrollProgress = document.querySelector('.scroll-progress');
-  if (scrollProgress) {
-    const updateProgress = () => {
-      const h = document.documentElement;
-      const max = h.scrollHeight - h.clientHeight;
-      scrollProgress.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
-    };
-    window.addEventListener('scroll', updateProgress, { passive: true });
-    updateProgress();
-  }
-  const navToggle = document.getElementById('navToggle');
-  const mobileNav = document.getElementById('mobileNav');
-  if (navToggle && mobileNav) {
-    const closeNav = () => {
-      navToggle.setAttribute('aria-expanded', 'false'); navToggle.setAttribute('aria-label', 'Apri il menu');
-      mobileNav.classList.remove('open'); mobileNav.setAttribute('aria-hidden', 'true'); document.body.classList.remove('nav-open');
-    };
-    navToggle.addEventListener('click', () => {
-      const isOpen = navToggle.getAttribute('aria-expanded') === 'true';
-      navToggle.setAttribute('aria-expanded', String(!isOpen)); navToggle.setAttribute('aria-label', isOpen ? 'Apri il menu' : 'Chiudi il menu');
-      mobileNav.classList.toggle('open', !isOpen); mobileNav.setAttribute('aria-hidden', String(isOpen)); document.body.classList.toggle('nav-open', !isOpen);
-    });
-    mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeNav(); });
-    window.addEventListener('resize', () => { if (window.innerWidth > 860) closeNav(); });
-  }
-})();
-</script>
-
-<!-- Chart.js e' incorporato qui sotto (non caricato da CDN): la pagina
-     funziona anche offline o dietro reti/filtri che bloccano script esterni. -->
-<script>
-___CHARTJS_SOURCE___
-</script>
-
-<script id="veyron-data" type="application/json">___PAYLOAD_JSON___</script>
-<script>
-___DASHBOARD_JS___
-</script>
+<script src="{{asset:site.js}}" defer></script>
+<script src="{{asset:vendor/chart.umd.js}}" defer></script>
+<script src="{{asset:backtest.js}}" data-json="{{asset:data/benchmark.json}}" defer></script>
+<script src="utm.js" defer></script>
 </body>
 </html>
 """
@@ -1642,15 +1084,18 @@ ___DASHBOARD_JS___
 # =========================================================================
 # 8. JAVASCRIPT DELLA DASHBOARD INTERATTIVA
 # =========================================================================
-DASHBOARD_JS = """
-(function(){
+DASHBOARD_JS = r"""
+(async function(){
   "use strict";
+  const DATA_URL = (document.currentScript && document.currentScript.dataset.json) || 'data/benchmark.json';
   if (typeof Chart === 'undefined') {
     console.error('Veyron backtest: Chart.js non disponibile, la dashboard interattiva resta disabilitata.');
     return;
   }
   try {
-  const DATA = JSON.parse(document.getElementById('veyron-data').textContent);
+  const resp = await fetch(DATA_URL);
+  if (!resp.ok) throw new Error('Dati non disponibili (' + resp.status + '). Serve un server web: da file:// il caricamento è bloccato.');
+  const DATA = await resp.json();
 
   const COLORS = {
     teal:'#0E3A5F', gold:'#875C0E', secure:'#2E7D46', rose:'#A63D3D',
@@ -1854,8 +1299,8 @@ DASHBOARD_JS = """
     }
     setRing(pct);
     document.getElementById('ringSub').textContent = isSel
-      ? `${label} — % di riduzione dei costi operativi verso l'obiettivo, ultimo anno`
-      : "% di riduzione dei costi operativi verso l'obiettivo, ultimo anno";
+      ? `${label} — % di differenza dei costi operativi rispetto al benchmark, ultimo anno (stima teorica)`
+      : "% di differenza dei costi operativi rispetto al benchmark, ultimo anno (stima teorica)";
 
     const capRealeT0 = lastValid(rec.capitale_investito_netto.reale);
     const capObiettivoT0 = lastValid(rec.capitale_investito_netto.obiettivo);
@@ -1863,7 +1308,7 @@ DASHBOARD_JS = """
     const capitaleDeltaT0 = (capRealeT0 !== null && capObiettivoT0 !== null) ? (capRealeT0 - capObiettivoT0) : null;
     const summary = document.getElementById('summaryList');
     summary.innerHTML = `
-      <div class="summary-line"><span>Costi operativi risparmiabili (ultimo anno)</span><span>${risparmioT0 === null ? 'n.d.' : fmtMetric(risparmioT0, 'costi_operativi')}</span></div>
+      <div class="summary-line"><span>Divario teorico sui costi operativi (ultimo anno)</span><span>${risparmioT0 === null ? 'n.d.' : fmtMetric(risparmioT0, 'costi_operativi')}</span></div>
       <div class="summary-line"><span>Capitale investito vs obiettivo (ultimo anno)</span><span>${capitaleDeltaT0 === null ? 'n.d.' : fmtMetric(capitaleDeltaT0, 'capitale_investito_netto')}</span></div>
       <div class="summary-line"><span>Orizzonte analizzato</span><span>${DATA.meta.orizzonteAnni} anni</span></div>
     `;
@@ -1884,6 +1329,11 @@ DASHBOARD_JS = """
     `;
   }
 
+  // Slug breve del settore per i link diretti: #settore=alimentare, #settore=packaging, ...
+  function sectorSlug(name){
+    return name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().split(/[^a-z0-9]+/)[0];
+  }
+
   // ==================== SELEZIONE AZIENDA/SETTORE =========================
   function selectRecord(key, opts){
     opts = opts || {};
@@ -1901,6 +1351,7 @@ DASHBOARD_JS = """
     }
     if (!opts.skipHash) {
       if (key === '__ALL__') history.replaceState(null, '', location.pathname + location.search);
+      else if (key.indexOf('SETTORE::') === 0) history.replaceState(null, '', location.pathname + location.search + '#settore=' + sectorSlug(key.slice(9)));
       else history.replaceState(null, '', '#azienda=' + encodeURIComponent(key));
     }
     renderDetailCharts(rec);
@@ -1942,7 +1393,10 @@ DASHBOARD_JS = """
   (function initSelection(){
     const m = location.hash.match(/azienda=([^&]+)/);
     const raw = m ? decodeURIComponent(m[1]) : null;
-    const initial = (raw && DATA.companies[raw]) ? raw : '__ALL__';
+    const ms = location.hash.match(/settore=([^&]+)/);
+    const slug = ms ? decodeURIComponent(ms[1]).toLowerCase() : null;
+    const sec = slug ? DATA.sectors.find(x => sectorSlug(x) === slug) : null;
+    const initial = (raw && DATA.companies[raw]) ? raw : (sec ? 'SETTORE::' + sec : '__ALL__');
     selectRecord(initial, { skipHash: true });
   })();
   } catch (err) {
@@ -1983,13 +1437,13 @@ SETTORI_ESCLUSI_NOTE = (
 # 10. SOSTITUZIONE PLACEHOLDER E SCRITTURA FILE
 # =========================================================================
 replacements = {
-    "___BASE_CSS___": BASE_CSS,
-    "___EXTRA_CSS___": EXTRA_CSS,
     "___DATA_BADGE___": DATA_BADGE,
     "___DATA_NOTE___": DATA_NOTE,
     "___N_MOSTRATE___": str(N_MOSTRATE),
     "___N_SETTORI___": str(N_SETTORI),
-    "___ORIZZONTE___": str(CONFIG["orizzonte_anni"]),
+    "___N_PER_SETTORE___": str(meta["nPmiPerSettore"]),
+    "___STORICO___": f"{meta['storicoCompleto']:,}".replace(",", "."),
+    "___ORIZZONTE___": str(meta["orizzonteAnni"]),
     "___KPI_EBITDA_REALE___": fmt_pp(meta["ebitdaMarginRealeT0"]),
     "___KPI_EBITDA_OBIETTIVO___": fmt_pp(meta["ebitdaMarginObiettivoT0"]),
     "___KPI_ROE_REALE___": fmt_pp(meta["roeRealeT0"]),
@@ -1997,23 +1451,31 @@ replacements = {
     "___KPI_ROTAZIONE_REALE___": fmt_volte(meta["rotazioneRealeT0"]),
     "___KPI_RISPARMIO___": fmt_migl(meta["risparmioMedioT0"]),
     "___KPI_RISPARMIO_CLASS___": "rose" if meta["risparmioMedioT0"] is not None and meta["risparmioMedioT0"] > 0 else "",
-    "___KPI_RISPARMIO_SUB___": ("migliaia EUR/anno, verso l'obiettivo" if meta["risparmioMedioT0"] is not None and meta["risparmioMedioT0"] > 0
+    "___KPI_RISPARMIO_SUB___": ("migliaia EUR/anno — stima teorica, non un risparmio garantito" if meta["risparmioMedioT0"] is not None and meta["risparmioMedioT0"] > 0
                                  else "negativo: in media già sotto il livello del benchmark"),
     "___KPI_CAPITALE___": fmt_migl(meta["capitaleLiberabileMedioT0"]),
     "___KPI_CAPITALE_CLASS___": "rose" if meta["capitaleLiberabileMedioT0"] is not None and meta["capitaleLiberabileMedioT0"] > 0 else "",
     "___KPI_CAPITALE_SUB___": ("migliaia EUR, verso l'obiettivo" if meta["capitaleLiberabileMedioT0"] is not None and meta["capitaleLiberabileMedioT0"] > 0
                                 else "negativo: in media già sotto il livello del benchmark"),
     "___SETTORI_ESCLUSI_NOTE___": SETTORI_ESCLUSI_NOTE,
-    "___PAYLOAD_JSON___": PAYLOAD_JSON,
-    "___CHARTJS_SOURCE___": CHARTJS_SOURCE,
-    "___DASHBOARD_JS___": DASHBOARD_JS,
 }
 
 html_out = HTML_TEMPLATE
 for token, value in replacements.items():
     html_out = html_out.replace(token, value)
 
-with open(OUT_PATH, "w", encoding="utf-8") as f:
-    f.write(html_out)
+# --- file scritti (tutti letti poi da build_site.py) -----------------------
+def _write(rel, text):
+    path = os.path.join(SITE_ROOT, rel)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8", newline="\n") as f:
+        f.write(text)
+    print(f"  scritto {rel}")
 
-print(f"Pagina generata: {OUT_PATH}")
+_write("data/benchmark.json", PAYLOAD_JSON)          # dati: caricati via fetch dalla pagina
+_write("backtest.css", EXTRA_CSS.strip("\n") + "\n" + HERO_CSS)
+_write("backtest.js", DASHBOARD_JS.strip("\n") + "\n")
+_write("src/pages/backtest.html", "<!-- page: active=backtest footer=- base=- -->\n" + html_out.lstrip())
+
+import build_site  # stessa cartella: assembla header/footer e riscrive tutte le pagine
+build_site.build()

@@ -1,0 +1,31 @@
+<header id="siteHeader">
+  <div class="wrap">
+    <nav>
+      <a class="logo" href="{{base}}index.html"><img class="logo-mark" src="{{base}}img/logo-mark.png" alt="Veyron" width="26" height="26">VEYRON<span class="dot">.</span> <span>Consulenza Data &amp; AI</span></a>
+      <div class="nav-links">
+        <a href="{{base}}chi-siamo.html"{{cur:chi-siamo}}>Chi Siamo</a>
+        <a href="{{base}}metodo.html"{{cur:metodo}}>Metodo</a>
+        <a href="{{base}}soluzioni.html"{{cur:soluzioni}}>Soluzioni</a>
+        <a href="{{base}}risultati.html"{{cur:risultati}}>Risultati</a>
+        <a href="{{base}}backtest.html"{{cur:backtest}}>Benchmark</a>
+        <a href="{{base}}contatti.html"{{cur:contatti}}>Contatti</a>
+      </div>
+      <button class="nav-toggle" id="navToggle" type="button" aria-label="Apri il menu" aria-expanded="false" aria-controls="mobileNav"><span></span><span></span><span></span></button>
+      <div class="nav-trailing">
+        <a href="{{base}}contatti.html" class="btn btn-ghost">Prenota una call</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<div class="mobile-nav" id="mobileNav" aria-hidden="true">
+  <nav aria-label="Menu mobile">
+    <a href="{{base}}chi-siamo.html"{{cur:chi-siamo}}>Chi Siamo</a>
+      <a href="{{base}}metodo.html"{{cur:metodo}}>Metodo</a>
+      <a href="{{base}}soluzioni.html"{{cur:soluzioni}}>Soluzioni</a>
+      <a href="{{base}}risultati.html"{{cur:risultati}}>Risultati</a>
+      <a href="{{base}}backtest.html"{{cur:backtest}}>Benchmark</a>
+      <a href="{{base}}contatti.html"{{cur:contatti}}>Contatti</a>
+    <a href="{{base}}contatti.html" class="btn btn-primary">Prenota una call</a>
+  </nav>
+</div>
