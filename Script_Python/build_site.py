@@ -55,13 +55,22 @@ con width/height reali, decoding="async" e:
       (immagini hero sopra la piega, da NON caricare in lazy).
 Attributo opzionale data-sizes="..." per sovrascrivere l'attributo sizes.
 
+Dati strutturati e sitemap
+--------------------------
+Lo script aggiunge da solo nel <head>: BreadcrumbList (tutte le pagine tranne
+home e 404) e FAQPage (se ci sono blocchi <div class="faq-item">). Genera
+anche sitemap.xml con le date lastmod prese da git.
+
 Dipendenze: Python 3.8+, Pillow (solo per leggere le dimensioni delle immagini).
 """
+import datetime
 import glob
 import hashlib
+import html as htmlmod
 import json
 import os
 import re
+import subprocess
 import sys
 
 from PIL import Image
@@ -88,7 +97,8 @@ def file_hash(rel_path):
     if not os.path.exists(full):
         raise SystemExit(f"[errore] asset non trovato: {rel_path}")
     with open(full, "rb") as f:
-        return hashlib.md5(f.read()).hexdigest()[:8]
+        data = f.read().replace(b"\r\n", b"\n")  # stesso hash su Windows e Linux/CI
+    return hashlib.md5(data).hexdigest()[:8]
 
 
 def load_meta():
@@ -220,6 +230,97 @@ def expand(text, ctx, meta, partials):
     return enhance_images(text, ctx)
 
 
+# ------------------------------------------------------------- JSON-LD
+SITE_URL = "https://www.veyron.it"
+
+
+def _plain(fragment):
+    """Testo semplice da un frammento HTML (niente tag, entita' decodificate)."""
+    return re.sub(r"\s+", " ", htmlmod.unescape(re.sub(r"<[^>]+>", " ", fragment))).strip()
+
+
+def _ld(obj):
+    return ('<script type="application/ld+json">\n'
+            + json.dumps(obj, ensure_ascii=False, indent=2) + "\n</script>\n")
+
+
+def jsonld_extras(slug, out):
+    """Dati strutturati generati dal contenuto stesso della pagina:
+    - BreadcrumbList (Home > Pagina) su tutte le pagine indicizzabili tranne la home;
+    - FAQPage se la pagina contiene blocchi <div class="faq-item"> (resta
+      sempre allineata al testo visibile, non va duplicata a mano)."""
+    blocks = []
+    canon = re.search(r'<link rel="canonical" href="([^"]+)"', out)
+    title = re.search(r"<title>(.*?)</title>", out, re.S)
+    if slug not in ("index", "404") and canon and title:
+        label = _plain(title.group(1)).split(" \u2014 ")[0].strip()
+        blocks.append(_ld({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": "Home", "item": SITE_URL + "/"},
+                {"@type": "ListItem", "position": 2, "name": label, "item": canon.group(1)},
+            ],
+        }))
+    faqs = re.findall(r'<div class="faq-item">\s*<h3>(.*?)</h3>\s*<p>(.*?)</p>', out, re.S)
+    if faqs:
+        blocks.append(_ld({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+                {"@type": "Question", "name": _plain(q),
+                 "acceptedAnswer": {"@type": "Answer", "text": _plain(a)}}
+                for q, a in faqs
+            ],
+        }))
+    return "".join(blocks)
+
+
+# ------------------------------------------------------------- sitemap
+SITEMAP_ORDER = ["index", "chi-siamo", "metodo", "soluzioni", "risultati",
+                 "backtest", "contatti", "privacy", "termini"]
+# Pagine il cui contenuto dipende anche da altri file (oltre a src/pages/<nome>.html)
+LASTMOD_EXTRA = {"index": ["data/benchmark.json"], "backtest": ["data/benchmark.json"]}
+
+
+def _last_change(rel):
+    """Data (YYYY-MM-DD) dell'ultima modifica di un file: ultimo commit git se il
+    file e' pulito, oggi se ha modifiche non committate, altrimenti la data del file."""
+    today = datetime.date.today().isoformat()
+    try:
+        dirty = subprocess.run(["git", "status", "--porcelain", "--", rel], cwd=ROOT,
+                               capture_output=True, text=True, check=True).stdout.strip()
+        if dirty:
+            return today
+        d = subprocess.run(["git", "log", "-1", "--format=%cs", "--", rel], cwd=ROOT,
+                           capture_output=True, text=True, check=True).stdout.strip()
+        if d:
+            return d
+    except (OSError, subprocess.CalledProcessError):
+        pass
+    full = os.path.join(ROOT, rel)
+    if os.path.exists(full):
+        return datetime.date.fromtimestamp(os.path.getmtime(full)).isoformat()
+    return today
+
+
+def sitemap_xml(slugs):
+    ordered = [s for s in SITEMAP_ORDER if s in slugs] + sorted(s for s in slugs if s not in SITEMAP_ORDER)
+    lines = ['<?xml version="1.0" encoding="UTF-8"?>',
+             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+    for slug in ordered:
+        deps = [f"src/pages/{slug}.html"] + LASTMOD_EXTRA.get(slug, [])
+        lastmod = max(_last_change(d) for d in deps)
+        path = "" if slug == "index" else f"{slug}.html"
+        lines.append(f"  <url><loc>{SITE_URL}/{path}</loc><lastmod>{lastmod}</lastmod></url>")
+    lines.append("</urlset>")
+    return "\n".join(lines) + "\n"
+
+
+def _strip_lastmod(xml):
+    return re.sub(r"<lastmod>.*?</lastmod>", "", xml)
+
+
 def build(check=False):
     partials = {
         os.path.splitext(os.path.basename(p))[0]: read(p)
@@ -227,10 +328,17 @@ def build(check=False):
     }
     meta = load_meta()
     stale, written = [], 0
+    indexable = []
     for page in sorted(glob.glob(os.path.join(PAGES, "*.html"))):
         name = os.path.basename(page)
         ctx, body = parse_directive(read(page), name)
         out = expand(body, ctx, meta, partials)
+        slug = name[:-5]
+        extras = jsonld_extras(slug, out)
+        if extras:
+            out = out.replace("</head>", extras + "</head>", 1)
+        if "noindex" not in out and slug != "404":
+            indexable.append(slug)
         left = re.findall(r"\{\{\s*(?:>|base|cur:|asset:|meta:|footer_class)[^}]*\}\}", out)
         if left:
             raise SystemExit(f"[errore] {name}: segnaposto non risolti: {left[:3]}")
@@ -242,12 +350,22 @@ def build(check=False):
                 with open(dest, "w", encoding="utf-8", newline="\n") as f:
                     f.write(out)
                 written += 1
+    # sitemap.xml: generata dalle pagine indicizzabili (in --check si confronta
+    # l'elenco degli URL, non le date lastmod, che dipendono dalla storia git)
+    sm_path = os.path.join(ROOT, "sitemap.xml")
+    sm_new = sitemap_xml(indexable)
+    sm_cur = read(sm_path) if os.path.exists(sm_path) else ""
+    if _strip_lastmod(sm_cur) != _strip_lastmod(sm_new):
+        stale.append("sitemap.xml")
     if check:
         if stale:
             print("Pagine obsolete (rilancia build_site.py):", ", ".join(stale))
             sys.exit(1)
         print("OK: tutte le pagine sono aggiornate.")
     else:
+        if sm_cur != sm_new:
+            with open(sm_path, "w", encoding="utf-8", newline="\n") as f:
+                f.write(sm_new)
         print(f"Build completata: {written} pagine riscritte, "
               f"{len(glob.glob(os.path.join(PAGES, '*.html'))) - written} invariate.")
 

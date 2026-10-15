@@ -1960,3 +1960,45 @@ body{font-size:16px;line-height:1.65}
 @media (prefers-reduced-motion:reduce){
   .ticker.is-ready .ticker-track{animation:none}
 }
+
+/* Ancore dei livelli in Soluzioni: non finiscono sotto l'header fisso */
+.level-row[id]{scroll-margin-top:110px}
+
+/* ==== Modulo di contatto ==== */
+.contact-form{margin-top:26px; display:grid; gap:16px}
+.contact-form[hidden],.form-success[hidden]{display:none}
+.contact-form .form-row{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+.contact-form .field{display:flex; flex-direction:column; gap:6px}
+.contact-form label{font-size:13px; font-weight:600; color:var(--paper)}
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea{
+  font:inherit; font-size:15px; color:var(--paper); background:#fff;
+  border:1px solid var(--line-strong); border-radius:var(--radius);
+  padding:12px 14px; width:100%;
+}
+.contact-form textarea{min-height:130px; resize:vertical; line-height:1.5}
+.contact-form input:focus, .contact-form textarea:focus{border-color:var(--teal)}
+.contact-form ::placeholder{color:var(--paper-faint)}
+.contact-form .hp{position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden}
+.contact-form .check{display:flex; gap:10px; align-items:flex-start; font-weight:400; font-size:13.5px; color:var(--paper-dim); line-height:1.5}
+.contact-form .check input{margin-top:3px; accent-color:var(--teal); flex:none}
+.contact-form .check a{border-bottom:1px solid currentColor}
+.contact-form .btn{justify-self:start}
+.contact-form .btn[disabled]{opacity:.6; cursor:wait; transform:none}
+.contact-card .form-status{margin:0; min-height:1.4em; font-size:14px; color:var(--paper-dim)}
+.contact-card .form-status.err{color:#A63D3D}
+.form-success{margin-top:26px; border:1px solid var(--line-strong); border-radius:var(--radius); padding:26px}
+.form-success h4{font-size:17px; font-weight:600; margin-bottom:8px}
+.form-success p{margin:0}
+@media (max-width:560px){ .contact-form .form-row{grid-template-columns:1fr} }
+
+/* ==== Home su telefono: la hero lascia vedere subito la banda Benchmark ==== */
+@media (max-width:640px){
+  .hero.hero-net{padding:102px 0 36px}
+  .hero-grid{gap:0}
+  .hero-net .hero-visual{display:none} /* mockup decorativo (aria-hidden): su telefono spinge il Benchmark sotto la piega */
+  .hero h1{font-size:clamp(30px,8.6vw,36px);line-height:1.12}
+  .hero-net .hero-sub{margin-top:16px;font-size:16px;line-height:1.55}
+  .hero-net .hero-actions{margin-top:24px;gap:10px}
+}

@@ -23,6 +23,25 @@
 <meta property="og:image" content="https://www.veyron.it/og-image.png">
 <meta name="twitter:image" content="https://www.veyron.it/og-image.png">
 <link rel="stylesheet" href="{{asset:style.css}}">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "Consulenza data & AI per PMI",
+  "provider": { "@type": "ProfessionalService", "name": "Veyron", "url": "https://www.veyron.it/" },
+  "areaServed": "IT",
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Soluzioni Veyron",
+    "itemListElement": [
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Dati", "description": "KPI, dashboard, reporting, analisi clienti e prodotti, controllo marginalità." } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Intelligence", "description": "Monitoraggio, alert, report automatici, business intelligence." } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Intelligenza Artificiale", "description": "Forecasting, analisi predittiva, assistenti AI, knowledge base aziendale." } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Automazione", "description": "Workflow, integrazioni, processi e reporting automatici." } }
+    ]
+  }
+}
+</script>
 <noscript><style>[data-reveal],[data-reveal] > *{opacity:1 !important; transform:none !important;}</style></noscript>
 </head>
 <body class="photo-topbar">
@@ -47,7 +66,7 @@
   <section>
     <div class="wrap">
       <div class="levels" data-reveal>
-        <div class="level-row">
+        <div class="level-row" id="dati">
           <div class="level-node">A</div>
           <div class="level-body">
             <div>
@@ -61,7 +80,7 @@
             </ul>
           </div>
         </div>
-        <div class="level-row">
+        <div class="level-row" id="intelligence">
           <div class="level-node">B</div>
           <div class="level-body">
             <div>
@@ -75,7 +94,7 @@
             </ul>
           </div>
         </div>
-        <div class="level-row">
+        <div class="level-row" id="ai">
           <div class="level-node">C</div>
           <div class="level-body">
             <div>
@@ -89,7 +108,7 @@
             </ul>
           </div>
         </div>
-        <div class="level-row">
+        <div class="level-row" id="automazione">
           <div class="level-node">D</div>
           <div class="level-body">
             <div>

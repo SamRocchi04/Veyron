@@ -23,8 +23,68 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:image" content="https://www.veyron.it/og-image.png">
 <meta name="twitter:image" content="https://www.veyron.it/og-image.png">
-<link rel="stylesheet" href="style.css?v=c9e91afd">
+<link rel="stylesheet" href="style.css?v=478792fc">
 <noscript><style>[data-reveal],[data-reveal] > *{opacity:1 !important; transform:none !important;}</style></noscript>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://www.veyron.it/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Contatti",
+      "item": "https://www.veyron.it/contatti.html"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Lavorate solo con aziende che hanno già un ERP o un CRM strutturato?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Molte PMI italiane partono da fogli Excel e sistemi non collegati tra loro: è esattamente il punto di partenza più comune per un Audit."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Quanto dura un percorso Veyron?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "L'Audit richiede 5-7 giorni lavorativi. I passi successivi variano in base a cosa emerge dal report: da un intervento di Ottimizzazione mirato, fino a un affiancamento continuativo con l'AI Business Monitoring."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Serve già sapere cosa vogliamo costruire?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Chi ci contatta spesso arriva con una domanda di business, non con una soluzione tecnica in mente. È il nostro lavoro individuare lo strumento giusto."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Lavorate anche su progetti di sola automazione, senza AI?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sì. Automazione e intelligenza artificiale sono due dei quattro livelli in cui lavoriamo: puoi partire da uno solo, in base a ciò che emerge dall'Audit."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body class="photo-topbar">
 
@@ -83,8 +143,47 @@
           <p>Rispondiamo entro un giorno lavorativo. Raccontaci in poche righe qual è la domanda che vorresti rispondere con i tuoi dati.</p>
           <div class="contact-line"><span>Email</span><span>info@veyron.it</span></div>
           <div class="contact-line"><span>Risposta</span><span>Entro 24h lavorative</span></div>
-          <div class="mt-26">
-            <a href="mailto:info@veyron.it" class="btn btn-primary">Scrivi a info@veyron.it</a>
+          <form class="contact-form" id="contactForm" action="https://formsubmit.co/info@veyron.it" method="POST">
+            <div class="form-row">
+              <div class="field">
+                <label for="cf-nome">Nome</label>
+                <input id="cf-nome" name="Nome" type="text" autocomplete="given-name" required maxlength="80">
+              </div>
+              <div class="field">
+                <label for="cf-cognome">Cognome</label>
+                <input id="cf-cognome" name="Cognome" type="text" autocomplete="family-name" required maxlength="80">
+              </div>
+            </div>
+            <div class="field">
+              <label for="cf-azienda">Nome dell'azienda</label>
+              <input id="cf-azienda" name="Azienda" type="text" autocomplete="organization" required maxlength="120">
+            </div>
+            <div class="field">
+              <label for="cf-email">Email per la risposta</label>
+              <input id="cf-email" name="email" type="email" autocomplete="email" required maxlength="120">
+            </div>
+            <div class="field">
+              <label for="cf-problema">Qual è il problema o la domanda?</label>
+              <textarea id="cf-problema" name="Problema" rows="5" required maxlength="2000" placeholder="Raccontaci in poche righe cosa vorresti capire o migliorare con i tuoi dati."></textarea>
+            </div>
+            <div class="hp" aria-hidden="true">
+              <label for="cf-honey">Lascia vuoto questo campo</label>
+              <input id="cf-honey" type="text" name="_honey" tabindex="-1" autocomplete="off">
+            </div>
+            <input type="hidden" name="_subject" value="Nuova richiesta dal sito Veyron">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_next" value="https://www.veyron.it/contatti.html?inviato=1">
+            <label class="check">
+              <input type="checkbox" name="Privacy" value="Letta" required>
+              <span>Ho letto la <a href="privacy.html">Privacy Policy</a>: i dati inseriti vengono inviati a Veyron tramite un servizio di inoltro di terze parti.</span>
+            </label>
+            <button class="btn btn-primary" type="submit">Invia messaggio</button>
+            <p class="form-status" id="cfStatus" role="status" aria-live="polite"></p>
+          </form>
+          <div class="form-success" id="cfSuccess" tabindex="-1" hidden>
+            <h4>Messaggio inviato</h4>
+            <p>Grazie! Abbiamo ricevuto la tua richiesta e ti rispondiamo entro un giorno lavorativo all'indirizzo email che hai indicato.</p>
           </div>
         </div>
         <div class="contact-card">
@@ -175,9 +274,9 @@
       </div>
       <div class="footer-col">
         <span class="label">Soluzioni</span>
-        <a href="soluzioni.html">Dati &amp; Intelligence</a>
-        <a href="soluzioni.html">Intelligenza Artificiale</a>
-        <a href="soluzioni.html">Automazione</a>
+        <a href="soluzioni.html#dati">Dati &amp; Intelligence</a>
+        <a href="soluzioni.html#ai">Intelligenza Artificiale</a>
+        <a href="soluzioni.html#automazione">Automazione</a>
       </div>
       <div class="footer-col">
         <span class="label">Contatti</span>
@@ -219,6 +318,51 @@
     host.appendChild(f);
     host.hidden = false;
     box.hidden = true;
+  });
+})();
+</script>
+<script>
+(function () {
+  var form = document.getElementById('contactForm');
+  if (!form) return;
+  var status = document.getElementById('cfStatus');
+  var done = document.getElementById('cfSuccess');
+  var btn = form.querySelector('button[type="submit"]');
+
+  function showDone() {
+    form.hidden = true;
+    done.hidden = false;
+    done.focus();
+  }
+  // Ritorno dal modulo inviato senza JavaScript (redirect di FormSubmit)
+  if (/[?&]inviato=1(&|$)/.test(location.search)) showDone();
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+    btn.disabled = true;
+    status.className = 'form-status';
+    status.textContent = 'Invio in corso\u2026';
+
+    var data = {};
+    new FormData(form).forEach(function (v, k) { if (k !== '_next') data[k] = v; });
+
+    fetch(form.action.replace('formsubmit.co/', 'formsubmit.co/ajax/'), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(data)
+    })
+      .then(function (r) {
+        return r.json().catch(function () { return {}; }).then(function (j) {
+          if (!r.ok || String(j.success) === 'false') throw new Error(j.message || ('HTTP ' + r.status));
+        });
+      })
+      .then(showDone)
+      .catch(function () {
+        btn.disabled = false;
+        status.className = 'form-status err';
+        status.textContent = 'Non siamo riusciti a inviare il messaggio. Riprova tra poco oppure scrivici direttamente a info@veyron.it.';
+      });
   });
 })();
 </script>

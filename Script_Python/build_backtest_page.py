@@ -951,13 +951,13 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         <div class="chart-card">
           <h3>Composizione per settore</h3>
           <div class="chart-sub">PMI con storico di bilancio completo, per settore — passa il mouse per i dettagli</div>
-          <div class="donut-wrap"><div class="chart-canvas-wrap tall" style="width:260px;"><canvas id="chartSectorDonut"></canvas></div></div>
+          <div class="donut-wrap"><div class="chart-canvas-wrap tall" style="width:260px;"><canvas id="chartSectorDonut" role="img" aria-label="Grafico a ciambella: composizione delle PMI analizzate per settore"></canvas></div></div>
           <div class="legend-row" id="legendSector"></div>
         </div>
         <div class="chart-card">
           <h3>Dal perimetro alle PMI mostrate</h3>
           <div class="chart-sub">quante aziende nei 6 settori target hanno uno storico di bilancio completo, e quante vengono mostrate qui</div>
-          <div class="chart-canvas-wrap tall"><canvas id="chartFunnel"></canvas></div>
+          <div class="chart-canvas-wrap tall"><canvas id="chartFunnel" role="img" aria-label="Grafico: dal perimetro iniziale alle aziende con storico completo e alle PMI mostrate"></canvas></div>
         </div>
       </div>
     </div>
@@ -975,12 +975,12 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         <div class="chart-card">
           <h3>EBITDA/Vendite: reale vs obiettivo</h3>
           <div class="chart-sub">media di tutte le PMI analizzate, per anno (obiettivo = miglior quartile del settore)</div>
-          <div class="chart-canvas-wrap"><canvas id="chartFeaturedEbitda"></canvas></div>
+          <div class="chart-canvas-wrap"><canvas id="chartFeaturedEbitda" role="img" aria-label="Grafico: margine EBITDA/Vendite medio per anno, reale e obiettivo (miglior quartile di settore)"></canvas></div>
         </div>
         <div class="chart-card">
           <h3>ROE: reale vs obiettivo</h3>
           <div class="chart-sub">stesso confronto sulla redditività del capitale proprio</div>
-          <div class="chart-canvas-wrap"><canvas id="chartFeaturedRoe"></canvas></div>
+          <div class="chart-canvas-wrap"><canvas id="chartFeaturedRoe" role="img" aria-label="Grafico: ROE medio per anno, reale e obiettivo (miglior quartile di settore)"></canvas></div>
         </div>
       </div>
       <div class="disclaimer-block teal" data-reveal>
@@ -997,15 +997,15 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       <div class="chart-row triple" data-reveal style="margin-top:24px;">
         <div class="chart-card">
           <h3 style="font-size:14.5px;">EBITDA/Vendite</h3>
-          <div class="chart-canvas-wrap short"><canvas id="chartDetailEbitda"></canvas></div>
+          <div class="chart-canvas-wrap short"><canvas id="chartDetailEbitda" role="img" aria-label="Grafico: EBITDA/Vendite per anno, reale e obiettivo"></canvas></div>
         </div>
         <div class="chart-card">
           <h3 style="font-size:14.5px;">ROE</h3>
-          <div class="chart-canvas-wrap short"><canvas id="chartDetailRoe"></canvas></div>
+          <div class="chart-canvas-wrap short"><canvas id="chartDetailRoe" role="img" aria-label="Grafico: ROE per anno, reale e obiettivo"></canvas></div>
         </div>
         <div class="chart-card">
           <h3 style="font-size:14.5px;">Rotazione capitale investito</h3>
-          <div class="chart-canvas-wrap short"><canvas id="chartDetailRotazione"></canvas></div>
+          <div class="chart-canvas-wrap short"><canvas id="chartDetailRotazione" role="img" aria-label="Grafico: rotazione del capitale investito per anno, reale e obiettivo"></canvas></div>
         </div>
       </div>
     </div>
@@ -1023,12 +1023,12 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         <div class="chart-card">
           <h3>Costi operativi: reale vs ipotetico</h3>
           <div class="chart-sub" id="costiSub">media di tutte le PMI — migliaia di EUR, per anno</div>
-          <div class="chart-canvas-wrap"><canvas id="chartCosti"></canvas></div>
+          <div class="chart-canvas-wrap"><canvas id="chartCosti" role="img" aria-label="Grafico: costi operativi per anno, reali e ipotetici (migliaia di euro)"></canvas></div>
         </div>
         <div class="chart-card">
           <h3>Capitale investito netto: reale vs ipotetico</h3>
           <div class="chart-sub" id="capitaleSub">migliaia di EUR, per anno</div>
-          <div class="chart-canvas-wrap"><canvas id="chartCapitale"></canvas></div>
+          <div class="chart-canvas-wrap"><canvas id="chartCapitale" role="img" aria-label="Grafico: capitale investito netto per anno, reale e ipotetico (migliaia di euro)"></canvas></div>
         </div>
       </div>
 
@@ -1047,7 +1047,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         <div class="chart-card">
           <h3>Rotazione del capitale investito: reale vs obiettivo</h3>
           <div class="chart-sub">quante volte il capitale investito si "gira" in ricavi — più alto è meglio</div>
-          <div class="chart-canvas-wrap"><canvas id="chartRotazioneWide"></canvas></div>
+          <div class="chart-canvas-wrap"><canvas id="chartRotazioneWide" role="img" aria-label="Grafico: rotazione del capitale investito per anno, reale e obiettivo"></canvas></div>
         </div>
       </div>
 
@@ -1055,7 +1055,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         <b>Nota metodologica.</b> L'obiettivo di settore è calcolato sul miglior quartile (75° percentile per le metriche "più alto è meglio"; 25° percentile sul rapporto costi/ricavi per il costo ipotetico) tra le aziende con storico di bilancio completo dello stesso settore, nello stesso anno relativo — mai un dato futuro rispetto all'anno osservato. I costi e il capitale investito "ipotetici" sono stime, ottenute applicando il rapporto di efficienza del miglior quartile ai ricavi reali dell'azienda: non sono una previsione, ma un termine di paragone. ___SETTORI_ESCLUSI_NOTE___
       </div>
 
-      <p class="disclaimer-small" data-reveal><b>Avvertenza.</b> I rendimenti passati non sono indicativi di quelli futuri.</p>
+      <p class="disclaimer-small" data-reveal><b>Avvertenza.</b> Il confronto con il miglior quartile di settore ha finalità illustrative: non è una previsione dei risultati futuri né una garanzia di miglioramento per la singola azienda.</p>
     </div>
   </section>
 

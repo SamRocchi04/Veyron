@@ -1,0 +1,20 @@
+name: Verifica build del sito
+
+# Fallisce se le pagine nella radice non corrispondono a src/ (cioe' se qualcuno
+# ha modificato a mano un file generato o ha dimenticato di lanciare la build).
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # serve la storia git per le date lastmod della sitemap
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pillow
+      - run: python3 Script_Python/build_site.py --check
