@@ -125,3 +125,12 @@ if (navToggle && mobileNav) {
     });
   }
 })();
+
+/* Eventi di conversione per le statistiche. Se non e' caricato nessuno strumento
+   di analytics (data/analytics.json) non fa nulla e non invia nessuna richiesta. */
+window.vTrack = function (name) {
+  try {
+    if (typeof window.plausible === 'function') window.plausible(name);
+    else if (window.umami && typeof window.umami.track === 'function') window.umami.track(name);
+  } catch (e) { /* le statistiche non devono mai rompere il sito */ }
+};

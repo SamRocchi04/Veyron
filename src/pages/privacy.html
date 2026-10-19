@@ -44,25 +44,26 @@
   <section>
     <div class="wrap">
       <div class="legal" data-reveal>
-        <p class="updated">Ultimo aggiornamento: 15 ottobre 2026</p>
+        <p class="updated">Ultimo aggiornamento: 17 ottobre 2026</p>
 
         <h2>1. Titolare del trattamento</h2>
-        <p>Il Titolare del trattamento è Samuele Rocchi, titolare della ditta individuale Veyron (di seguito «Veyron»). Per qualsiasi questione relativa ai tuoi dati personali puoi scrivere a <a href="mailto:info@veyron.it">info@veyron.it</a>.</p>
+        <p>Il Titolare del trattamento è {{azienda:titolare}}, titolare della ditta individuale {{azienda:denominazione}} (di seguito «Veyron»){{if:partita_iva}}, P. IVA {{azienda:partita_iva}}{{/if}}{{if:sede}}, con sede in {{azienda:sede}}{{/if}}{{if:pec}}, PEC <a href="mailto:{{azienda:pec}}">{{azienda:pec}}</a>{{/if}}. Per qualsiasi questione relativa ai tuoi dati personali puoi scrivere a <a href="mailto:{{azienda:email_enc}}">{{azienda:email_enc}}</a>.</p>
 
         <h2>2. Dati trattati</h2>
         <ul>
           <li><strong>Dati che ci fornisci tu.</strong> Se ci scrivi via email, compili il modulo di contatto o prenoti una call, trattiamo i dati che ci comunichi: di norma nome, cognome, indirizzo email, azienda, ruolo, eventuale numero di telefono e contenuto del messaggio. Le richieste ci arrivano via email, tramite il modulo di contatto del sito o tramite il calendario di prenotazione.</li>
-          <li><strong>Dati del modulo di contatto.</strong> Nome, cognome, azienda, indirizzo email, testo del messaggio e conferma di presa visione dell'informativa. I dati vengono inviati solo quando premi «Invia messaggio» e sono recapitati alla nostra casella info@veyron.it tramite un servizio di inoltro di terze parti (FormSubmit).</li>
+          <li><strong>Dati del modulo di contatto.</strong> Nome, cognome, azienda, indirizzo email, testo del messaggio e conferma di presa visione dell'informativa. I dati vengono inviati solo quando premi «Invia messaggio» e sono recapitati alla nostra casella {{azienda:email_enc}} tramite un servizio di inoltro di terze parti (FormSubmit).</li>
           <li><strong>Dati di prenotazione (Calendly).</strong> Solo se carichi il calendario e prenoti uno slot: nome, indirizzo email, data e ora scelte ed eventuali note che inserisci.</li>
           <li><strong>Dati di navigazione.</strong> I server che ospitano il sito registrano automaticamente log tecnici (indirizzo IP, data e ora, pagina richiesta, tipo di browser e sistema operativo). Li usiamo solo per sicurezza e corretto funzionamento, non per profilarti.</li>
         </ul>
-        <p>Non utilizziamo strumenti di analytics, pubblicità o profilazione.</p>
+{{if:analytics}}        <p>Per capire quante persone visitano il sito e quali pagine portano a una richiesta di contatto usiamo {{azienda:analytics_provider}}, uno strumento di statistica web che non utilizza cookie e non salva informazioni sul tuo dispositivo: produce solo dati aggregati (pagine viste, provenienza, tipo di dispositivo) e non ti riconosce da una visita all'altra né da un sito all'altro. Registra inoltre, in forma aggregata, alcune azioni utili a capire se il sito funziona (ad esempio l'invio del modulo o il caricamento del calendario), senza collegarle a nome o email. Non utilizziamo pubblicità o profilazione.</p>{{/if}}{{ifnot:analytics}}        <p>Non utilizziamo strumenti di analytics, pubblicità o profilazione.</p>{{/ifnot}}
 
         <h2>3. Finalità e basi giuridiche</h2>
         <ul>
           <li>Rispondere alle tue richieste (via email o modulo di contatto) e gestire la prenotazione della call conoscitiva: art. 6, par. 1, lett. b) GDPR (misure precontrattuali adottate su tua richiesta).</li>
           <li>Gestire l'eventuale rapporto contrattuale e adempiere a obblighi amministrativi, contabili e fiscali: art. 6, par. 1, lett. b) e c) GDPR.</li>
-          <li>Garantire la sicurezza del sito, prevenire abusi e far valere o difendere un diritto: legittimo interesse, art. 6, par. 1, lett. f) GDPR.</li>
+          <li>Garantire la sicurezza del sito, prevenire abusi e far valere o difendere un diritto: legittimo interesse, art. 6, par. 1, lett. f) GDPR.</li>{{if:analytics}}
+          <li>Misurare in forma aggregata le visite al sito e migliorarne i contenuti: legittimo interesse, art. 6, par. 1, lett. f) GDPR. Puoi opporti scrivendoci all'indirizzo indicato sotto.</li>{{/if}}
           <li>Caricare il calendario di terze parti (Calendly): tuo consenso, art. 6, par. 1, lett. a) GDPR e art. 122 del Codice Privacy, che esprimi cliccando su «Carica il calendario». Se preferisci non farlo, puoi scriverci via email.</li>
         </ul>
 
@@ -70,23 +71,26 @@
         <p>Il conferimento dei dati è facoltativo, ma senza i dati essenziali (ad esempio un indirizzo email) non possiamo rispondere alla tua richiesta né fissare una call.</p>
 
         <h2>5. Destinatari dei dati</h2>
-        <p>I dati sono trattati dalle persone autorizzate di Veyron e possono essere comunicati a fornitori che li trattano per nostro conto, nominati responsabili del trattamento ai sensi dell'art. 28 GDPR: ad esempio servizi di hosting, di posta elettronica, di prenotazione (Calendly), di inoltro del modulo di contatto (FormSubmit) e di gestione dei contatti. Possono inoltre essere comunicati a consulenti professionali (come commercialista o legale) tenuti alla riservatezza. I dati non sono diffusi né venduti. L'elenco aggiornato dei fornitori è disponibile su richiesta.</p>
+        <p>I dati sono trattati dalle persone autorizzate di Veyron e possono essere comunicati a fornitori che li trattano per nostro conto, nominati responsabili del trattamento ai sensi dell'art. 28 GDPR: ad esempio servizi di hosting, di posta elettronica, di prenotazione (Calendly), di inoltro del modulo di contatto (FormSubmit){{if:analytics}}, di statistica web ({{azienda:analytics_provider}}){{/if}} e di gestione dei contatti. Possono inoltre essere comunicati a consulenti professionali (come commercialista o legale) tenuti alla riservatezza. I dati non sono diffusi né venduti. L'elenco aggiornato dei fornitori è disponibile su richiesta.</p>
 
         <h2>6. Trasferimenti extra-UE</h2>
         <p>Calendly ha sede negli Stati Uniti: se utilizzi il calendario, i dati di prenotazione possono essere trattati fuori dallo Spazio Economico Europeo. Il trasferimento avviene sulla base delle garanzie previste dagli artt. 44 e seguenti del GDPR (decisione di adeguatezza o clausole contrattuali standard), come descritto nell'<a href="https://calendly.com/privacy" target="_blank" rel="noopener noreferrer">informativa di Calendly</a>. Le stesse garanzie sono richieste a qualsiasi altro fornitore stabilito fuori dallo SEE.</p>
 
         <p>Anche il servizio che inoltra il modulo di contatto (FormSubmit) è un fornitore terzo e può trattare i dati fuori dallo Spazio Economico Europeo. I dati inseriti nel modulo gli vengono trasmessi solo quando invii il messaggio; per i dettagli si rimanda all'informativa del fornitore, consultabile sul suo sito (formsubmit.co).</p>
 
-        <h2>7. Conservazione</h2>
+{{if:analytics_nota}}        <p>{{azienda:analytics_nota}}</p>
+
+{{/if}}        <h2>7. Conservazione</h2>
         <ul>
           <li>Richieste e contatti senza seguito contrattuale: per il tempo necessario a rispondere e comunque non oltre 24 mesi dall'ultimo contatto.</li>
           <li>Dati contrattuali, contabili e fiscali: per 10 anni, come previsto dalla legge.</li>
-          <li>Log tecnici del sito: per un periodo limitato, secondo le impostazioni del fornitore di hosting.</li>
+          <li>Log tecnici del sito: per un periodo limitato, secondo le impostazioni del fornitore di hosting.</li>{{if:analytics}}
+          <li>Statistiche di visita: dati aggregati, conservati secondo le impostazioni di {{azienda:analytics_provider}}.</li>{{/if}}
           <li>Dati di prenotazione su Calendly: secondo l'informativa di Calendly; su tua richiesta cancelliamo la prenotazione dal nostro account.</li>
         </ul>
 
         <h2 id="cookie">8. Cookie e tecnologie simili</h2>
-        <p>Il sito non imposta cookie propri né di terze parti e non usa strumenti di analytics, pubblicità o profilazione. Font, immagini e script sono serviti dallo stesso dominio del sito: nessun contenuto di terzi viene caricato automaticamente.</p>
+{{if:analytics}}        <p>Il sito non imposta cookie propri né di terze parti e non usa strumenti di pubblicità o profilazione. Font, immagini e script sono serviti dallo stesso dominio del sito, con una sola eccezione: lo script di statistica di {{azienda:analytics_provider}}, che funziona senza cookie e senza memorizzare nulla sul tuo dispositivo (per questo non è richiesto un banner di consenso per i cookie).</p>{{/if}}{{ifnot:analytics}}        <p>Il sito non imposta cookie propri né di terze parti e non usa strumenti di analytics, pubblicità o profilazione. Font, immagini e script sono serviti dallo stesso dominio del sito: nessun contenuto di terzi viene caricato automaticamente.</p>{{/ifnot}}
         <ul>
           <li><strong>Calendly.</strong> Il calendario di prenotazione viene caricato solo dopo il tuo click su «Carica il calendario». Da quel momento Calendly può ricevere il tuo indirizzo IP e impostare cookie propri o di terze parti, secondo la <a href="https://calendly.com/privacy" target="_blank" rel="noopener noreferrer">propria informativa</a>. Se sei arrivato da un nostro link con parametri di campagna (utm_*), questi vengono trasmessi a Calendly insieme alla prenotazione, così sappiamo da quale contenuto arrivi; sul nostro sito non vengono salvati né analizzati. Se ricarichi la pagina, il calendario non viene caricato di nuovo in automatico.</li>
           <li><strong>Modulo di contatto.</strong> Il modulo non carica contenuti di terzi: i dati che inserisci vengono trasmessi a FormSubmit solo nel momento in cui premi «Invia messaggio».</li>
@@ -95,7 +99,7 @@
         <p>Se in futuro introdurremo strumenti diversi da quelli tecnici, aggiorneremo questa pagina e chiederemo prima il tuo consenso.</p>
 
         <h2>9. I tuoi diritti</h2>
-        <p>Puoi chiederci in qualsiasi momento l'accesso ai tuoi dati, la rettifica, la cancellazione, la limitazione del trattamento, la portabilità e puoi opporti al trattamento fondato sul legittimo interesse. Dove il trattamento si basa sul consenso, puoi revocarlo in qualsiasi momento, senza effetto sui trattamenti già avvenuti. Per esercitare i diritti scrivi a <a href="mailto:info@veyron.it">info@veyron.it</a>. Hai inoltre il diritto di proporre reclamo al Garante per la protezione dei dati personali (<a href="https://www.garanteprivacy.it" target="_blank" rel="noopener noreferrer">www.garanteprivacy.it</a>).</p>
+        <p>Puoi chiederci in qualsiasi momento l'accesso ai tuoi dati, la rettifica, la cancellazione, la limitazione del trattamento, la portabilità e puoi opporti al trattamento fondato sul legittimo interesse. Dove il trattamento si basa sul consenso, puoi revocarlo in qualsiasi momento, senza effetto sui trattamenti già avvenuti. Per esercitare i diritti scrivi a <a href="mailto:{{azienda:email_enc}}">{{azienda:email_enc}}</a>. Hai inoltre il diritto di proporre reclamo al Garante per la protezione dei dati personali (<a href="https://www.garanteprivacy.it" target="_blank" rel="noopener noreferrer">www.garanteprivacy.it</a>).</p>
 
         <h2>10. Decisioni automatizzate e modifiche</h2>
         <p>Non adottiamo processi decisionali automatizzati né attività di profilazione. Eventuali modifiche a questa informativa saranno pubblicate su questa pagina, con aggiornamento della data in cima.</p>

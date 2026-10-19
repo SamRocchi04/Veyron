@@ -3,13 +3,13 @@
     <div class="footer-top">
       <div class="footer-brand">
         <a class="logo" href="{{base}}index.html"><img class="logo-mark" src="{{base}}img/logo-mark.png" alt="Veyron" width="26" height="26">VEYRON<span class="dot">.</span></a>
-        <p>Consulenza data &amp; AI per piccole e medie imprese. Analizziamo, preveniamo, automatizziamo.</p>
+        <p>Consulenza data &amp; AI per piccole e medie imprese. Dati, intelligence, AI e automazione al servizio delle decisioni.</p>
       </div>
       <div class="footer-col">
         <span class="label">Azienda</span>
         <a href="{{base}}chi-siamo.html">Chi Siamo</a>
         <a href="{{base}}metodo.html">Metodo</a>
-        <a href="{{base}}risultati.html">Risultati</a>
+        <a href="{{base}}percorsi.html">Percorsi</a>
         <a href="{{base}}backtest.html">Benchmark</a>
       </div>
       <div class="footer-col">
@@ -21,8 +21,15 @@
       <div class="footer-col">
         <span class="label">Contatti</span>
         <a href="{{base}}contatti.html">Prenota una call</a>
-        <a href="mailto:info@veyron.it">info@veyron.it</a>
+        <a href="mailto:{{azienda:email_enc}}">{{azienda:email_enc}}</a>
       </div>
+    </div>
+    <div class="footer-company">
+      <span>{{azienda:ragione_sociale}}</span>{{if:partita_iva}}
+      <span>P. IVA {{azienda:partita_iva}}</span>{{/if}}{{if:sede}}
+      <span>{{azienda:sede}}</span>{{/if}}{{if:rea}}
+      <span>REA {{azienda:rea}}</span>{{/if}}{{if:pec}}
+      <span>PEC <a href="mailto:{{azienda:pec}}">{{azienda:pec}}</a></span>{{/if}}
     </div>
     <div class="footer-row">
       <span>© 2026 Veyron — Consulenza Data &amp; AI</span>

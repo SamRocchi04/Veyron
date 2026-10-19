@@ -1,0 +1,16 @@
+{
+  "_nota": "Dati identificativi dell'attivita'. Compila i campi vuoti: dove un campo e' vuoto, la riga corrispondente non viene pubblicata e build_site.py lo segnala. Fai confermare al commercialista quali dati sono obbligatori. 'email' e' l'indirizzo pubblico (nel sito viene ripetuto in forma offuscata). 'form_id' e' l'identificativo casuale che FormSubmit assegna dopo l'attivazione: se lo compili, l'email non compare piu' nell'indirizzo del form.",
+  "email": "info@veyron.it",
+  "form_id": "",
+  "titolare": "Samuele Rocchi",
+  "denominazione": "Veyron",
+  "forma": "ditta individuale",
+  "partita_iva": "",
+  "codice_fiscale": "",
+  "rea": "",
+  "pec": "",
+  "via": "",
+  "cap": "",
+  "comune": "",
+  "provincia": ""
+}

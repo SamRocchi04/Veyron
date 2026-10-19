@@ -41,6 +41,10 @@ Segnaposto disponibili nei file sorgente
     {{cur:slug}}            ' aria-current="page"' se slug == active
     {{footer_class}}        ' class="..."' per il <footer>, oppure nulla
     {{asset:percorso}}      percorso + ?v=<hash del file> (cache-busting)
+    {{azienda:campo}}       dato da data/azienda.json (partita_iva, sede, ragione_sociale...)
+    {{if:campo}}...{{/if}}  blocco pubblicato solo se il campo azienda non e' vuoto
+    {{ifnot:campo}}...{{/ifnot}}  il contrario
+    (campi: anche email_enc, form_action, analytics, analytics_provider... da data/analytics.json)
     {{meta:chiave|formato}} numero preso da data/benchmark.json -> meta
                             formati: pct1 (6,8%), int (1.582), dec1 (6,8), dec2 (1,52), sdec1 (+7,1)
 
@@ -118,6 +122,62 @@ def load_meta():
     except (KeyError, IndexError):
         pass
     return meta
+
+
+def load_azienda():
+    """Dati identificativi dell'attivita' da data/azienda.json, con campi derivati."""
+    path = os.path.join(ROOT, "data", "azienda.json")
+    a = {}
+    if os.path.exists(path):
+        with open(path, encoding="utf-8") as f:
+            a = {k: (v or "").strip() for k, v in json.load(f).items() if not k.startswith("_")}
+    for k in ("titolare", "denominazione", "forma", "partita_iva", "codice_fiscale",
+              "rea", "pec", "via", "cap", "comune", "provincia", "email", "form_id"):
+        a.setdefault(k, "")
+    # -- email offuscata (riferimenti numerici HTML: i browser la leggono, gli scraper semplici no)
+    enc = lambda t: "".join(f"&#{ord(c)};" for c in t)
+    a["email_enc"] = enc(a["email"]) if a["email"] else ""
+    a["email_json"] = a["email"].replace("@", "\\u0040")
+    a["email_user"], _, a["email_domain"] = a["email"].partition("@")
+    # -- modulo di contatto (FormSubmit): con form_id l'email non compare nell'URL
+    ident = a["form_id"] or a["email"]
+    a["form_action"] = "https://formsubmit.co/" + ident.replace("@", "&#64;")
+    a["form_ajax"] = "https://formsubmit.co/ajax/" + ident.replace("@", "&#64;")
+    # -- analytics (data/analytics.json)
+    apath = os.path.join(ROOT, "data", "analytics.json")
+    an = {}
+    if os.path.exists(apath):
+        with open(apath, encoding="utf-8") as f:
+            an = json.load(f)
+    snippet = (an.get("snippet") or "").strip()
+    on = bool(an.get("attivo")) and snippet.startswith("<script") and snippet.endswith("</script>")
+    if an.get("attivo") and not on:
+        raise SystemExit("[errore] data/analytics.json: 'attivo' e' true ma 'snippet' non e' un tag <script>...</script>")
+    a["analytics"] = "1" if on else ""
+    a["analytics_snippet"] = snippet if on else ""
+    a["analytics_provider"] = (an.get("provider") or "").strip() if on else ""
+    a["analytics_nota"] = (an.get("nota_privacy") or "").strip() if on else ""
+    citta = " ".join(x for x in (a["cap"], a["comune"]) if x)
+    if a["provincia"]:
+        citta = f"{citta} ({a['provincia'].upper()})" if citta else ""
+    a["citta"] = citta
+    a["sede"] = ", ".join(x for x in (a["via"], citta) if x) if (a["via"] and citta) else ""
+    a["ragione_sociale"] = f"{a['titolare']}, {a['forma']} {a['denominazione']}".strip(", ")
+    a["piva_it"] = f"IT{a['partita_iva']}" if a["partita_iva"] else ""
+    a["sede_json"] = json.dumps(
+        {"@type": "PostalAddress", "streetAddress": a["via"], "postalCode": a["cap"],
+         "addressLocality": a["comune"], "addressRegion": a["provincia"].upper(),
+         "addressCountry": "IT"} if a["sede"] else {"@type": "PostalAddress", "addressCountry": "IT"},
+        ensure_ascii=False)
+    if a["sede"]:
+        a["sede_json"] = json.dumps(
+            {k: v for k, v in json.loads(a["sede_json"]).items() if v}, ensure_ascii=False)
+    return a
+
+
+# campi gia' pronti per l'HTML/JSON (non vanno escapati di nuovo)
+RAW_KEYS = {"sede_json", "email_enc", "email_json", "form_action", "form_ajax"}
+AZIENDA_CAMPI_OBBLIGATORI = ("partita_iva", "via", "cap", "comune", "provincia")
 
 
 def it_number(x, decimals=0):
@@ -199,13 +259,21 @@ def enhance_images(html, ctx):
 
 
 # ------------------------------------------------------------- espansione
-def expand(text, ctx, meta, partials):
+def expand(text, ctx, meta, partials, azienda=None):
+    azienda = azienda or {}
     # 1) include (annidabili)
     for _ in range(5):
         new = re.sub(r"\{\{>\s*([\w\-]+)\s*\}\}", lambda m: partials[m.group(1)].rstrip("\n"), text)
         if new == text:
             break
         text = new
+
+    # 1b) blocchi condizionali sui dati azienda: {{if:campo}}...{{/if}}
+    #     (il blocco sparisce se il campo e' vuoto)
+    text = re.sub(r"\{\{if:([\w]+)\}\}(.*?)\{\{/if\}\}",
+                  lambda m: m.group(2) if azienda.get(m.group(1)) else "", text, flags=re.S)
+    text = re.sub(r"\{\{ifnot:([\w]+)\}\}(.*?)\{\{/ifnot\}\}",
+                  lambda m: "" if azienda.get(m.group(1)) else m.group(2), text, flags=re.S)
 
     # 2) segnaposto
     def token(m):
@@ -219,6 +287,12 @@ def expand(text, ctx, meta, partials):
         if t.startswith("asset:"):
             p = t[6:]
             return f'{ctx["base"]}{p}?v={file_hash(p)}'
+        if t.startswith("azienda:"):
+            key = t[8:]
+            if key not in azienda:
+                raise SystemExit(f"[errore] campo azienda '{key}' sconosciuto")
+            v = azienda[key]
+            return v if key in RAW_KEYS else htmlmod.escape(v, quote=False)
         if t.startswith("meta:"):
             key, _, fmt = t[5:].partition("|")
             if key not in meta:
@@ -244,6 +318,22 @@ def _ld(obj):
             + json.dumps(obj, ensure_ascii=False, indent=2) + "\n</script>\n")
 
 
+# Etichetta breve per il BreadcrumbList (il <title> e' lungo, pensato per i motori di ricerca)
+BREADCRUMB_LABEL = {
+    "chi-siamo": "Chi Siamo", "metodo": "Metodo", "soluzioni": "Soluzioni",
+    "percorsi": "Percorsi", "backtest": "Benchmark", "contatti": "Contatti",
+    "privacy": "Privacy Policy", "termini": "Termini e Condizioni",
+}
+
+# Servizi per i dati strutturati della pagina Soluzioni (allineati ai 4 livelli del sito)
+SERVIZI = [
+    ("Dati", "KPI, dashboard, reporting, analisi clienti e prodotti, controllo marginalità per PMI."),
+    ("Intelligence", "Monitoraggio, alert, report automatici e business intelligence per PMI."),
+    ("Intelligenza Artificiale", "Forecasting, analisi predittiva, assistenti AI e knowledge base aziendale per PMI."),
+    ("Automazione", "Workflow, integrazioni, processi e reporting senza lavoro manuale per PMI."),
+]
+
+
 def jsonld_extras(slug, out):
     """Dati strutturati generati dal contenuto stesso della pagina:
     - BreadcrumbList (Home > Pagina) su tutte le pagine indicizzabili tranne la home;
@@ -252,14 +342,28 @@ def jsonld_extras(slug, out):
     blocks = []
     canon = re.search(r'<link rel="canonical" href="([^"]+)"', out)
     title = re.search(r"<title>(.*?)</title>", out, re.S)
-    if slug not in ("index", "404") and canon and title:
-        label = _plain(title.group(1)).split(" \u2014 ")[0].strip()
+    if slug not in ("index", "404", "risultati") and canon and title:
+        label = BREADCRUMB_LABEL.get(slug) or _plain(title.group(1)).split(" \u2014 ")[0].strip()
         blocks.append(_ld({
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
             "itemListElement": [
                 {"@type": "ListItem", "position": 1, "name": "Home", "item": SITE_URL + "/"},
                 {"@type": "ListItem", "position": 2, "name": label, "item": canon.group(1)},
+            ],
+        }))
+    if slug == "soluzioni":
+        blocks.append(_ld({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "name": "Soluzioni Veyron",
+            "itemListElement": [
+                {"@type": "ListItem", "position": i,
+                 "item": {"@type": "Service", "name": f"Veyron {nome}", "description": desc,
+                          "serviceType": "Consulenza data & AI",
+                          "areaServed": "IT",
+                          "provider": {"@type": "ProfessionalService", "name": "Veyron", "url": SITE_URL + "/"}}}
+                for i, (nome, desc) in enumerate(SERVIZI, 1)
             ],
         }))
     faqs = re.findall(r'<div class="faq-item">\s*<h3>(.*?)</h3>\s*<p>(.*?)</p>', out, re.S)
@@ -277,7 +381,7 @@ def jsonld_extras(slug, out):
 
 
 # ------------------------------------------------------------- sitemap
-SITEMAP_ORDER = ["index", "chi-siamo", "metodo", "soluzioni", "risultati",
+SITEMAP_ORDER = ["index", "chi-siamo", "metodo", "soluzioni", "percorsi",
                  "backtest", "contatti", "privacy", "termini"]
 # Pagine il cui contenuto dipende anche da altri file (oltre a src/pages/<nome>.html)
 LASTMOD_EXTRA = {"index": ["data/benchmark.json"], "backtest": ["data/benchmark.json"]}
@@ -327,19 +431,26 @@ def build(check=False):
         for p in glob.glob(os.path.join(PARTIALS, "*.html"))
     }
     meta = load_meta()
+    azienda = load_azienda()
+    vuoti = [k for k in AZIENDA_CAMPI_OBBLIGATORI if not azienda.get(k)]
+    if vuoti and not check:
+        print("ATTENZIONE - data/azienda.json: campi ancora vuoti (le righe relative non "
+              "vengono pubblicate): " + ", ".join(vuoti))
     stale, written = [], 0
     indexable = []
     for page in sorted(glob.glob(os.path.join(PAGES, "*.html"))):
         name = os.path.basename(page)
         ctx, body = parse_directive(read(page), name)
-        out = expand(body, ctx, meta, partials)
+        out = expand(body, ctx, meta, partials, azienda)
         slug = name[:-5]
         extras = jsonld_extras(slug, out)
         if extras:
             out = out.replace("</head>", extras + "</head>", 1)
+        if azienda.get("analytics") and slug != "risultati":
+            out = out.replace("</head>", azienda["analytics_snippet"] + "\n</head>", 1)
         if "noindex" not in out and slug != "404":
             indexable.append(slug)
-        left = re.findall(r"\{\{\s*(?:>|base|cur:|asset:|meta:|footer_class)[^}]*\}\}", out)
+        left = re.findall(r"\{\{\s*(?:>|base|cur:|asset:|meta:|azienda:|if:|/if|ifnot:|/ifnot|footer_class)[^}]*\}\}", out)
         if left:
             raise SystemExit(f"[errore] {name}: segnaposto non risolti: {left[:3]}")
         dest = os.path.join(ROOT, name)

@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contatti — Veyron</title>
+<title>Contatti: prenota una call di 30 minuti — Veyron</title>
 <link rel="icon" href="favicon.ico" sizes="48x48">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <meta name="description" content="Parla con Veyron: prenota una call conoscitiva di 30 minuti, senza impegno, per capire da dove partire con i dati della tua azienda.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Veyron">
-<meta property="og:title" content="Contatti — Veyron">
+<meta property="og:title" content="Contatti: prenota una call di 30 minuti — Veyron">
 <meta property="og:description" content="Parla con Veyron: prenota una call conoscitiva di 30 minuti, senza impegno, per capire da dove partire con i dati della tua azienda.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://www.veyron.it/contatti.html">
@@ -23,7 +23,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:image" content="https://www.veyron.it/og-image.png">
 <meta name="twitter:image" content="https://www.veyron.it/og-image.png">
-<link rel="stylesheet" href="style.css?v=478792fc">
+<link rel="stylesheet" href="style.css?v=ceaba6bc">
 <noscript><style>[data-reveal],[data-reveal] > *{opacity:1 !important; transform:none !important;}</style></noscript>
 <script type="application/ld+json">
 {
@@ -98,7 +98,7 @@
         <a href="chi-siamo.html">Chi Siamo</a>
         <a href="metodo.html">Metodo</a>
         <a href="soluzioni.html">Soluzioni</a>
-        <a href="risultati.html">Risultati</a>
+        <a href="percorsi.html">Percorsi</a>
         <a href="backtest.html">Benchmark</a>
         <a href="contatti.html" aria-current="page">Contatti</a>
       </div>
@@ -115,7 +115,7 @@
     <a href="chi-siamo.html">Chi Siamo</a>
       <a href="metodo.html">Metodo</a>
       <a href="soluzioni.html">Soluzioni</a>
-      <a href="risultati.html">Risultati</a>
+      <a href="percorsi.html">Percorsi</a>
       <a href="backtest.html">Benchmark</a>
       <a href="contatti.html" aria-current="page">Contatti</a>
     <a href="contatti.html" class="btn btn-primary">Prenota una call</a>
@@ -141,9 +141,9 @@
         <div class="contact-card">
           <h3>Scrivici</h3>
           <p>Rispondiamo entro un giorno lavorativo. Raccontaci in poche righe qual è la domanda che vorresti rispondere con i tuoi dati.</p>
-          <div class="contact-line"><span>Email</span><span>info@veyron.it</span></div>
+          <div class="contact-line"><span>Email</span><span>&#105;&#110;&#102;&#111;&#64;&#118;&#101;&#121;&#114;&#111;&#110;&#46;&#105;&#116;</span></div>
           <div class="contact-line"><span>Risposta</span><span>Entro 24h lavorative</span></div>
-          <form class="contact-form" id="contactForm" action="https://formsubmit.co/info@veyron.it" method="POST">
+          <form class="contact-form" id="contactForm" action="https://formsubmit.co/info&#64;veyron.it" data-ajax="https://formsubmit.co/ajax/info&#64;veyron.it" data-mail-u="info" data-mail-d="veyron.it" method="POST">
             <div class="form-row">
               <div class="field">
                 <label for="cf-nome">Nome</label>
@@ -161,6 +161,29 @@
             <div class="field">
               <label for="cf-email">Email per la risposta</label>
               <input id="cf-email" name="email" type="email" autocomplete="email" required maxlength="120">
+            </div>
+            <div class="form-row">
+              <div class="field">
+                <label for="cf-dimensione">Dimensione dell'azienda <span class="opt">(facoltativo)</span></label>
+                <select id="cf-dimensione" name="Dimensione">
+                  <option value="">Preferisco non indicarla</option>
+                  <option>1-9 addetti</option>
+                  <option>10-49 addetti</option>
+                  <option>50-250 addetti</option>
+                  <option>Oltre 250 addetti</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="cf-strumenti">Dove stanno oggi i dati? <span class="opt">(facoltativo)</span></label>
+                <select id="cf-strumenti" name="Strumenti">
+                  <option value="">Preferisco non indicarlo</option>
+                  <option>Soprattutto fogli Excel</option>
+                  <option>Gestionale / ERP</option>
+                  <option>CRM</option>
+                  <option>Un mix di strumenti</option>
+                  <option>Non so da dove partire</option>
+                </select>
+              </div>
             </div>
             <div class="field">
               <label for="cf-problema">Qual è il problema o la domanda?</label>
@@ -221,7 +244,7 @@
           <p>Per prenotare uno slot usiamo Calendly, un servizio di terze parti con sede negli Stati Uniti. Se carichi il calendario, Calendly riceverà il tuo indirizzo IP e potrà impostare cookie propri. Finché non lo carichi, nessun dato viene inviato a Calendly. Dettagli nella nostra <a href="privacy.html#cookie">Privacy Policy</a> e nell'<a href="https://calendly.com/privacy" target="_blank" rel="noopener noreferrer">informativa di Calendly</a>.</p>
           <div class="calendly-consent-actions">
             <button type="button" class="btn btn-primary" id="loadCalendly">Carica il calendario</button>
-            <a class="btn btn-ghost" href="mailto:info@veyron.it?subject=Richiesta%20call%20conoscitiva">Preferisco scrivere via email</a>
+            <a class="btn btn-ghost" href="mailto:&#105;&#110;&#102;&#111;&#64;&#118;&#101;&#121;&#114;&#111;&#110;&#46;&#105;&#116;?subject=Richiesta%20call%20conoscitiva">Preferisco scrivere via email</a>
           </div>
         </div>
         <div class="calendly-inline-widget" id="calendlyFrame" hidden></div>
@@ -263,13 +286,13 @@
     <div class="footer-top">
       <div class="footer-brand">
         <a class="logo" href="index.html"><img class="logo-mark" src="img/logo-mark.png" alt="Veyron" width="26" height="26">VEYRON<span class="dot">.</span></a>
-        <p>Consulenza data &amp; AI per piccole e medie imprese. Analizziamo, preveniamo, automatizziamo.</p>
+        <p>Consulenza data &amp; AI per piccole e medie imprese. Dati, intelligence, AI e automazione al servizio delle decisioni.</p>
       </div>
       <div class="footer-col">
         <span class="label">Azienda</span>
         <a href="chi-siamo.html">Chi Siamo</a>
         <a href="metodo.html">Metodo</a>
-        <a href="risultati.html">Risultati</a>
+        <a href="percorsi.html">Percorsi</a>
         <a href="backtest.html">Benchmark</a>
       </div>
       <div class="footer-col">
@@ -281,8 +304,11 @@
       <div class="footer-col">
         <span class="label">Contatti</span>
         <a href="contatti.html">Prenota una call</a>
-        <a href="mailto:info@veyron.it">info@veyron.it</a>
+        <a href="mailto:&#105;&#110;&#102;&#111;&#64;&#118;&#101;&#121;&#114;&#111;&#110;&#46;&#105;&#116;">&#105;&#110;&#102;&#111;&#64;&#118;&#101;&#121;&#114;&#111;&#110;&#46;&#105;&#116;</a>
       </div>
+    </div>
+    <div class="footer-company">
+      <span>Samuele Rocchi, ditta individuale Veyron</span>
     </div>
     <div class="footer-row">
       <span>© 2026 Veyron — Consulenza Data &amp; AI</span>
@@ -295,13 +321,14 @@
   </div>
 </footer>
 
-<script src="site.js?v=36bbec31" defer></script>
+<script src="site.js?v=af52ce8c" defer></script>
 
 <script>
 (function () {
   var btn = document.getElementById('loadCalendly');
   if (!btn) return;
   btn.addEventListener('click', function () {
+    if (window.vTrack) window.vTrack('Calendario caricato');
     var box = document.getElementById('calendlyConsent');
     var host = document.getElementById('calendlyFrame');
     var f = document.createElement('iframe');
@@ -328,6 +355,7 @@
   var status = document.getElementById('cfStatus');
   var done = document.getElementById('cfSuccess');
   var btn = form.querySelector('button[type="submit"]');
+  var mail = form.getAttribute('data-mail-u') + '@' + form.getAttribute('data-mail-d');
 
   function showDone() {
     form.hidden = true;
@@ -336,6 +364,24 @@
   }
   // Ritorno dal modulo inviato senza JavaScript (redirect di FormSubmit)
   if (/[?&]inviato=1(&|$)/.test(location.search)) showDone();
+
+  // Se l'invio fallisce, il messaggio scritto dalla persona non va perso: proponiamo
+  // un'email gia' compilata con il suo testo, da inviare con un click.
+  function showError(data) {
+    var body = 'Nome: ' + (data.Nome || '') + ' ' + (data.Cognome || '') +
+      '\nAzienda: ' + (data.Azienda || '') + '\nEmail: ' + (data.email || '') +
+      '\n\n' + String(data.Problema || '').slice(0, 1200);
+    var href = 'mailto:' + mail + '?subject=' + encodeURIComponent('Richiesta dal sito Veyron') +
+      '&body=' + encodeURIComponent(body);
+    status.className = 'form-status err';
+    status.textContent = 'Non siamo riusciti a inviare il messaggio. Riprova tra poco, oppure ';
+    var a = document.createElement('a');
+    a.href = href;
+    a.textContent = 'invialo dalla tua email (il testo è già compilato)';
+    status.appendChild(a);
+    status.appendChild(document.createTextNode('.'));
+    if (window.vTrack) window.vTrack('Form errore');
+  }
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -347,22 +393,24 @@
     var data = {};
     new FormData(form).forEach(function (v, k) { if (k !== '_next') data[k] = v; });
 
-    fetch(form.action.replace('formsubmit.co/', 'formsubmit.co/ajax/'), {
+    // Senza timeout una richiesta bloccata lascerebbe il pulsante fermo all'infinito
+    var ctrl = window.AbortController ? new AbortController() : null;
+    var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, 15000);
+
+    fetch(form.getAttribute('data-ajax'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
+      signal: ctrl ? ctrl.signal : undefined
     })
       .then(function (r) {
         return r.json().catch(function () { return {}; }).then(function (j) {
           if (!r.ok || String(j.success) === 'false') throw new Error(j.message || ('HTTP ' + r.status));
         });
       })
-      .then(showDone)
-      .catch(function () {
-        btn.disabled = false;
-        status.className = 'form-status err';
-        status.textContent = 'Non siamo riusciti a inviare il messaggio. Riprova tra poco oppure scrivici direttamente a info@veyron.it.';
-      });
+      .then(function () { if (window.vTrack) window.vTrack('Form inviato'); showDone(); })
+      .catch(function () { btn.disabled = false; showError(data); })
+      .then(function () { clearTimeout(timer); });
   });
 })();
 </script>

@@ -1,0 +1,45 @@
+name: Pubblica il sito
+
+# Pubblica su GitHub Pages SOLO la cartella dist/ (senza src/, script e dati interni).
+#
+# ATTIVAZIONE (una volta sola):
+#   1. Repository > Settings > Pages > Build and deployment > Source: "GitHub Actions".
+#   2. Lancia a mano questo workflow da Actions e verifica il sito.
+#   3. Quando e' tutto ok, sostituisci "workflow_dispatch:" con il blocco "push" qui sotto
+#      (decommentalo) per pubblicare a ogni push su main.
+on:
+  workflow_dispatch:
+  # push:
+  #   branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # date lastmod della sitemap dalla storia git
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pillow
+      - run: python3 Script_Python/build_site.py --check
+      - run: python3 Script_Python/make_dist.py
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - id: deployment
+        uses: actions/deploy-pages@v4

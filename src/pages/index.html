@@ -31,9 +31,10 @@
   "name": "Veyron",
   "url": "https://www.veyron.it/",
   "description": "Veyron è uno studio di consulenza data & AI per PMI: analisi, intelligence, intelligenza artificiale e automazione al servizio delle decisioni.",
-  "email": "info@veyron.it",
+  "email": "{{azienda:email_json}}",
   "areaServed": "IT",
-  "address": { "@type": "PostalAddress", "addressCountry": "IT" },
+  {{if:partita_iva}}"vatID": "{{azienda:piva_it}}",
+  {{/if}}"address": {{azienda:sede_json}},
   "founder": {"@type":"Person","name":"Samuele Rocchi","jobTitle":"Titolare e fondatore","sameAs":["https://www.linkedin.com/in/samuele-rocchi-5b82622ba/"]},
   "member": {"@type":"Person","name":"Leonardo Giovanni De Bortoli","jobTitle":"Collaboratore, analisi finanziaria","sameAs":["https://www.linkedin.com/in/leonardo-de-bortoli-862ba22b9/"]}
 }
@@ -54,6 +55,7 @@
       <div class="hero-content">
         <h1>Trasformiamo i dati della tua azienda in decisioni migliori.</h1>
         <p class="hero-sub">Veyron è uno studio di consulenza data &amp; AI: analizziamo i dati che generi ogni giorno, li mettiamo in relazione e costruiamo gli strumenti — dashboard, previsioni, automazioni — che ti permettono di decidere con più sicurezza.</p>
+        <p class="hero-cred"><strong>Formazione statistico-finanziaria all'Università di Bologna e background bancario:</strong> siamo abituati a leggere bilanci e numeri con occhio critico.</p>
         <div class="hero-actions">
           <a href="metodo.html" class="btn btn-primary">Scopri il metodo</a>
           <a href="contatti.html" class="btn btn-ghost">Prenota una call</a>

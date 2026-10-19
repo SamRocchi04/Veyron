@@ -1,0 +1,7 @@
+{
+  "_nota": "Statistiche di visita senza cookie. Per attivarle: crea l'account (es. Plausible o Umami), incolla in 'snippet' il tag <script ...></script> che ti da' il provider, scrivi il nome in 'provider' e metti 'attivo' a true, poi lancia build_site.py. Con 'attivo': false (o snippet vuoto) non viene caricato nulla e la privacy policy dice che non ci sono analytics. 'nota_privacy' e' una frase facoltativa per la privacy (es. dove sono trattati i dati): scrivila solo se corrisponde al vero per il provider scelto.",
+  "attivo": false,
+  "provider": "",
+  "snippet": "",
+  "nota_privacy": ""
+}
