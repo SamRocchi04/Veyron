@@ -13,7 +13,7 @@
 <meta property="og:description" content="Veyron è uno studio di consulenza data & AI per PMI: analisi, intelligence, intelligenza artificiale e automazione al servizio delle decisioni.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://www.veyron.it/">
-<meta name="theme-color" content="#F5F3EE">
+<meta name="theme-color" content="#030A14">
 <meta property="og:url" content="https://www.veyron.it/">
 <!-- Typefaces: Fraunces (titoli) + Inter (testo e UI) + IBM Plex Mono (solo numeri), self-hosted in /fonts -->
 <link rel="preload" href="fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -35,13 +35,12 @@
   "areaServed": "IT",
   {{if:partita_iva}}"vatID": "{{azienda:piva_it}}",
   {{/if}}"address": {{azienda:sede_json}},
-  "founder": {"@type":"Person","name":"Samuele Rocchi","jobTitle":"Titolare e fondatore","sameAs":["https://www.linkedin.com/in/samuele-rocchi-5b82622ba/"]},
-  "member": {"@type":"Person","name":"Leonardo Giovanni De Bortoli","jobTitle":"Collaboratore, analisi finanziaria","sameAs":["https://www.linkedin.com/in/leonardo-de-bortoli-862ba22b9/"]}
+  "founder": {"@type":"Person","name":"Samuele Rocchi","jobTitle":"Titolare e fondatore","sameAs":["https://www.linkedin.com/in/samuele-rocchi-5b82622ba/"]}
 }
 </script>
 <noscript><style>[data-reveal],[data-reveal] > *{opacity:1 !important; transform:none !important;}</style></noscript>
 </head>
-<body class="home">
+<body class="home photo-topbar">
 
 <a class="skip-link" href="#main-content">Vai al contenuto</a>
 
@@ -50,35 +49,65 @@
 <main id="main-content">
 
   <!-- HERO -->
-  <section class="hero hero-net">
+  <section class="hero hero-net hero-x t-dark">
+    <div class="hx-glow" aria-hidden="true"></div>
     <div class="wrap hero-grid">
       <div class="hero-content">
-        <h1>Trasformiamo i dati della tua azienda in decisioni migliori.</h1>
+        <p class="hx-kicker"><span class="hx-pulse" aria-hidden="true"></span>Consulenza Data &amp; AI per PMI</p>
+        <h1><span class="hx-l"><span>Trasformiamo i dati</span></span> <span class="hx-l"><span>della tua azienda in</span></span> <span class="hx-l"><span><em>decisioni migliori.</em></span></span></h1>
         <p class="hero-sub">Veyron è uno studio di consulenza data &amp; AI: analizziamo i dati che generi ogni giorno, li mettiamo in relazione e costruiamo gli strumenti — dashboard, previsioni, automazioni — che ti permettono di decidere con più sicurezza.</p>
-        <p class="hero-cred"><strong>Formazione statistico-finanziaria all'Università di Bologna e background bancario:</strong> siamo abituati a leggere bilanci e numeri con occhio critico.</p>
         <div class="hero-actions">
           <a href="metodo.html" class="btn btn-primary">Scopri il metodo</a>
           <a href="contatti.html" class="btn btn-ghost">Prenota una call</a>
         </div>
+        <p class="hero-cred"><strong>Formazione statistico-finanziaria all'Università di Bologna e background bancario:</strong> siamo abituati a leggere bilanci e numeri con occhio critico.</p>
       </div>
-      <div class="hero-visual" aria-hidden="true">
-        <svg viewBox="0 0 480 340" focusable="false">
-          <rect x="1" y="1" width="478" height="338" rx="12" class="hv-frame"/>
-          <circle cx="22" cy="20" r="4" class="hv-dot"/><circle cx="36" cy="20" r="4" class="hv-dot"/><circle cx="50" cy="20" r="4" class="hv-dot"/>
-          <text x="458" y="24" text-anchor="end" class="hv-small">Esempio illustrativo</text>
-          <rect x="20" y="42" width="136" height="58" rx="6" class="hv-tile"/><text x="32" y="63" class="hv-small">Ricavi</text><rect x="32" y="74" width="62" height="10" rx="3" class="hv-bar-ink"/>
-          <rect x="172" y="42" width="136" height="58" rx="6" class="hv-tile"/><text x="184" y="63" class="hv-small">Marginalità</text><rect x="184" y="74" width="48" height="10" rx="3" class="hv-bar-ink"/>
-          <rect x="324" y="42" width="136" height="58" rx="6" class="hv-tile"/><text x="336" y="63" class="hv-small">Scorte</text><rect x="336" y="74" width="70" height="10" rx="3" class="hv-bar-ink"/>
-          <rect x="20" y="114" width="440" height="206" rx="8" class="hv-tile"/>
-          <text x="34" y="136" class="hv-small">Andamento e previsione</text>
-          <line x1="34" y1="170" x2="446" y2="170" class="hv-grid"/><line x1="34" y1="210" x2="446" y2="210" class="hv-grid"/><line x1="34" y1="250" x2="446" y2="250" class="hv-grid"/>
-          <rect x="300" y="146" width="146" height="124" class="hv-band"/>
-          <polyline points="34,250 80,236 126,242 172,214 218,222 264,190 300,196" class="hv-line"/>
-          <polyline points="300,196 342,176 384,168 426,152 446,146" class="hv-forecast"/>
-          <circle cx="300" cy="196" r="5" class="hv-pt"/>
-          <text x="34" y="296" class="hv-small">Passato</text><text x="300" y="296" class="hv-small hv-gold">Futuro</text>
-        </svg>
+
+      <div class="console" aria-hidden="true">
+        <div class="cs-bar">
+          <span class="cs-dots"><i></i><i></i><i></i></span>
+          <span class="cs-title">veyron / cruscotto-direzione</span>
+          <span class="cs-live"><b></b>Live</span>
+        </div>
+        <div class="cs-kpis">
+          <div class="cs-kpi"><span class="cs-k">Ricavi · da inizio anno</span><span class="cs-v">€<span data-count>4,25</span> M</span><span class="cs-d up">&#9650; +6,2% vs 2025</span></div>
+          <div class="cs-kpi"><span class="cs-k">EBITDA / Vendite</span><span class="cs-v"><span data-count>11,4</span>%</span><span class="cs-d up">&#9650; +0,8 pt</span></div>
+          <div class="cs-kpi"><span class="cs-k">Giorni di scorta</span><span class="cs-v"><span data-count>62</span> gg</span><span class="cs-d up">&#9660; &minus;5 gg</span></div>
+        </div>
+        <div class="cs-chart">
+          <div class="cs-chart-head"><span>Ricavi mensili e previsione a 6 mesi</span><span class="cs-legend"><i class="l-real"></i>Reale<i class="l-fc"></i>Previsione</span></div>
+          <svg class="cs-svg" viewBox="0 0 600 226" focusable="false" data-vals="372,388,401,332,379,405,414,436,391,398,421,433,428,447,459,371,438,462,471,496,449,458,484,497" data-labels="Mag 25,Giu 25,Lug 25,Ago 25,Set 25,Ott 25,Nov 25,Dic 25,Gen 26,Feb 26,Mar 26,Apr 26,Mag 26,Giu 26,Lug 26,Ago 26,Set 26,Ott 26,Nov 26,Dic 26,Gen 27,Feb 27,Mar 27,Apr 27" data-real="18">
+            <defs><linearGradient id="csArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7FB3E8" stop-opacity=".38"/><stop offset="1" stop-color="#7FB3E8" stop-opacity="0"/></linearGradient></defs>
+            <line x1="40" y1="26" x2="584" y2="26" class="cs-grid"/><line x1="40" y1="68.5" x2="584" y2="68.5" class="cs-grid"/><line x1="40" y1="111" x2="584" y2="111" class="cs-grid"/><line x1="40" y1="153.5" x2="584" y2="153.5" class="cs-grid"/><line x1="40" y1="196" x2="584" y2="196" class="cs-grid"/>
+            <polygon points="442.1,81.2 465.7,68.9 489.4,44.5 513.0,73.3 536.7,60.7 560.3,34.8 584.0,18.4 584.0,94.5 560.3,96.5 536.7,107.4 513.0,107.6 489.4,69.8 465.7,80.9 442.1,81.2" class="cs-band"/>
+            <polygon points="40.0,196 40.0,145.0 63.7,133.7 87.3,124.5 111.0,173.3 134.6,140.0 158.3,121.6 181.9,115.2 205.6,99.7 229.2,131.5 252.9,126.6 276.5,110.3 300.2,101.8 323.8,105.3 347.5,91.9 371.1,83.4 394.8,145.7 418.4,98.3 442.1,81.2 442.1,196" class="cs-area"/>
+            <line x1="442.1" y1="18" x2="442.1" y2="196" class="cs-now"/>
+            <polyline points="40.0,145.0 63.7,133.7 87.3,124.5 111.0,173.3 134.6,140.0 158.3,121.6 181.9,115.2 205.6,99.7 229.2,131.5 252.9,126.6 276.5,110.3 300.2,101.8 323.8,105.3 347.5,91.9 371.1,83.4 394.8,145.7 418.4,98.3 442.1,81.2" class="cs-line" pathLength="1"/>
+            <polyline points="442.1,81.2 465.7,74.9 489.4,57.2 513.0,90.5 536.7,84.1 560.3,65.7 584.0,56.5" class="cs-fc"/>
+            <circle cx="442.1" cy="81.2" r="4.5" class="cs-pt"/>
+            <text x="434.1" y="16" text-anchor="end" class="cs-tick">Oggi</text>
+            <text x="450.1" y="16" class="cs-tick cs-gold">Previsione</text>
+            <text x="40.0" y="216" text-anchor="middle" class="cs-tick">Mag</text><text x="181.9" y="216" text-anchor="middle" class="cs-tick">Nov</text><text x="323.8" y="216" text-anchor="middle" class="cs-tick">Mag</text><text x="442.1" y="216" text-anchor="middle" class="cs-tick">Ott</text><text x="584.0" y="216" text-anchor="middle" class="cs-tick">Apr</text>
+            <g class="cs-cursor" hidden><line class="cs-cur-line" y1="18" y2="196"/><circle class="cs-cur-dot" r="4.5"/></g>
+          </svg>
+          <div class="cs-tip" hidden></div>
+        </div>
+        <ul class="cs-feed" role="list">
+          <li><span class="cs-tag warn">Alert</span><span>Marginalità linea B sotto soglia: &minus;2,1 pt</span><time>09:41</time></li>
+          <li><span class="cs-tag info">Previsione</span><span>Rottura scorta articolo 4471 tra 9 giorni</span><time>09:12</time></li>
+          <li><span class="cs-tag ok">Report</span><span>Report settimanale inviato a 6 destinatari</span><time>08:00</time></li>
+        </ul>
+        <p class="cs-note">Esempio illustrativo · dati fittizi</p>
       </div>
+    </div>
+
+    <div class="wrap">
+      <dl class="hx-stats">
+        <div><dt>PMI italiane analizzate</dt><dd><span data-count>{{meta:mostrate|int}}</span></dd></div>
+        <div><dt>Anni di bilanci reali per ogni PMI</dt><dd><span data-count>{{meta:orizzonteAnni|int}}</span></dd></div>
+        <div><dt>Settori a confronto</dt><dd><span data-count>{{meta:nSettori|int}}</span></dd></div>
+        <div><dt>Giorni lavorativi per il primo Audit</dt><dd>5<small>–</small>7</dd></div>
+      </dl>
     </div>
   </section>
   <!-- BANDA DATI A SCORRIMENTO (numeri letti da data/benchmark.json) -->
@@ -225,15 +254,15 @@
       </div>
       <div class="stat-row bench-row" data-reveal>
         <div class="stat-cell">
-          <div class="bench-num">{{meta:ebitdaMarginRealeT0|pct1}}</div>
+          <div class="bench-num" data-count>{{meta:ebitdaMarginRealeT0|pct1}}</div>
           <div class="stat-label">EBITDA/Vendite medio delle {{meta:mostrate|int}} PMI analizzate (ultimo anno)</div>
         </div>
         <div class="stat-cell">
-          <div class="bench-num gold">{{meta:ebitdaMarginObiettivoT0|pct1}}</div>
+          <div class="bench-num gold" data-count>{{meta:ebitdaMarginObiettivoT0|pct1}}</div>
           <div class="stat-label">Soglia media del miglior quartile (75° percentile) dei rispettivi settori</div>
         </div>
         <div class="stat-cell">
-          <div class="bench-num">{{meta:mostrate|int}}</div>
+          <div class="bench-num" data-count>{{meta:mostrate|int}}</div>
           <div class="stat-label">PMI in {{meta:nSettori|int}} settori, {{meta:orizzonteAnni|int}} anni di bilanci</div>
         </div>
       </div>
@@ -263,7 +292,7 @@
         <span class="photo-block-mark" aria-hidden="true"></span>
         <div class="photo-block-content">
           <div class="eyebrow">Come lavoriamo</div>
-          <h3>Un team che siede al tuo tavolo, non un fornitore a distanza</h3>
+          <h3>Uno studio che siede al tuo tavolo, non un fornitore a distanza</h3>
         </div>
       </div>
     </div>
@@ -281,7 +310,7 @@
         <div class="security-row">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="10" width="16" height="10" rx="1.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
           <h3>Protezione dei dati</h3>
-          <p>Comunicazioni cifrate in transito (HTTPS/TLS) e, dove i sistemi coinvolti lo prevedono, dati cifrati a riposo. Accesso limitato al solo team di progetto.</p>
+          <p>Comunicazioni cifrate in transito (HTTPS/TLS) e, dove i sistemi coinvolti lo prevedono, dati cifrati a riposo. Accesso limitato a chi lavora al progetto.</p>
         </div>
         <div class="security-row">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l7 3v5c0 4.5-3 8.2-7 10-4-1.8-7-5.5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>

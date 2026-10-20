@@ -134,3 +134,80 @@ window.vTrack = function (name) {
     else if (window.umami && typeof window.umami.track === 'function') window.umami.track(name);
   } catch (e) { /* le statistiche non devono mai rompere il sito */ }
 };
+
+
+// Contatori animati: leggono il numero scritto nell'HTML (formato italiano, es. 6,8% o 1.582) e lo fanno crescere.
+(function countSetup() {
+  var els = document.querySelectorAll('[data-count]');
+  if (!els.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+  var RE = /^(\d{1,3}(?:\.\d{3})+|\d+)(?:,(\d+))?(\s*[%a-zA-Z]*)$/;
+  var fmt = function (v, dec) {
+    return v.toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec })
+      .replace(/,/g, '§').replace(/\./g, ',').replace(/§/g, '.');
+  };
+  var run = function (el) {
+    var m = RE.exec(el.textContent.trim());
+    if (!m) return;
+    var dec = m[2] ? m[2].length : 0;
+    var target = parseFloat(m[1].replace(/\./g, '') + (m[2] ? '.' + m[2] : ''));
+    var suffix = m[3] || '';
+    var dur = 1300, t0 = performance.now();
+    var step = function (now) {
+      var p = Math.min((now - t0) / dur, 1);
+      el.textContent = fmt(target * (1 - Math.pow(1 - p, 4)), dec) + suffix;
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { run(e.target); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.4 });
+  els.forEach(function (el) { io.observe(el); });
+})();
+
+// Cruscotto della hero (decorativo): cursore sul grafico e riga attiva nel feed.
+(function consoleSetup() {
+  var svg = document.querySelector('.cs-svg');
+  if (svg) {
+    var parse = function (sel) {
+      return svg.querySelector(sel).getAttribute('points').trim().split(/\s+/).map(function (p) {
+        var a = p.split(','); return [parseFloat(a[0]), parseFloat(a[1])];
+      });
+    };
+    var vals = svg.getAttribute('data-vals').split(',').map(Number);
+    var labels = svg.getAttribute('data-labels').split(',');
+    var real = parseInt(svg.getAttribute('data-real'), 10);
+    var pts = parse('.cs-line').concat(parse('.cs-fc').slice(1));
+    var cur = svg.querySelector('.cs-cursor');
+    var line = svg.querySelector('.cs-cur-line');
+    var dot = svg.querySelector('.cs-cur-dot');
+    var tip = document.querySelector('.cs-tip');
+    var VW = 600, VH = 226;
+    var hide = function () { cur.setAttribute('hidden', ''); tip.setAttribute('hidden', ''); };
+    svg.addEventListener('pointermove', function (e) {
+      var r = svg.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width * VW, best = 0;
+      for (var i = 1; i < pts.length; i++) if (Math.abs(pts[i][0] - x) < Math.abs(pts[best][0] - x)) best = i;
+      line.setAttribute('x1', pts[best][0]); line.setAttribute('x2', pts[best][0]);
+      dot.setAttribute('cx', pts[best][0]); dot.setAttribute('cy', pts[best][1]);
+      cur.removeAttribute('hidden');
+      tip.innerHTML = '<span>' + labels[best] + (best >= real ? ' · prev.' : '') + '</span>€' + vals[best] + ' k';
+      tip.style.left = (svg.offsetLeft + pts[best][0] / VW * r.width) + 'px';
+      tip.style.top = (svg.offsetTop + pts[best][1] / VH * r.height) + 'px';
+      tip.removeAttribute('hidden');
+    });
+    svg.addEventListener('pointerleave', hide);
+  }
+  var rows = document.querySelectorAll('.cs-feed li');
+  if (rows.length > 1 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var i = 0;
+    rows[0].classList.add('is-on');
+    setInterval(function () {
+      rows[i].classList.remove('is-on');
+      i = (i + 1) % rows.length;
+      rows[i].classList.add('is-on');
+    }, 2800);
+  }
+})();
