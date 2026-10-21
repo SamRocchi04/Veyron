@@ -875,7 +875,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <meta name="twitter:card" content="summary">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://www.veyron.it/backtest.html">
-<meta name="theme-color" content="#030A14">
+<meta name="theme-color" content="#F6F3EC">
 <meta property="og:url" content="https://www.veyron.it/backtest.html">
 <meta property="og:image" content="https://www.veyron.it/og-image.png">
 <meta name="twitter:card" content="summary_large_image">

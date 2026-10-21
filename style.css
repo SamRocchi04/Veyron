@@ -2258,3 +2258,77 @@ h1,h2{text-wrap:balance}
 .levels .level-row .level-node,.levels.flat .level-row .level-node{background:var(--sheet);color:var(--teal);border:1px solid var(--line-strong);font-family:'Fraunces',Georgia,serif;font-weight:500}
 /* cifre grandi in serif, non in monospazio */
 .bench-num,.stat-cell .stat-num,.res-num,.kpi-card .kpi-num{font-family:'Fraunces',Georgia,serif;font-weight:500;letter-spacing:-.02em}
+
+/* ==== REVISIONE v3: ritmo, contrasto, logo ==== */
+
+/* Ritmo: padding verticali più stretti, distacco tra intestazione e contenuto ridotto */
+section{padding:84px 0}
+section.tight{padding:60px 0}
+.method-head{margin-bottom:44px}
+.value-grid,.stat-row{margin-top:40px}
+.page-hero.ph-x{padding:132px 0 56px}
+.hero.hero-x{padding-top:116px}
+.hx-stats{margin-top:48px}
+.final-cta{padding:72px 0 96px}
+.mt-44{margin-top:32px!important}
+.mt-56{margin-top:40px!important}
+@media (max-width:860px){
+  section{padding:60px 0}
+  section.tight{padding:48px 0}
+  .method-head{margin-bottom:32px}
+  .final-cta{padding:56px 0 72px}
+}
+
+/* Contrasto: grigio tenue più scuro (>= 4.5:1 su tutti i fondi crema), testi minuscoli più grandi */
+:root,.t-light,.t-navy,.t-dark{--paper-faint:#566070}
+.final-cta.t-dark,footer.t-dark{--paper-faint:#A8B6C8}
+.rp-meta{font-size:13px}
+.rp-table thead th,.rp-bars-t,.rp-bar span{font-size:13px}
+.rp-foot{font-size:12.5px}
+.rp-note{font-size:14px;color:var(--paper)}
+.footer-company,.footer-brand p,.footer-legal{font-size:13px}
+.disclaimer-small,.stat-cell .stat-label{font-size:13.5px}
+
+/* Logo: segno pieno in blu inchiostro e wordmark spaziato */
+.logo{font-size:21px;letter-spacing:.14em;gap:12px}
+.logo-mark{width:34px;height:34px;border:0;border-radius:0;box-shadow:none}
+.logo span{letter-spacing:.01em;font-size:13px;color:var(--paper-dim)}
+.logo .dot{color:var(--gold)}
+footer .logo{letter-spacing:.14em}
+
+/* Home: Cosa costruiamo, due colonne con immagine */
+.sol-split{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center}
+.sol-split h2{font-size:clamp(28px,3.6vw,42px);max-width:16ch;margin-bottom:28px}
+.level-list{list-style:none;margin:0 0 32px;padding:0;border-top:1px solid var(--line-strong)}
+.level-list li{display:grid;grid-template-columns:44px 1fr;gap:16px;padding:18px 0;border-bottom:1px solid var(--line)}
+.level-list .ll-k{width:36px;height:36px;display:grid;place-items:center;background:var(--sheet);border:1px solid var(--line-strong);color:var(--teal);font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:17px}
+.level-list h3{font-size:19px;margin-bottom:4px}
+.level-list p{color:var(--paper-dim);font-size:15px;max-width:46ch}
+.sol-split-img{margin:0;align-self:stretch;min-height:420px;position:relative;overflow:hidden;background:#1B2530;border-radius:2px}
+.sol-split-img img,.sol-split-img picture{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+@media (max-width:980px){
+  .sol-split{grid-template-columns:1fr;gap:36px}
+  .sol-split-img{min-height:260px;order:-1}
+}
+
+/* Home: Benchmark, un numero grande al posto delle tre celle */
+.bench-big{display:grid;grid-template-columns:1.3fr auto 1fr;gap:20px 48px;align-items:end;padding:36px 0 28px;border-top:2px solid var(--paper);border-bottom:1px solid var(--line-strong)}
+.bench-big .bb-num{font-size:clamp(64px,9vw,128px);line-height:1;letter-spacing:-.03em}
+.bench-big .bb-side .bb-num{font-size:clamp(40px,5vw,68px);color:var(--paper-dim)}
+.bench-big .bb-cap{margin:12px 0 0;max-width:34ch;font-size:14.5px;line-height:1.45;color:var(--paper-dim)}
+.bench-big .bb-vs{font:600 13px var(--sans);color:var(--paper-faint);padding-bottom:30px;text-transform:uppercase;letter-spacing:.12em}
+.bench-big .bb-foot{grid-column:1/-1;margin:0;padding-top:18px;border-top:1px solid var(--line);font-size:14px;color:var(--paper-dim)}
+@media (max-width:860px){
+  .bench-big{grid-template-columns:1fr;gap:20px}
+  .bench-big .bb-vs{padding-bottom:0}
+}
+
+/* Home: Sicurezza, schede 2x2 */
+.security-grid.sec-cards{grid-template-columns:repeat(2,1fr);margin-top:0;gap:16px;background:none;border:0}
+.sec-cards .security-card{background:var(--sheet);border:1px solid var(--line);padding:28px 28px 30px}
+.sec-cards .security-card h3{font-size:19px;margin-bottom:8px}
+.sec-cards .security-card p{font-size:15px}
+@media (max-width:640px){.security-grid.sec-cards{grid-template-columns:1fr}}
+/* il punto resta attaccato al wordmark */
+.logo .dot{font:inherit;letter-spacing:0;margin-left:-13px;color:var(--gold)}
+.method-item:nth-child(1){--dotcolor:#566070}
