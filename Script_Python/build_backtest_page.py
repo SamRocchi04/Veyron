@@ -182,7 +182,7 @@ CONFIG = dict(
 # anche se in un'esecuzione futura un settore venisse escluso)
 SETTORE_COLOR_MAP = dict(zip(
     CONFIG["settori_target"],
-    ["#0E3A5F", "#875C0E", "#2E7D46", "#3A8FA3", "#A63D3D", "#5B6270"],
+    ["#7FB3E8", "#F0CB84", "#79D79A", "#5CC0D6", "#E58A8A", "#9AA6B8"],
 ))
 
 # le 5 metriche della strategia — "sezione" decide in quale sezione della
@@ -714,7 +714,7 @@ EXTRA_CSS = r"""
 }
 .kpi-card .kpi-num{ font-family:var(--mono); font-weight:500; font-size:24px; color:var(--teal); text-shadow:0 0 22px rgba(14,58,95,0.28); }
 .kpi-card .kpi-num.gold{ color:var(--gold); text-shadow:0 0 22px rgba(156,107,18,0.3); }
-.kpi-card .kpi-num.rose{ color:#A63D3D; text-shadow:0 0 22px rgba(166,61,61,0.3); }
+.kpi-card .kpi-num.rose{ color:#E58A8A; text-shadow:0 0 22px rgba(229,138,138,0.3); }
 .kpi-card .kpi-sub{ margin-top:6px; font-size:12px; color:var(--paper-faint); }
 
 .chart-row{ display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line); margin-top:32px; }
@@ -875,7 +875,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <meta name="twitter:card" content="summary">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://www.veyron.it/backtest.html">
-<meta name="theme-color" content="#F5F3EE">
+<meta name="theme-color" content="#030A14">
 <meta property="og:url" content="https://www.veyron.it/backtest.html">
 <meta property="og:image" content="https://www.veyron.it/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -887,7 +887,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <link rel="stylesheet" href="{{asset:style.css}}">
 <link rel="stylesheet" href="{{asset:backtest.css}}">
 </head>
-<body class="photo-topbar">
+<body>
 
 <a class="skip-link" href="#main-content">Vai al contenuto</a>
 
@@ -895,14 +895,12 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
 <main id="main-content">
 
-  <section class="page-hero photo-hero">
-    <div class="hero-media">
-      <img src="img/dashboard-schermo.jpg" alt="Schermo con una dashboard di monitoraggio: grafici e indicatori" loading="eager" width="2000" height="1333">
-      <div class="wrap">
-      <div class="eyebrow">Benchmark &amp; Analisi di Bilancio</div>
-      <h1>30 PMI italiane a confronto con il miglior quartile del loro settore</h1>
-      <p>La stessa domanda che ci poniamo per una PMI cliente — su quali voci di bilancio può migliorare, e quanto — qui la testiamo su ___N_MOSTRATE___ PMI italiane reali (dati AIDA/Bureau van Dijk), confrontando ogni azienda con il miglior quartile del proprio settore negli ultimi ___ORIZZONTE___ anni. Nessun nome d’azienda è pubblicato: solo etichette anonime.</p>
-      </div>
+  <section class="page-hero hero-x ph-x t-dark">
+    <div class="hx-glow" aria-hidden="true"></div>
+    <div class="wrap">
+      <p class="hx-kicker"><span class="hx-pulse" aria-hidden="true"></span>Benchmark &amp; Analisi di Bilancio</p>
+      <h1><span class="hx-l"><span>30 PMI italiane a confronto con il miglior quartile del loro settore</span></span></h1>
+      <p class="hero-sub">La stessa domanda che ci poniamo per una PMI cliente — su quali voci di bilancio può migliorare, e quanto — qui la testiamo su ___N_MOSTRATE___ PMI italiane reali (dati AIDA/Bureau van Dijk), confrontando ogni azienda con il miglior quartile del proprio settore negli ultimi ___ORIZZONTE___ anni. Nessun nome d’azienda è pubblicato: solo etichette anonime.</p>
     </div>
   </section>
 
@@ -1038,9 +1036,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
           <div class="chart-sub" id="ringSub">% di differenza dei costi operativi rispetto al benchmark, ultimo anno (stima teorica)</div>
           <svg class="ring-svg" viewBox="0 0 190 190" width="190" height="190" role="img" aria-label="divario teorico percentuale sui costi">
             <circle cx="95" cy="95" r="87" fill="none" stroke="rgba(21,26,33,0.10)" stroke-width="16"/>
-            <circle id="ringProgress" cx="95" cy="95" r="87" fill="none" stroke="#2E7D46" stroke-width="16"
+            <circle id="ringProgress" cx="95" cy="95" r="87" fill="none" stroke="#79D79A" stroke-width="16"
               stroke-dasharray="0 1000" stroke-linecap="round" transform="rotate(-90 95 95)"/>
-            <text id="ringText" x="95" y="103" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-weight="600" font-size="34" fill="#2E7D46">0%</text>
+            <text id="ringText" x="95" y="103" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-weight="600" font-size="34" fill="#79D79A">0%</text>
           </svg>
           <div class="summary-list" id="summaryList"></div>
         </div>
@@ -1098,8 +1096,8 @@ DASHBOARD_JS = r"""
   const DATA = await resp.json();
 
   const COLORS = {
-    teal:'#0E3A5F', gold:'#875C0E', secure:'#2E7D46', rose:'#A63D3D',
-    paper:'#151A21', paperDim:'#5B6270', paperFaint:'#666C7E', line:'rgba(21,26,33,0.10)'
+    teal:'#7FB3E8', gold:'#F0CB84', secure:'#79D79A', rose:'#E58A8A',
+    paper:'#EFF4FA', paperDim:'#A7BBD1', paperFaint:'#7F96B1', line:'rgba(255,255,255,0.12)'
   };
 
   Chart.defaults.color = COLORS.paperDim;
@@ -1130,7 +1128,7 @@ DASHBOARD_JS = r"""
   }
 
   const tooltipBase = {
-    backgroundColor: '#E6E3D9', borderColor: 'rgba(21,26,33,0.20)', borderWidth: 1,
+    backgroundColor: '#0B1B30', borderColor: 'rgba(255,255,255,0.22)', borderWidth: 1,
     titleColor: COLORS.paper, bodyColor: COLORS.paperDim, padding: 10, boxPadding: 4,
     titleFont: { family: "'Fraunces', sans-serif", weight: '500' },
     bodyFont: { family: "'IBM Plex Mono', monospace", size: 11.5 }
@@ -1210,7 +1208,7 @@ DASHBOARD_JS = r"""
     const ctx = document.getElementById(canvasId).getContext('2d');
     return new Chart(ctx, {
       type: 'doughnut',
-      data: { labels: DATA.sectors, datasets: [{ data: values, backgroundColor: DATA.sectorColors, borderColor: '#F5F3EE', borderWidth: 2, offset: DATA.sectors.map(()=>0) }] },
+      data: { labels: DATA.sectors, datasets: [{ data: values, backgroundColor: DATA.sectorColors, borderColor: '#0A2038', borderWidth: 2, offset: DATA.sectors.map(()=>0) }] },
       options: {
         responsive: true, maintainAspectRatio: false, cutout: '66%',
         plugins: {

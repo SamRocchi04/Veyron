@@ -12,7 +12,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://www.veyron.it/backtest.html">
-<meta name="theme-color" content="#F5F3EE">
+<meta name="theme-color" content="#030A14">
 <meta property="og:url" content="https://www.veyron.it/backtest.html">
 <meta property="og:image" content="https://www.veyron.it/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -23,8 +23,8 @@
 <link rel="preload" href="fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="fonts/fonts.css">
-<link rel="stylesheet" href="style.css?v=4a197415">
-<link rel="stylesheet" href="backtest.css?v=487bf068">
+<link rel="stylesheet" href="style.css?v=782a1224">
+<link rel="stylesheet" href="backtest.css?v=2ce00486">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -46,7 +46,7 @@
 }
 </script>
 </head>
-<body class="photo-topbar">
+<body>
 
 <a class="skip-link" href="#main-content">Vai al contenuto</a>
 
@@ -84,14 +84,12 @@
 
 <main id="main-content">
 
-  <section class="page-hero photo-hero">
-    <div class="hero-media">
-      <picture><source type="image/avif" srcset="img/dashboard-schermo-640.avif 640w, img/dashboard-schermo-1024.avif 1024w, img/dashboard-schermo-1600.avif 1600w, img/dashboard-schermo-1800.avif 1800w" sizes="100vw"><source type="image/webp" srcset="img/dashboard-schermo-640.webp 640w, img/dashboard-schermo-1024.webp 1024w, img/dashboard-schermo-1600.webp 1600w, img/dashboard-schermo-1800.webp 1800w" sizes="100vw"><img src="img/dashboard-schermo.jpg" alt="Schermo con una dashboard di monitoraggio: grafici e indicatori" loading="eager" decoding="async" fetchpriority="high" width="1800" height="1295"></picture>
-      <div class="wrap">
-      <div class="eyebrow">Benchmark &amp; Analisi di Bilancio</div>
-      <h1>30 PMI italiane a confronto con il miglior quartile del loro settore</h1>
-      <p>La stessa domanda che ci poniamo per una PMI cliente — su quali voci di bilancio può migliorare, e quanto — qui la testiamo su 30 PMI italiane reali (dati AIDA/Bureau van Dijk), confrontando ogni azienda con il miglior quartile del proprio settore negli ultimi 5 anni. Nessun nome d’azienda è pubblicato: solo etichette anonime.</p>
-      </div>
+  <section class="page-hero hero-x ph-x t-dark">
+    <div class="hx-glow" aria-hidden="true"></div>
+    <div class="wrap">
+      <p class="hx-kicker"><span class="hx-pulse" aria-hidden="true"></span>Benchmark &amp; Analisi di Bilancio</p>
+      <h1><span class="hx-l"><span>30 PMI italiane a confronto con il miglior quartile del loro settore</span></span></h1>
+      <p class="hero-sub">La stessa domanda che ci poniamo per una PMI cliente — su quali voci di bilancio può migliorare, e quanto — qui la testiamo su 30 PMI italiane reali (dati AIDA/Bureau van Dijk), confrontando ogni azienda con il miglior quartile del proprio settore negli ultimi 5 anni. Nessun nome d’azienda è pubblicato: solo etichette anonime.</p>
     </div>
   </section>
 
@@ -227,9 +225,9 @@
           <div class="chart-sub" id="ringSub">% di differenza dei costi operativi rispetto al benchmark, ultimo anno (stima teorica)</div>
           <svg class="ring-svg" viewBox="0 0 190 190" width="190" height="190" role="img" aria-label="divario teorico percentuale sui costi">
             <circle cx="95" cy="95" r="87" fill="none" stroke="rgba(21,26,33,0.10)" stroke-width="16"/>
-            <circle id="ringProgress" cx="95" cy="95" r="87" fill="none" stroke="#2E7D46" stroke-width="16"
+            <circle id="ringProgress" cx="95" cy="95" r="87" fill="none" stroke="#79D79A" stroke-width="16"
               stroke-dasharray="0 1000" stroke-linecap="round" transform="rotate(-90 95 95)"/>
-            <text id="ringText" x="95" y="103" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-weight="600" font-size="34" fill="#2E7D46">0%</text>
+            <text id="ringText" x="95" y="103" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-weight="600" font-size="34" fill="#79D79A">0%</text>
           </svg>
           <div class="summary-list" id="summaryList"></div>
         </div>
@@ -301,7 +299,7 @@
 
 <script src="site.js?v=f8e91aaa" defer></script>
 <script src="vendor/chart.umd.js?v=283d65ad" defer></script>
-<script src="backtest.js?v=bfde5636" data-json="data/benchmark.json?v=cffdc2ea" defer></script>
+<script src="backtest.js?v=d6b36220" data-json="data/benchmark.json?v=9c5ee3d4" defer></script>
 <script src="utm.js" defer></script>
 </body>
 </html>

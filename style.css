@@ -2118,3 +2118,40 @@ body{font-size:16px;line-height:1.65}
 
 /* ==== Chi siamo: una sola persona ==== */
 .team-grid.solo{grid-template-columns:minmax(0,640px)}
+
+/* ==== STILE UNICO: tutto il sito come la hero della home (scuro, tecnico, griglia + glow) ==== */
+:root{
+  --ink:#0A2038; --ink-2:#0F2A46; --ink-3:#143354;
+  --paper:#EFF4FA; --paper-dim:#A7BBD1; --paper-faint:#7F96B1;
+  --line:rgba(255,255,255,0.14); --line-strong:rgba(255,255,255,0.24);
+  --teal:#7FB3E8; --teal-dim:rgba(127,179,232,0.14);
+  --gold:#F0CB84; --gold-dim:rgba(240,203,132,0.12);
+  --secure:#79D79A; --secure-dim:rgba(121,215,154,0.12);
+  --shadow-soft:rgba(2,8,16,0.5);
+  --shadow-card:0 1px 2px rgba(0,0,0,.3),0 12px 28px -14px rgba(0,0,0,.6);
+  --nav-blur-bg:rgba(3,10,20,0.88);
+  --mobilenav-bg:rgba(3,10,20,0.98);
+  color-scheme:dark;
+}
+body{background:#030A14}
+.btn-primary:hover{background:#A9CDF3}
+
+/* sezioni: stessa griglia tecnica della hero, divisore sottile tra l'una e l'altra */
+main>section.t-navy,main>section.t-dark,main>section:not([class]){
+  background-image:linear-gradient(rgba(143,195,242,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(143,195,242,.04) 1px,transparent 1px);
+  background-size:72px 72px;
+}
+main>section+section{border-top:1px solid rgba(143,195,242,.10)}
+.t-navy{--ink:#0D2B4B;--ink-2:#123560;--ink-3:#173F6E;--paper:#EFF4FA}
+
+/* hero delle pagine interne: stessa hero della home, senza cruscotto */
+.page-hero.ph-x{position:relative;overflow:hidden;isolation:isolate;padding:158px 0 84px;background:#030A14;border-bottom:1px solid var(--line)}
+.page-hero.ph-x h1{max-width:24ch;font-size:clamp(32px,4.2vw,56px);animation:none}
+.page-hero.ph-x .hx-kicker{max-width:none;margin:0 0 24px;font:500 13px/1 var(--sans);letter-spacing:.02em;color:var(--paper-dim);animation:hx-fade .8s ease forwards}
+.page-hero.ph-x .hero-sub{max-width:62ch;margin:24px 0 0;font-size:18px;line-height:1.6;color:var(--paper-dim);animation:hx-fade .8s ease .5s forwards}
+.page-hero.ph-x .hero-actions{margin-top:32px;animation-delay:.62s}
+@media (max-width:640px){.page-hero.ph-x{padding:116px 0 56px}.page-hero.ph-x .hero-sub{font-size:16.5px}}
+
+/* moduli: campi scuri come il resto */
+.contact-form input[type="text"],.contact-form input[type="email"],.contact-form select,.contact-form textarea{background:rgba(255,255,255,.05)}
+.contact-form select option{background:#0A2038;color:var(--paper)}

@@ -11,8 +11,8 @@
   const DATA = await resp.json();
 
   const COLORS = {
-    teal:'#0E3A5F', gold:'#875C0E', secure:'#2E7D46', rose:'#A63D3D',
-    paper:'#151A21', paperDim:'#5B6270', paperFaint:'#666C7E', line:'rgba(21,26,33,0.10)'
+    teal:'#7FB3E8', gold:'#F0CB84', secure:'#79D79A', rose:'#E58A8A',
+    paper:'#EFF4FA', paperDim:'#A7BBD1', paperFaint:'#7F96B1', line:'rgba(255,255,255,0.12)'
   };
 
   Chart.defaults.color = COLORS.paperDim;
@@ -43,7 +43,7 @@
   }
 
   const tooltipBase = {
-    backgroundColor: '#E6E3D9', borderColor: 'rgba(21,26,33,0.20)', borderWidth: 1,
+    backgroundColor: '#0B1B30', borderColor: 'rgba(255,255,255,0.22)', borderWidth: 1,
     titleColor: COLORS.paper, bodyColor: COLORS.paperDim, padding: 10, boxPadding: 4,
     titleFont: { family: "'Fraunces', sans-serif", weight: '500' },
     bodyFont: { family: "'IBM Plex Mono', monospace", size: 11.5 }
@@ -123,7 +123,7 @@
     const ctx = document.getElementById(canvasId).getContext('2d');
     return new Chart(ctx, {
       type: 'doughnut',
-      data: { labels: DATA.sectors, datasets: [{ data: values, backgroundColor: DATA.sectorColors, borderColor: '#F5F3EE', borderWidth: 2, offset: DATA.sectors.map(()=>0) }] },
+      data: { labels: DATA.sectors, datasets: [{ data: values, backgroundColor: DATA.sectorColors, borderColor: '#0A2038', borderWidth: 2, offset: DATA.sectors.map(()=>0) }] },
       options: {
         responsive: true, maintainAspectRatio: false, cutout: '66%',
         plugins: {
