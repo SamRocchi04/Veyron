@@ -49,13 +49,12 @@
 <main id="main-content">
 
   <!-- HERO -->
-  <section class="hero hero-net hero-x t-dark">
-    <div class="hx-glow" aria-hidden="true"></div>
+  <section class="hero hero-net hero-x t-light">
     <div class="wrap hero-grid">
       <div class="hero-content">
-        <p class="hx-kicker"><span class="hx-pulse" aria-hidden="true"></span>Consulenza Data &amp; AI per PMI</p>
-        <h1><span class="hx-l"><span>Trasformiamo i dati</span></span> <span class="hx-l"><span>della tua azienda in</span></span> <span class="hx-l"><span><em>decisioni migliori.</em></span></span></h1>
-        <p class="hero-sub">Veyron è uno studio di consulenza data &amp; AI: analizziamo i dati che generi ogni giorno, li mettiamo in relazione e costruiamo gli strumenti — dashboard, previsioni, automazioni — che ti permettono di decidere con più sicurezza.</p>
+        <p class="hx-kicker">Consulenza Data &amp; AI per PMI</p>
+        <h1>Sai quanto fatturi. Sai anche quanto guadagni su ogni cliente e prodotto?</h1>
+        <p class="hero-sub">Veyron è uno studio di consulenza per piccole e medie imprese. Partiamo dai numeri che hai già — gestionale, fogli Excel, bilanci — e li trasformiamo in report chiari, avvisi automatici e previsioni, per decidere su dati aggiornati e non a sensazione.</p>
         <div class="hero-actions">
           <a href="metodo.html" class="btn btn-primary">Scopri il metodo</a>
           <a href="contatti.html" class="btn btn-ghost">Prenota una call</a>
@@ -63,42 +62,26 @@
         <p class="hero-cred"><strong>Formazione statistico-finanziaria all'Università di Bologna e background bancario:</strong> siamo abituati a leggere bilanci e numeri con occhio critico.</p>
       </div>
 
-      <div class="console" aria-hidden="true">
-        <div class="cs-bar">
-          <span class="cs-dots"><i></i><i></i><i></i></span>
-          <span class="cs-title">veyron / cruscotto-direzione</span>
-          <span class="cs-live"><b></b>Live</span>
+      <figure class="report" aria-label="Esempio di report di direzione con dati fittizi">
+        <div class="rp-head"><span class="rp-title">Report di direzione</span><span class="rp-meta">Gen–Set 2026 · confronto con 2025</span></div>
+        <table class="rp-table">
+          <thead><tr><th scope="col">Linea di prodotto</th><th scope="col">Ricavi</th><th scope="col">Margine</th><th scope="col">vs 2025</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Linea A</th><td>€ 2,10 M</td><td>13,2%</td><td class="up">+2,4 pt</td></tr>
+            <tr class="flag"><th scope="row">Linea B</th><td>€ 1,35 M</td><td>8,4%</td><td class="down">&minus;2,1 pt</td></tr>
+            <tr><th scope="row">Linea C</th><td>€ 0,80 M</td><td>11,6%</td><td class="up">+1,3 pt</td></tr>
+          </tbody>
+          <tfoot><tr><th scope="row">Totale</th><td>€ 4,25 M</td><td>11,4%</td><td class="up">+0,8 pt</td></tr></tfoot>
+        </table>
+        <div class="rp-bars" aria-hidden="true">
+          <p class="rp-bars-t">Margine per linea · soglia di riferimento 10%</p>
+          <div class="rp-bar"><span>A</span><div class="trk"><i style="width:82.5%"></i></div></div>
+          <div class="rp-bar low"><span>B</span><div class="trk"><i style="width:52.5%"></i></div></div>
+          <div class="rp-bar"><span>C</span><div class="trk"><i style="width:72.5%"></i></div></div>
         </div>
-        <div class="cs-kpis">
-          <div class="cs-kpi"><span class="cs-k">Ricavi · da inizio anno</span><span class="cs-v">€<span data-count>4,25</span> M</span><span class="cs-d up">&#9650; +6,2% vs 2025</span></div>
-          <div class="cs-kpi"><span class="cs-k">EBITDA / Vendite</span><span class="cs-v"><span data-count>11,4</span>%</span><span class="cs-d up">&#9650; +0,8 pt</span></div>
-          <div class="cs-kpi"><span class="cs-k">Giorni di scorta</span><span class="cs-v"><span data-count>62</span> gg</span><span class="cs-d up">&#9660; &minus;5 gg</span></div>
-        </div>
-        <div class="cs-chart">
-          <div class="cs-chart-head"><span>Ricavi mensili e previsione a 6 mesi</span><span class="cs-legend"><i class="l-real"></i>Reale<i class="l-fc"></i>Previsione</span></div>
-          <svg class="cs-svg" viewBox="0 0 600 226" focusable="false" data-vals="372,388,401,332,379,405,414,436,391,398,421,433,428,447,459,371,438,462,471,496,449,458,484,497" data-labels="Mag 25,Giu 25,Lug 25,Ago 25,Set 25,Ott 25,Nov 25,Dic 25,Gen 26,Feb 26,Mar 26,Apr 26,Mag 26,Giu 26,Lug 26,Ago 26,Set 26,Ott 26,Nov 26,Dic 26,Gen 27,Feb 27,Mar 27,Apr 27" data-real="18">
-            <defs><linearGradient id="csArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7FB3E8" stop-opacity=".38"/><stop offset="1" stop-color="#7FB3E8" stop-opacity="0"/></linearGradient></defs>
-            <line x1="40" y1="26" x2="584" y2="26" class="cs-grid"/><line x1="40" y1="68.5" x2="584" y2="68.5" class="cs-grid"/><line x1="40" y1="111" x2="584" y2="111" class="cs-grid"/><line x1="40" y1="153.5" x2="584" y2="153.5" class="cs-grid"/><line x1="40" y1="196" x2="584" y2="196" class="cs-grid"/>
-            <polygon points="442.1,81.2 465.7,68.9 489.4,44.5 513.0,73.3 536.7,60.7 560.3,34.8 584.0,18.4 584.0,94.5 560.3,96.5 536.7,107.4 513.0,107.6 489.4,69.8 465.7,80.9 442.1,81.2" class="cs-band"/>
-            <polygon points="40.0,196 40.0,145.0 63.7,133.7 87.3,124.5 111.0,173.3 134.6,140.0 158.3,121.6 181.9,115.2 205.6,99.7 229.2,131.5 252.9,126.6 276.5,110.3 300.2,101.8 323.8,105.3 347.5,91.9 371.1,83.4 394.8,145.7 418.4,98.3 442.1,81.2 442.1,196" class="cs-area"/>
-            <line x1="442.1" y1="18" x2="442.1" y2="196" class="cs-now"/>
-            <polyline points="40.0,145.0 63.7,133.7 87.3,124.5 111.0,173.3 134.6,140.0 158.3,121.6 181.9,115.2 205.6,99.7 229.2,131.5 252.9,126.6 276.5,110.3 300.2,101.8 323.8,105.3 347.5,91.9 371.1,83.4 394.8,145.7 418.4,98.3 442.1,81.2" class="cs-line" pathLength="1"/>
-            <polyline points="442.1,81.2 465.7,74.9 489.4,57.2 513.0,90.5 536.7,84.1 560.3,65.7 584.0,56.5" class="cs-fc"/>
-            <circle cx="442.1" cy="81.2" r="4.5" class="cs-pt"/>
-            <text x="434.1" y="16" text-anchor="end" class="cs-tick">Oggi</text>
-            <text x="450.1" y="16" class="cs-tick cs-gold">Previsione</text>
-            <text x="40.0" y="216" text-anchor="middle" class="cs-tick">Mag</text><text x="181.9" y="216" text-anchor="middle" class="cs-tick">Nov</text><text x="323.8" y="216" text-anchor="middle" class="cs-tick">Mag</text><text x="442.1" y="216" text-anchor="middle" class="cs-tick">Ott</text><text x="584.0" y="216" text-anchor="middle" class="cs-tick">Apr</text>
-            <g class="cs-cursor" hidden><line class="cs-cur-line" y1="18" y2="196"/><circle class="cs-cur-dot" r="4.5"/></g>
-          </svg>
-          <div class="cs-tip" hidden></div>
-        </div>
-        <ul class="cs-feed" role="list">
-          <li><span class="cs-tag warn">Alert</span><span>Marginalità linea B sotto soglia: &minus;2,1 pt</span><time>09:41</time></li>
-          <li><span class="cs-tag info">Previsione</span><span>Rottura scorta articolo 4471 tra 9 giorni</span><time>09:12</time></li>
-          <li><span class="cs-tag ok">Report</span><span>Report settimanale inviato a 6 destinatari</span><time>08:00</time></li>
-        </ul>
-        <p class="cs-note">Esempio illustrativo · dati fittizi</p>
-      </div>
+        <p class="rp-note"><strong>Da verificare:</strong> la linea B scende sotto la soglia del 10%. Si guardano insieme sconti concessi e costo delle materie prime. Giorni di scorta: 62, cinque in meno dell'anno scorso.</p>
+        <p class="rp-foot">Esempio illustrativo · dati fittizi</p>
+      </figure>
     </div>
 
     <div class="wrap">
@@ -110,32 +93,6 @@
       </dl>
     </div>
   </section>
-  <!-- BANDA DATI A SCORRIMENTO (numeri letti da data/benchmark.json) -->
-  <div class="ticker t-dark" data-ticker role="region" aria-label="Dati e statistiche dal benchmark su bilanci reali">
-    <a class="ticker-tag" href="backtest.html">
-      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M5 20v-6M12 20V6M19 20v-10"/></svg>
-      <span>Benchmark</span>
-    </a>
-    <div class="ticker-viewport">
-      <div class="ticker-track">
-        <ul class="ticker-group" role="list">
-          <li class="tk-item"><span class="tk-k">EBITDA/Vendite medio</span><span class="tk-v">{{meta:ebitdaMarginRealeT0|pct1}}</span><span class="tk-d">ultimo anno</span></li>
-          <li class="tk-item"><span class="tk-k">Miglior quartile</span><span class="tk-v gold">{{meta:ebitdaMarginObiettivoT0|pct1}}</span><span class="tk-d gap">{{meta:gapEbitdaT0|sdec1}} pt di margine</span></li>
-          <li class="tk-item"><span class="tk-k">EBITDA/Vendite, {{meta:orizzonteAnni|int}} anni fa</span><span class="tk-v">{{meta:ebitdaMarginRealeInizio|pct1}}</span><span class="tk-d up">&#9650; {{meta:ebitdaMarginRealeT0|pct1}} oggi</span></li>
-          <li class="tk-item"><span class="tk-k">ROE medio</span><span class="tk-v">{{meta:roeRealeT0|pct1}}</span><span class="tk-d">vs {{meta:roeObiettivoT0|pct1}} miglior quartile</span></li>
-          <li class="tk-item"><span class="tk-k">Rotazione capitale investito</span><span class="tk-v">{{meta:rotazioneRealeT0|dec2}}</span><span class="tk-d">vs {{meta:rotazioneObiettivoT0|dec2}} miglior quartile</span></li>
-          <li class="tk-item"><span class="tk-k">PMI analizzate</span><span class="tk-v">{{meta:mostrate|int}}</span><span class="tk-d">dati AIDA, anonimizzati</span></li>
-          <li class="tk-item"><span class="tk-k">Settori</span><span class="tk-v">{{meta:nSettori|int}}</span><span class="tk-d">{{meta:nPmiPerSettore|int}} PMI per settore</span></li>
-          <li class="tk-item"><span class="tk-k">Anni di bilancio</span><span class="tk-v">{{meta:orizzonteAnni|int}}</span><span class="tk-d">per ogni PMI analizzata</span></li>
-          <li class="tk-item"><span class="tk-k">Aziende con storico completo</span><span class="tk-v">{{meta:storicoCompleto|int}}</span><span class="tk-d">su {{meta:perimetro|int}} nel perimetro</span></li>
-        </ul>
-      </div>
-    </div>
-    <button class="ticker-toggle" type="button" aria-pressed="false" aria-label="Metti in pausa lo scorrimento dei dati">
-      <svg class="ic-pause" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true" focusable="false"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
-      <svg class="ic-play" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 5.5v13l11-6.5z"/></svg>
-    </button>
-  </div>
   <div class="proof">
     <div class="wrap proof-grid">
       <div><strong>Call da 30 minuti</strong><span>Conoscitiva e senza impegno</span></div>
@@ -156,12 +113,13 @@
         Veyron collega ciò che è successo, ciò che sta succedendo e ciò che potrebbe succedere, per aiutarti a decidere meglio, oggi.
       </p>
       </div>
-      <div class="flow-chips">
-        <span class="chip past">Passato</span>
-        <span class="flow-arrow">→</span>
-        <span class="chip now">Presente</span>
-        <span class="flow-arrow">→</span>
-        <span class="chip future">Futuro</span>
+      <div class="questions">
+        <p class="q-label">Le domande da cui partiamo</p>
+        <ul>
+          <li>Quali clienti e quali prodotti mi fanno guadagnare davvero, al netto di sconti e costi?</li>
+          <li>Quanta merce ho a magazzino rispetto a quanta ne vendo?</li>
+          <li>Perché a fine mese il margine è più basso di quello che pensavo?</li>
+        </ul>
       </div>
     </div>
   </section>
@@ -177,20 +135,20 @@
       <div class="value-grid time-flow" data-reveal>
         <div class="value-card">
           <div class="value-num">Passato</div>
-          <h3>Guarda indietro</h3>
-          <p>Analizziamo vendite, marginalità, scorte e clienti per capire cosa è già successo nei tuoi dati.</p>
+          <h3>Cosa è successo</h3>
+          <p>Margine per cliente, prodotto e commessa, ricostruito dal tuo gestionale e dai fogli Excel che usi già.</p>
         </div>
         <div class="flow-link" aria-hidden="true">→</div>
         <div class="value-card">
           <div class="value-num">Presente</div>
-          <h3>Osserva il presente</h3>
-          <p>Monitoraggio, alert e report automatici: sai cosa sta succedendo in azienda, in tempo reale.</p>
+          <h3>Cosa sta succedendo</h3>
+          <p>Un report in casella ogni lunedì e un avviso quando un indicatore esce dai limiti che hai fissato.</p>
         </div>
         <div class="flow-link" aria-hidden="true">→</div>
         <div class="value-card">
           <div class="value-num">Futuro</div>
-          <h3>Guarda avanti</h3>
-          <p>Anticipiamo il futuro con forecasting e analisi predittiva basata sull'intelligenza artificiale.</p>
+          <h3>Cosa succederà</h3>
+          <p>Previsioni di vendite e scorte, con un margine d'errore dichiarato, per ordinare e pianificare con anticipo.</p>
         </div>
       </div>
       <div class="mt-44" data-reveal>

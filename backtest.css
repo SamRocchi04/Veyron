@@ -15,9 +15,9 @@
   font-family:'Inter', sans-serif; font-weight:600; font-size:10.5px;
   letter-spacing:0.08em; text-transform:uppercase; color:var(--paper-dim); margin-bottom:10px;
 }
-.kpi-card .kpi-num{ font-family:var(--mono); font-weight:500; font-size:24px; color:var(--teal); text-shadow:0 0 22px rgba(14,58,95,0.28); }
-.kpi-card .kpi-num.gold{ color:var(--gold); text-shadow:0 0 22px rgba(156,107,18,0.3); }
-.kpi-card .kpi-num.rose{ color:#E58A8A; text-shadow:0 0 22px rgba(229,138,138,0.3); }
+.kpi-card .kpi-num{ font-family:var(--mono); font-weight:500; font-size:24px; color:var(--teal); }
+.kpi-card .kpi-num.gold{ color:var(--gold); }
+.kpi-card .kpi-num.rose{ color:#A33A2F; }
 .kpi-card .kpi-sub{ margin-top:6px; font-size:12px; color:var(--paper-faint); }
 
 .chart-row{ display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line); margin-top:32px; }

@@ -9,10 +9,12 @@
   const resp = await fetch(DATA_URL);
   if (!resp.ok) throw new Error('Dati non disponibili (' + resp.status + '). Serve un server web: da file:// il caricamento è bloccato.');
   const DATA = await resp.json();
+  const SECTOR_COLORS = {'Alimentare':'#1F4E79','Metallurgia e Prodotti in Metallo':'#B7862B','Edilizia e Costruzioni':'#3C7D58','Packaging':'#4F8FA3','Trasporti e Logistica':'#A5483B','Turismo e Ristorazione':'#7B8696'};
+  DATA.sectorColors = DATA.sectors.map((s,i) => SECTOR_COLORS[s] || (DATA.sectorColors||[])[i] || '#7B8696');
 
   const COLORS = {
-    teal:'#7FB3E8', gold:'#F0CB84', secure:'#79D79A', rose:'#E58A8A',
-    paper:'#EFF4FA', paperDim:'#A7BBD1', paperFaint:'#7F96B1', line:'rgba(255,255,255,0.12)'
+    teal:'#12385B', gold:'#85600F', secure:'#2B7A43', rose:'#A33A2F',
+    paper:'#16202B', paperDim:'#485160', paperFaint:'#697180', line:'rgba(22,32,43,0.12)'
   };
 
   Chart.defaults.color = COLORS.paperDim;
@@ -43,8 +45,8 @@
   }
 
   const tooltipBase = {
-    backgroundColor: '#0B1B30', borderColor: 'rgba(255,255,255,0.22)', borderWidth: 1,
-    titleColor: COLORS.paper, bodyColor: COLORS.paperDim, padding: 10, boxPadding: 4,
+    backgroundColor: '#16202B', borderColor: 'rgba(22,32,43,0.9)', borderWidth: 1,
+    titleColor: '#F6F3EC', bodyColor: '#D5DBE3', padding: 10, boxPadding: 4,
     titleFont: { family: "'Fraunces', sans-serif", weight: '500' },
     bodyFont: { family: "'IBM Plex Mono', monospace", size: 11.5 }
   };
@@ -123,7 +125,7 @@
     const ctx = document.getElementById(canvasId).getContext('2d');
     return new Chart(ctx, {
       type: 'doughnut',
-      data: { labels: DATA.sectors, datasets: [{ data: values, backgroundColor: DATA.sectorColors, borderColor: '#0A2038', borderWidth: 2, offset: DATA.sectors.map(()=>0) }] },
+      data: { labels: DATA.sectors, datasets: [{ data: values, backgroundColor: DATA.sectorColors, borderColor: '#FFFDF8', borderWidth: 2, offset: DATA.sectors.map(()=>0) }] },
       options: {
         responsive: true, maintainAspectRatio: false, cutout: '66%',
         plugins: {
