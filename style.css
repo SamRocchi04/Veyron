@@ -2116,7 +2116,7 @@ body{font-size:16px;line-height:1.65}
 .home .final-cta h2{font-size:clamp(34px,5vw,64px);letter-spacing:-.025em}
 
 /* ==== Chi siamo: una sola persona ==== */
-.team-grid.solo{grid-template-columns:minmax(0,640px)}
+.team-grid.solo{grid-template-columns:minmax(0,640px);justify-content:center}
 
 /* ==== REALISMO: carta calda e blu inchiostro, nessun effetto ====
    Un solo blocco scuro (call finale + footer). Niente griglie, aloni, animazioni decorative. */
