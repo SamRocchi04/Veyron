@@ -3,13 +3,15 @@
 """
 test_form.py
 ------------
-Invia un messaggio di prova al modulo di contatto (FormSubmit) e esce con
+Invia un messaggio di prova al modulo di contatto (Web3Forms) e esce con
 codice 1 se il servizio risponde con un errore: cosi' ti accorgi subito se il
 form ha smesso di funzionare, senza aspettare che si perda un contatto vero.
 
 Due controlli in uno:
-  1. questo script (lo lancia ogni settimana .github/workflows/check-form.yml):
-     verifica che il servizio risponda e che l'indirizzo sia ancora attivo;
+  1. questo script (si lancia a mano da .github/workflows/check-form.yml):
+     verifica che il servizio risponda e che la chiave sia ancora valida. Con il
+     piano gratuito Web3Forms puo' rifiutare le richieste dai server: in quel caso
+     un errore non significa che il form del sito sia rotto;
   2. tu: il messaggio "[TEST AUTOMATICO]" deve arrivare nella casella
      dell'attivita'. Se una settimana non arriva, c'e' un problema di consegna
      (spam, casella piena, servizio fermo) anche se lo script e' verde.
@@ -26,20 +28,20 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 with open(os.path.join(ROOT, "data", "azienda.json"), encoding="utf-8") as f:
     az = json.load(f)
-ident = (az.get("form_id") or az.get("email") or "").strip()
-if not ident:
-    sys.exit("[errore] data/azienda.json: serve 'email' o 'form_id'")
+key = (az.get("form_key") or "").strip()
+if not key:
+    sys.exit("[errore] data/azienda.json: manca 'form_key' (access key di Web3Forms)")
 
-url = "https://formsubmit.co/ajax/" + ident
+url = "https://api.web3forms.com/submit"
 payload = {
+    "access_key": key,
     "Nome": "TEST AUTOMATICO",
-    "Cognome": "Controllo settimanale",
+    "Cognome": "Controllo manuale",
     "Azienda": "Veyron (verifica del modulo)",
     "email": "test@veyron.it",
     "Problema": "Messaggio di prova inviato dallo script test_form.py. Puoi cancellarlo.",
-    "_subject": "[TEST AUTOMATICO] Verifica modulo di contatto Veyron",
-    "_template": "table",
-    "_captcha": "false",
+    "subject": "[TEST AUTOMATICO] Verifica modulo di contatto Veyron",
+    "from_name": "Test automatico Veyron",
 }
 req = urllib.request.Request(
     url,

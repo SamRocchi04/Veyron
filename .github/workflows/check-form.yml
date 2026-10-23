@@ -1,13 +1,11 @@
 name: Controllo modulo di contatto
 
-# Ogni lunedi' invia un messaggio di prova al modulo di contatto. Se il servizio
-# di inoltro non risponde o non e' piu' attivo il workflow fallisce e GitHub ti
-# avvisa via email. Il messaggio "[TEST AUTOMATICO]" deve anche arrivare nella
-# casella dell'attivita': se una settimana manca, controlla spam e consegna.
-# Si puo' lanciare a mano da Actions > "Controllo modulo di contatto" > Run workflow.
+# Invia un messaggio di prova al modulo di contatto (Web3Forms).
+# Si lancia SOLO a mano da Actions > "Controllo modulo di contatto" > Run workflow.
+# Non e' programmato ogni settimana: nel piano gratuito Web3Forms puo' rifiutare le
+# richieste che arrivano da server come quelli di GitHub, e avresti un falso errore
+# ogni lunedi'. Per un controllo affidabile invia un messaggio dal sito pubblico.
 on:
-  schedule:
-    - cron: "0 7 * * 1"
   workflow_dispatch:
 
 jobs:
