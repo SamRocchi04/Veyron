@@ -1,7 +1,7 @@
 {
-  "_nota": "Dati identificativi dell'attivita'. Compila i campi vuoti: dove un campo e' vuoto, la riga corrispondente non viene pubblicata e build_site.py lo segnala. Fai confermare al commercialista quali dati sono obbligatori. 'email' e' l'indirizzo pubblico (nel sito viene ripetuto in forma offuscata). 'form_id' e' l'identificativo casuale che FormSubmit assegna dopo l'attivazione: se lo compili, l'email non compare piu' nell'indirizzo del form.",
+  "_nota": "Dati identificativi dell'attivita'. Compila i campi vuoti: dove un campo e' vuoto, la riga corrispondente non viene pubblicata e build_site.py lo segnala. Fai confermare al commercialista quali dati sono obbligatori. 'email' e' l'indirizzo pubblico (nel sito viene ripetuto in forma offuscata). 'form_key' e' la access key di Web3Forms (web3forms.com) a cui e' collegato il modulo di contatto: i messaggi arrivano all'email con cui e' stata creata. E' una chiave pubblica per progettazione, non un segreto.",
   "email": "info@veyron.it",
-  "form_id": "",
+  "form_key": "634968ba-c623-4fc9-913b-92369acfb13b",
   "titolare": "Samuele Rocchi",
   "denominazione": "Veyron",
   "forma": "ditta individuale",

@@ -3,7 +3,7 @@
 """
 test_form.py
 ------------
-Invia un messaggio di prova al modulo di contatto (FormSubmit) e esce con
+Invia un messaggio di prova al modulo di contatto (Web3Forms) e esce con
 codice 1 se il servizio risponde con un errore: cosi' ti accorgi subito se il
 form ha smesso di funzionare, senza aspettare che si perda un contatto vero.
 
@@ -26,20 +26,20 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 with open(os.path.join(ROOT, "data", "azienda.json"), encoding="utf-8") as f:
     az = json.load(f)
-ident = (az.get("form_id") or az.get("email") or "").strip()
-if not ident:
-    sys.exit("[errore] data/azienda.json: serve 'email' o 'form_id'")
+key = (az.get("form_key") or "").strip()
+if not key:
+    sys.exit("[errore] data/azienda.json: manca 'form_key' (access key di Web3Forms)")
 
-url = "https://formsubmit.co/ajax/" + ident
+url = "https://api.web3forms.com/submit"
 payload = {
+    "access_key": key,
     "Nome": "TEST AUTOMATICO",
     "Cognome": "Controllo settimanale",
     "Azienda": "Veyron (verifica del modulo)",
     "email": "test@veyron.it",
     "Problema": "Messaggio di prova inviato dallo script test_form.py. Puoi cancellarlo.",
-    "_subject": "[TEST AUTOMATICO] Verifica modulo di contatto Veyron",
-    "_template": "table",
-    "_captcha": "false",
+    "subject": "[TEST AUTOMATICO] Verifica modulo di contatto Veyron",
+    "from_name": "Test automatico Veyron",
 }
 req = urllib.request.Request(
     url,
