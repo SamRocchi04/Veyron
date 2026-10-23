@@ -5,7 +5,7 @@ make_dist.py
 ------------
 Copia in dist/ SOLO i file che devono essere pubblicati. Sorgenti (src/),
 script (Script_Python/, Script_R/), README, workflow e data/azienda.json
-(contiene form_id e altri dati interni) restano fuori dal sito pubblico.
+(dati interni) restano fuori dal sito pubblico.
 
 Uso:  python3 Script_Python/build_site.py && python3 Script_Python/make_dist.py
 """

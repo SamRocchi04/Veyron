@@ -132,17 +132,16 @@ def load_azienda():
         with open(path, encoding="utf-8") as f:
             a = {k: (v or "").strip() for k, v in json.load(f).items() if not k.startswith("_")}
     for k in ("titolare", "denominazione", "forma", "partita_iva", "codice_fiscale",
-              "rea", "pec", "via", "cap", "comune", "provincia", "email", "form_id"):
+              "rea", "pec", "via", "cap", "comune", "provincia", "email", "form_key"):
         a.setdefault(k, "")
     # -- email offuscata (riferimenti numerici HTML: i browser la leggono, gli scraper semplici no)
     enc = lambda t: "".join(f"&#{ord(c)};" for c in t)
     a["email_enc"] = enc(a["email"]) if a["email"] else ""
     a["email_json"] = a["email"].replace("@", "\\u0040")
     a["email_user"], _, a["email_domain"] = a["email"].partition("@")
-    # -- modulo di contatto (FormSubmit): con form_id l'email non compare nell'URL
-    ident = a["form_id"] or a["email"]
-    a["form_action"] = "https://formsubmit.co/" + ident.replace("@", "&#64;")
-    a["form_ajax"] = "https://formsubmit.co/ajax/" + ident.replace("@", "&#64;")
+    # -- modulo di contatto (Web3Forms): la access key identifica la casella di destinazione
+    a["form_action"] = "https://api.web3forms.com/submit"
+    a["form_ajax"] = "https://api.web3forms.com/submit"
     # -- analytics (data/analytics.json)
     apath = os.path.join(ROOT, "data", "analytics.json")
     an = {}

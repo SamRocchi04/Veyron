@@ -141,7 +141,7 @@
           <p>Rispondiamo entro un giorno lavorativo. Raccontaci in poche righe qual è la domanda che vorresti rispondere con i tuoi dati.</p>
           <div class="contact-line"><span>Email</span><span>&#105;&#110;&#102;&#111;&#64;&#118;&#101;&#121;&#114;&#111;&#110;&#46;&#105;&#116;</span></div>
           <div class="contact-line"><span>Risposta</span><span>Entro 24h lavorative</span></div>
-          <form class="contact-form" id="contactForm" action="https://formsubmit.co/info&#64;veyron.it" data-ajax="https://formsubmit.co/ajax/info&#64;veyron.it" data-mail-u="info" data-mail-d="veyron.it" method="POST">
+          <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" data-ajax="https://api.web3forms.com/submit" data-mail-u="info" data-mail-d="veyron.it" method="POST">
             <div class="form-row">
               <div class="field">
                 <label for="cf-nome">Nome</label>
@@ -188,13 +188,13 @@
               <textarea id="cf-problema" name="Problema" rows="5" required maxlength="2000" placeholder="Raccontaci in poche righe cosa vorresti capire o migliorare con i tuoi dati."></textarea>
             </div>
             <div class="hp" aria-hidden="true">
-              <label for="cf-honey">Lascia vuoto questo campo</label>
-              <input id="cf-honey" type="text" name="_honey" tabindex="-1" autocomplete="off">
+              <label for="cf-honey">Non spuntare questa casella</label>
+              <input id="cf-honey" type="checkbox" name="botcheck" tabindex="-1" autocomplete="off">
             </div>
-            <input type="hidden" name="_subject" value="Nuova richiesta dal sito Veyron">
-            <input type="hidden" name="_template" value="table">
-            <input type="hidden" name="_captcha" value="false">
-            <input type="hidden" name="_next" value="https://www.veyron.it/contatti.html?inviato=1">
+            <input type="hidden" name="access_key" value="634968ba-c623-4fc9-913b-92369acfb13b">
+            <input type="hidden" name="subject" value="Nuova richiesta dal sito Veyron">
+            <input type="hidden" name="from_name" value="Sito Veyron">
+            <input type="hidden" name="redirect" value="https://www.veyron.it/contatti.html?inviato=1">
             <label class="check">
               <input type="checkbox" name="Privacy" value="Letta" required>
               <span>Ho letto la <a href="privacy.html">Privacy Policy</a>: i dati inseriti vengono inviati a Veyron tramite un servizio di inoltro di terze parti.</span>
@@ -360,7 +360,7 @@
     done.hidden = false;
     done.focus();
   }
-  // Ritorno dal modulo inviato senza JavaScript (redirect di FormSubmit)
+  // Ritorno dal modulo inviato senza JavaScript (redirect di Web3Forms)
   if (/[?&]inviato=1(&|$)/.test(location.search)) showDone();
 
   // Se l'invio fallisce, il messaggio scritto dalla persona non va perso: proponiamo
@@ -389,7 +389,7 @@
     status.textContent = 'Invio in corso\u2026';
 
     var data = {};
-    new FormData(form).forEach(function (v, k) { if (k !== '_next') data[k] = v; });
+    new FormData(form).forEach(function (v, k) { if (k !== 'redirect') data[k] = v; });
 
     // Senza timeout una richiesta bloccata lascerebbe il pulsante fermo all'infinito
     var ctrl = window.AbortController ? new AbortController() : null;
