@@ -33,4 +33,3 @@ Le pagine HTML nella radice sono GENERATE: non modificarle a mano.
   Settings > Pages > Source = "GitHub Actions", poi lancialo a mano e, se il sito è ok,
   decommenta il trigger `push`.
 - Lo script R è in `Script_R/`; `__pycache__` è ignorato da `.gitignore`.
-
