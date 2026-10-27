@@ -153,6 +153,8 @@ def load_azienda():
     if an.get("attivo") and not on:
         raise SystemExit("[errore] data/analytics.json: 'attivo' e' true ma 'snippet' non e' un tag <script>...</script>")
     a["analytics"] = "1" if on else ""
+    a["analytics_cookie"] = "1" if on and an.get("cookie") else ""
+    a["analytics_nocookie"] = "1" if on and not an.get("cookie") else ""
     a["analytics_snippet"] = snippet if on else ""
     a["analytics_provider"] = (an.get("provider") or "").strip() if on else ""
     a["analytics_nota"] = (an.get("nota_privacy") or "").strip() if on else ""

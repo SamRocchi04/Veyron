@@ -132,6 +132,7 @@ window.vTrack = function (name) {
   try {
     if (typeof window.plausible === 'function') window.plausible(name);
     else if (window.umami && typeof window.umami.track === 'function') window.umami.track(name);
+    else if (typeof window.vGaEvent === 'function') window.vGaEvent(name);
   } catch (e) { /* le statistiche non devono mai rompere il sito */ }
 };
 
