@@ -3,6 +3,6 @@
   "attivo": true,
   "provider": "Google Analytics 4 (Google Ireland Limited)",
   "cookie": true,
-  "snippet": "<script src=\"consent.js\" data-ga=\"G-915X8EV10C\" defer></script>",
+  "snippet": "<script src=\"consent.js?v=2\" data-ga=\"G-915X8EV10C\" defer></script>",
   "nota_privacy": "Google può trattare i dati di Google Analytics anche negli Stati Uniti; il trasferimento si basa sulla decisione di adeguatezza UE-USA (Data Privacy Framework) o, ove applicabile, sulle clausole contrattuali standard."
 }

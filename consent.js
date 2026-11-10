@@ -93,7 +93,11 @@
       '.vc button{flex:1 1 140px;font:600 14px var(--sans,system-ui,sans-serif);padding:11px 16px;cursor:pointer;' +
       'border-radius:var(--radius,6px);border:1px solid var(--teal,#0E3A5F);background:transparent;color:var(--teal,#0E3A5F)}' +
       '.vc button:hover{background:var(--teal-dim,rgba(14,58,95,.07))}' +
-      '.vc button:focus-visible{outline:2px solid var(--teal,#0E3A5F);outline-offset:2px}';
+      '.vc button:focus-visible{outline:2px solid var(--teal,#0E3A5F);outline-offset:2px}' +
+      // telefono: banner basso, per non coprire i pulsanti dell'hero
+      '.vc-long{display:inline}' +
+      '@media (max-width:640px){.vc{left:8px;right:8px;bottom:8px;padding:12px 14px;font-size:13.5px;line-height:1.45}' +
+      '.vc p{margin:0 0 10px}.vc-long{display:none}.vc button{flex:1 1 0;padding:9px 10px}}';
     document.head.appendChild(st);
   }
 
@@ -106,7 +110,7 @@
     banner.setAttribute('aria-label', 'Preferenze cookie');
     banner.innerHTML =
       '<p>Usiamo Google Analytics, solo con il tuo consenso, per capire come viene usato il sito. ' +
-      'Se rifiuti, non viene caricato nulla di Google. Puoi cambiare idea in ogni momento da «Preferenze cookie» nel footer. ' +
+      'Se rifiuti, non viene caricato nulla di Google. <span class="vc-long">Puoi cambiare idea in ogni momento da «Preferenze cookie» nel footer. </span>' +
       '<a href="privacy.html#cookie">Maggiori informazioni</a></p>' +
       '<div class="vc-row"><button type="button" data-v="denied">Rifiuta</button>' +
       '<button type="button" data-v="granted">Accetta</button></div>';

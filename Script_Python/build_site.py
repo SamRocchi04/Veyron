@@ -321,18 +321,24 @@ def _ld(obj):
 
 # Etichetta breve per il BreadcrumbList (il <title> e' lungo, pensato per i motori di ricerca)
 BREADCRUMB_LABEL = {
-    "chi-siamo": "Chi Siamo", "metodo": "Metodo", "soluzioni": "Soluzioni",
+    "chi-siamo": "Chi Siamo", "metodo": "Metodo", "esempio-report": "Esempio di report",
     "percorsi": "Percorsi", "backtest": "Benchmark", "contatti": "Contatti",
     "privacy": "Privacy Policy", "termini": "Termini e Condizioni",
 }
 
-# Servizi per i dati strutturati della pagina Soluzioni (allineati ai 4 livelli del sito)
+# Servizi per i dati strutturati della pagina Metodo (allineati ai 4 passi del sito;
+# la vecchia pagina Soluzioni e' confluita in Metodo)
 SERVIZI = [
-    ("Dati", "KPI, dashboard, reporting, analisi clienti e prodotti, controllo marginalità per PMI."),
-    ("Intelligence", "Monitoraggio, alert, report automatici e business intelligence per PMI."),
-    ("Intelligenza Artificiale", "Forecasting, analisi predittiva, assistenti AI e knowledge base aziendale per PMI."),
-    ("Automazione", "Workflow, integrazioni, processi e reporting senza lavoro manuale per PMI."),
+    ("Analisi dei margini", "Margine per cliente, prodotto e commessa, scorte e controllo di gestione per PMI."),
+    ("Report e avvisi", "Report automatici, dashboard e avvisi su soglie per PMI."),
+    ("Previsioni", "Previsione di vendite, domanda e scorte con margine d'errore dichiarato per PMI."),
+    ("Automazione", "Integrazioni, report senza lavoro manuale e assistenti AI sui documenti interni per PMI."),
 ]
+
+
+def is_redirect(out):
+    """Pagine-ponte (vecchi indirizzi): solo un meta refresh verso la pagina nuova."""
+    return 'http-equiv="refresh"' in out
 
 
 def jsonld_extras(slug, out):
@@ -343,7 +349,7 @@ def jsonld_extras(slug, out):
     blocks = []
     canon = re.search(r'<link rel="canonical" href="([^"]+)"', out)
     title = re.search(r"<title>(.*?)</title>", out, re.S)
-    if slug not in ("index", "404", "risultati") and canon and title:
+    if slug not in ("index", "404") and not is_redirect(out) and canon and title:
         label = BREADCRUMB_LABEL.get(slug) or _plain(title.group(1)).split(" \u2014 ")[0].strip()
         blocks.append(_ld({
             "@context": "https://schema.org",
@@ -353,14 +359,14 @@ def jsonld_extras(slug, out):
                 {"@type": "ListItem", "position": 2, "name": label, "item": canon.group(1)},
             ],
         }))
-    if slug == "soluzioni":
+    if slug == "metodo":
         blocks.append(_ld({
             "@context": "https://schema.org",
             "@type": "ItemList",
-            "name": "Soluzioni Veyron",
+            "name": "Cosa fa Veyron",
             "itemListElement": [
                 {"@type": "ListItem", "position": i,
-                 "item": {"@type": "Service", "name": f"Veyron {nome}", "description": desc,
+                 "item": {"@type": "Service", "name": nome, "description": desc,
                           "serviceType": "Consulenza data & AI",
                           "areaServed": "IT",
                           "provider": {"@type": "ProfessionalService", "name": "Veyron", "url": SITE_URL + "/"}}}
@@ -382,7 +388,7 @@ def jsonld_extras(slug, out):
 
 
 # ------------------------------------------------------------- sitemap
-SITEMAP_ORDER = ["index", "chi-siamo", "metodo", "soluzioni", "percorsi",
+SITEMAP_ORDER = ["index", "chi-siamo", "metodo", "percorsi", "esempio-report",
                  "backtest", "contatti", "privacy", "termini"]
 # Pagine il cui contenuto dipende anche da altri file (oltre a src/pages/<nome>.html)
 LASTMOD_EXTRA = {"index": ["data/benchmark.json"], "backtest": ["data/benchmark.json"]}
@@ -447,7 +453,7 @@ def build(check=False):
         extras = jsonld_extras(slug, out)
         if extras:
             out = out.replace("</head>", extras + "</head>", 1)
-        if azienda.get("analytics") and slug != "risultati":
+        if azienda.get("analytics") and not is_redirect(out):
             out = out.replace("</head>", azienda["analytics_snippet"] + "\n</head>", 1)
         if "noindex" not in out and slug != "404":
             indexable.append(slug)

@@ -16,6 +16,12 @@ Le pagine HTML nella radice sono GENERATE: non modificarle a mano.
   non e' programmato perche' Web3Forms gratuito puo' bloccare le richieste dai server GitHub. Per un controllo
   affidabile invia un messaggio dal sito pubblico.
 - `risultati.html` è solo un redirect verso `percorsi.html` (la pagina si chiamava Risultati).
+- `soluzioni.html` è solo un redirect verso `metodo.html`: le due pagine sono state unite (i quattro passi del
+  Metodo sostituiscono i «quattro livelli»). Qualsiasi pagina con un meta refresh è trattata come redirect dal build.
+- `esempio-report.html` è l'esempio del report del Veyron Audit, con dati fittizi: i numeri devono restare coerenti
+  con il report della home e con le tabelle di `metodo.html` (stesse linee A/B/C e stessi clienti).
+- Le modifiche grafiche di novembre 2026 sono in fondo a `style.css`, in un blocco unico commentato.
+- Banner cookie: se cambi `consent.js`, aumenta `?v=` nello snippet di `data/analytics.json`.
 - Rigenera tutto: `python3 Script_Python/build_site.py` (`--check` per verificare)
 - Immagini nuove: metti il JPG in `img/`, poi `python3 Script_Python/ottimizza_immagini.py`
   (le `<img>` diventano `<picture>` AVIF/WebP in automatico)

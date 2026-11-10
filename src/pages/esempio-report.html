@@ -1,0 +1,169 @@
+<!-- page: active=percorsi footer=t-dark base=- -->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Esempio di report del Veyron Audit — Veyron</title>
+{{> head-icons}}
+<meta name="description" content="Un esempio completo del report che chiude il Veyron Audit, su dati fittizi: sintesi, fonti analizzate, margini per linea e per cliente, punti critici e raccomandazioni.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Veyron">
+<meta property="og:title" content="Esempio di report del Veyron Audit — Veyron">
+<meta property="og:description" content="Un esempio completo del report che chiude il Veyron Audit, su dati fittizi: sintesi, fonti analizzate, margini per linea e per cliente, punti critici e raccomandazioni.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.veyron.it/esempio-report.html">
+<meta name="theme-color" content="#F6F3EC">
+<meta property="og:url" content="https://www.veyron.it/esempio-report.html">
+<!-- Typefaces: Fraunces (titoli) + Inter (testo e UI) + IBM Plex Mono (solo numeri), self-hosted in /fonts -->
+<link rel="preload" href="fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts/fonts.css">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:image" content="https://www.veyron.it/og-image-v2.png">
+<meta name="twitter:image" content="https://www.veyron.it/og-image-v2.png">
+<link rel="stylesheet" href="{{asset:style.css}}">
+<noscript><style>[data-reveal],[data-reveal] > *{opacity:1 !important; transform:none !important;}</style></noscript>
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Vai al contenuto</a>
+
+{{> header}}
+
+<main id="main-content">
+
+  <section class="page-hero hero-x ph-x t-dark">
+    
+    <div class="wrap">
+      <p class="hx-kicker">Esempio di report</p>
+      <h1><span class="hx-l"><span>Cosa ricevi alla fine del Veyron Audit</span></span></h1>
+      <p class="hero-sub">Un report di poche pagine, scritto per chi decide: prima le conclusioni, poi i numeri che le sostengono. Qui sotto la struttura completa, su un'azienda inventata.</p>
+    </div>
+  </section>
+
+  <section class="t-dark">
+    <div class="wrap">
+      <div class="doc-note">
+        <p><strong>Esempio illustrativo.</strong> Azienda, clienti e numeri sono inventati: servono a mostrare com'è fatto il report, non risultati ottenuti.</p>
+        <button type="button" class="btn btn-ghost" id="printDoc">Stampa o salva in PDF</button>
+      </div>
+
+      <article class="doc">
+        <div class="doc-head">
+          <div>
+            <h2>Report dell'Audit</h2>
+            <p>Esempio S.r.l. — distribuzione all'ingrosso, 38 addetti</p>
+          </div>
+          <p class="doc-meta">Periodo analizzato: gen–set 2026<br>Confronto con gen–set 2025</p>
+        </div>
+
+        <div class="doc-sec">
+          <h3><span>1</span>In sintesi</h3>
+          <p>I ricavi crescono e il margine complessivo migliora (11,4%, +0,8 punti). Dietro la media ci sono però tre punti che da soli spiegano gran parte del margine perso.</p>
+          <ol class="doc-findings">
+            <li><strong>Due dei primi cinque clienti rendono meno della metà della media.</strong> I clienti 2 e 4 valgono il 21% dei ricavi ma, con sconti medi del 9-11%, lasciano un margine del 4-6%.</li>
+            <li><strong>La linea B è scesa sotto la soglia del 10%.</strong> Il margine è passato dal 10,5% all'8,4%: i costi d'acquisto sono saliti e i listini non sono stati aggiornati.</li>
+            <li><strong>Una parte del magazzino è ferma.</strong> 38 articoli non si muovono da oltre 180 giorni, per circa 96 mila € a valore di costo.</li>
+          </ol>
+        </div>
+
+        <div class="doc-sec">
+          <h3><span>2</span>I dati che abbiamo usato</h3>
+          <p>Prima di calcolare qualsiasi cosa verifichiamo le fonti: cosa c'è, cosa manca e quanto ci si può fidare.</p>
+          <div class="doc-scroll">
+          <table class="doc-table">
+            <thead><tr><th scope="col">Fonte</th><th scope="col" class="l">Contenuto</th><th scope="col" class="l">Affidabilità</th><th scope="col" class="l">Note</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Gestionale</th><td class="l">Fatture e ordini 2023–2026</td><td class="l"><span class="tag-ok">Buona</span></td><td class="l">Nessuna correzione necessaria</td></tr>
+              <tr><th scope="row">Foglio Excel sconti</th><td class="l">Condizioni per cliente</td><td class="l"><span class="tag-mid">Parziale</span></td><td class="l">14% delle righe senza codice cliente, ricostruite a mano</td></tr>
+              <tr><th scope="row">Magazzino</th><td class="l">Giacenze a fine mese</td><td class="l"><span class="tag-mid">Parziale</span></td><td class="l">Mensili, non giornaliere: i giorni di scorta sono una stima</td></tr>
+              <tr><th scope="row">Bilanci</th><td class="l">Esercizi 2021–2025</td><td class="l"><span class="tag-ok">Buona</span></td><td class="l">Usati per il confronto con il settore</td></tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+
+        <div class="doc-sec">
+          <h3><span>3</span>Margine per linea di prodotto</h3>
+          <p class="muted">Margine = ricavi meno costo del venduto, sconti e trasporti. Soglia di riferimento concordata: 10%.</p>
+          <div class="doc-scroll">
+          <table class="doc-table">
+            <thead><tr><th scope="col">Linea</th><th scope="col">Ricavi</th><th scope="col">Margine €</th><th scope="col">Margine %</th><th scope="col">vs 2025</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Linea A</th><td>€ 2,10 M</td><td>€ 277 k</td><td>13,2%</td><td class="up">+2,4 pt</td></tr>
+              <tr class="flag"><th scope="row">Linea B</th><td>€ 1,35 M</td><td>€ 113 k</td><td>8,4%</td><td class="down">−2,1 pt</td></tr>
+              <tr><th scope="row">Linea C</th><td>€ 0,80 M</td><td>€ 93 k</td><td>11,6%</td><td class="up">+1,3 pt</td></tr>
+            </tbody>
+            <tfoot><tr><th scope="row">Totale</th><td>€ 4,25 M</td><td>€ 483 k</td><td>11,4%</td><td class="up">+0,8 pt</td></tr></tfoot>
+          </table>
+          </div>
+        </div>
+
+        <div class="doc-sec">
+          <h3><span>4</span>Margine per cliente</h3>
+          <div class="doc-scroll">
+          <table class="doc-table">
+            <thead><tr><th scope="col">Cliente</th><th scope="col">Ricavi</th><th scope="col">Sconto medio</th><th scope="col">Margine €</th><th scope="col">Margine %</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Cliente 1</th><td>€ 620 k</td><td>4%</td><td>€ 87 k</td><td>14,1%</td></tr>
+              <tr class="flag"><th scope="row">Cliente 2</th><td>€ 540 k</td><td>11%</td><td>€ 23 k</td><td class="down">4,2%</td></tr>
+              <tr><th scope="row">Cliente 3</th><td>€ 410 k</td><td>5%</td><td>€ 52 k</td><td>12,8%</td></tr>
+              <tr class="flag"><th scope="row">Cliente 4</th><td>€ 365 k</td><td>9%</td><td>€ 22 k</td><td class="down">6,0%</td></tr>
+              <tr><th scope="row">Cliente 5</th><td>€ 290 k</td><td>3%</td><td>€ 44 k</td><td>15,3%</td></tr>
+              <tr><th scope="row">Altri 87 clienti</th><td>€ 2.025 k</td><td>5%</td><td>€ 255 k</td><td>12,6%</td></tr>
+            </tbody>
+            <tfoot><tr><th scope="row">Totale</th><td>€ 4.250 k</td><td>6%</td><td>€ 483 k</td><td>11,4%</td></tr></tfoot>
+          </table>
+          </div>
+        </div>
+
+        <div class="doc-sec">
+          <h3><span>5</span>Punti critici, in ordine di peso</h3>
+          <p class="muted">Le stime sono a volumi invariati e indicano un ordine di grandezza, non un risultato garantito.</p>
+          <div class="doc-scroll">
+          <table class="doc-table">
+            <thead><tr><th scope="col">Punto critico</th><th scope="col" class="l">Cosa dicono i numeri</th><th scope="col">Valore stimato</th><th scope="col" class="l">Difficoltà</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Listini della linea B</th><td class="l">Recuperare i 2,1 punti persi su € 1,35 M di ricavi</td><td>≈ € 28 k l'anno</td><td class="l">Media</td></tr>
+              <tr><th scope="row">Sconti ai clienti 2 e 4</th><td class="l">Portare lo sconto medio dal 10% al 7% su € 905 k</td><td>≈ € 27 k l'anno</td><td class="l">Alta: trattativa commerciale</td></tr>
+              <tr><th scope="row">Articoli fermi</th><td class="l">38 articoli senza movimenti da oltre 180 giorni</td><td>€ 96 k immobilizzati</td><td class="l">Bassa</td></tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+
+        <div class="doc-sec">
+          <h3><span>6</span>Cosa consigliamo</h3>
+          <ol class="doc-findings">
+            <li><strong>Subito, senza di noi.</strong> Rivedere i listini della linea B e decidere cosa fare dei 38 articoli fermi: l'elenco è in allegato.</li>
+            <li><strong>Nei prossimi due mesi.</strong> Un avviso settimanale quando il margine di una linea o di un cliente scende sotto la soglia, per non scoprirlo a fine trimestre.</li>
+            <li><strong>Più avanti, se serve.</strong> Una previsione degli ordini per linea, per ridurre le scorte senza restare scoperti.</li>
+          </ol>
+        </div>
+
+        <p class="doc-foot">Esempio illustrativo con dati fittizi · Veyron — Consulenza Data &amp; AI · www.veyron.it</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="final-cta t-dark">
+    <div class="wrap">
+      <div class="eyebrow jc-center">Parliamone</div>
+      <h2 data-reveal>Vuoi lo stesso report sui tuoi numeri?</h2>
+      <p>Una call conoscitiva di 30 minuti, senza impegno, per capire da dove partire.</p>
+      <a href="contatti.html" class="btn btn-primary btn-lg">Parla con Veyron</a>
+    </div>
+  </section>
+
+</main>
+
+{{> footer}}
+
+<script src="{{asset:site.js}}" defer></script>
+<script src="utm.js" defer></script>
+<script>
+(function(){var b=document.getElementById('printDoc');if(b)b.addEventListener('click',function(){window.print();});})();
+</script>
+</body>
+</html>

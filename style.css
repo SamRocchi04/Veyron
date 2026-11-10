@@ -2332,3 +2332,167 @@ footer .logo{letter-spacing:.14em}
 /* il punto resta attaccato al wordmark */
 .logo .dot{font:inherit;letter-spacing:0;margin-left:-13px;color:var(--gold)}
 .method-item:nth-child(1){--dotcolor:#566070}
+
+/* ==========================================================================
+   Revisione novembre 2026: pagina Metodo unificata, Veyron Audit, esempio di
+   report, leggibilita' dei testi. Tutto cio' che segue sovrascrive le regole
+   precedenti: per tornare indietro basta rimuovere questo blocco.
+   ========================================================================== */
+
+/* -- Testi di schede ed elenchi a 16px (prima 14-15px) -------------------- */
+.res-card p,.journey-hero p,.timeline-row p,.faq-item p,.method-item p,
+.sec-cards .security-card p,.level-body p,.step-row p,.split-body p,
+.stat-cell .stat-label,.team-card p,.calendly-consent p,.bench-note,
+.bench-big .bb-cap,.photo-block-content p{font-size:16px;line-height:1.6}
+.proof-grid span,.hx-stats dt{font-size:15px}
+.faq-item h3{font-size:19px}
+.timeline-row h3{font-size:19px}
+.res-card h3{font-size:20px}
+.res-card .res-tag{font-size:14px}
+
+/* -- Niente rientro a scaletta nelle liste numerate ----------------------- */
+.level-row:nth-child(2),.level-row:nth-child(3),.level-row:nth-child(4){margin-left:0}
+
+/* -- Metodo: quattro passi, testo + esempio visivo ------------------------ */
+.steps{display:grid}
+.step{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:center;padding:72px 0;border-top:1px solid var(--line-strong);scroll-margin-top:90px}
+.step:first-child{border-top:0;padding-top:8px}
+.step:last-child{padding-bottom:8px}
+.step:nth-child(even) .step-viz{order:-1}
+.step-k{display:flex;align-items:baseline;gap:12px;margin:0 0 14px;font:600 14px var(--sans);color:var(--gold)}
+.step-k b{font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:22px;color:var(--teal)}
+.step h2{font-size:clamp(26px,3vw,36px);line-height:1.15;letter-spacing:-.015em;max-width:18ch;margin-bottom:16px}
+.step-text>p{font-size:17px;line-height:1.6;color:var(--paper-dim);max-width:50ch}
+.step-out{list-style:none;margin:24px 0 0;padding:18px 0 0;border-top:1px solid var(--line);max-width:50ch}
+.step-out-t{font:600 14px var(--sans);color:var(--paper);margin:0 0 10px}
+.step-out li{position:relative;padding:5px 0 5px 22px;font-size:16px;line-height:1.5;color:var(--paper-dim)}
+
+.step-out li.step-out-t::before{display:none}
+.step-out li:not(.step-out-t)::before{content:"";position:absolute;left:2px;top:14px;width:8px;height:2px;background:var(--gold)}
+.step-viz{margin:0;min-width:0}
+@media (max-width:900px){
+  .step{grid-template-columns:1fr;gap:32px;padding:52px 0}
+  .step:nth-child(even) .step-viz{order:0}
+  .step h2{max-width:none}
+}
+
+/* -- Esempi visivi (stesso foglio del report in home) --------------------- */
+.mock{font-size:15px}
+.mock .rp-table th,.mock .rp-table td{padding:10px 0 10px 10px}
+.mock .rp-table th:first-child{padding-left:0}
+.mock .rp-table tr.flag th:first-child{padding-left:8px}
+.mail-meta{margin:0;padding:12px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:70px 1fr;gap:4px 12px;font-size:14px}
+.mail-meta dt{color:var(--paper-faint)}
+.mail-meta dd{margin:0;color:var(--paper)}
+.mail-meta dd strong{font-weight:600}
+.mail-body{padding:14px 0 2px}
+.mail-body p{margin:0 0 10px;font-size:15px;line-height:1.55;color:var(--paper)}
+.mail-alert{margin:0 0 12px;padding:11px 13px;background:var(--ink-2);border-left:3px solid var(--neg);font-size:15px;line-height:1.5}
+.mail-alert strong{color:var(--neg)}
+.mail-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin:4px 0 0;border-top:1px solid var(--line)}
+.mail-kpis div{padding:12px 10px 4px 0}
+.mail-kpis div+div{padding-left:12px;border-left:1px solid var(--line)}
+.mail-kpis dt{font-size:13px;color:var(--paper-faint)}
+.mail-kpis dd{margin:2px 0 0;font-family:'Fraunces',Georgia,serif;font-size:22px;font-variant-numeric:tabular-nums}
+.mail-kpis small{display:block;font:500 13px var(--sans);color:var(--paper-dim)}
+.fc-svg{display:block;width:100%;height:auto;margin-top:10px}
+.fc-legend{display:flex;flex-wrap:wrap;gap:6px 18px;margin:10px 0 0;padding:0;list-style:none;font-size:13px;color:var(--paper-dim)}
+.fc-legend li{display:flex;align-items:center;gap:7px}
+.fc-legend i{display:inline-block;width:18px;height:0;border-top:2.5px solid var(--teal)}
+.fc-legend i.dash{border-top-style:dashed;border-top-color:var(--gold)}
+.fc-legend i.band{height:10px;border:0;background:rgba(135,92,14,.18)}
+.flow-steps{list-style:none;margin:8px 0 0;padding:0;counter-reset:fl}
+.flow-steps li{position:relative;display:grid;grid-template-columns:64px 1fr;gap:12px;align-items:baseline;padding:13px 0;border-bottom:1px solid var(--line);font-size:15px;line-height:1.45}
+.flow-steps li:last-child{border-bottom:0}
+.flow-steps time{font:500 14px var(--mono);color:var(--gold)}
+.flow-steps b{font-weight:600;color:var(--paper)}
+.flow-steps span{color:var(--paper-dim)}
+
+/* -- Home: nota sotto le tre schede, link nel report ---------------------- */
+.flow-then{margin:28px 0 0;font-size:16px;color:var(--paper-dim);max-width:70ch}
+.flow-then strong{color:var(--paper);font-weight:600}
+.rp-foot a{color:var(--teal);border-bottom:1px solid currentColor}
+.hero-x .hero-grid{margin-bottom:56px}
+
+/* -- Percorsi: il Veyron Audit in evidenza -------------------------------- */
+.journey-hero{background:#12385B;border-color:#12385B;color:#F6F3EC;padding:48px 44px;align-items:start}
+.journey-hero .res-num{color:#E3C07A;font-size:44px;line-height:1}
+.journey-hero .res-tag{color:#B9C4D2;font:600 14px var(--sans);margin-bottom:6px}
+.journey-hero h3{color:#F6F3EC;font-size:clamp(28px,3.4vw,38px)}
+.journey-hero p{color:#D5DDE7;font-size:17px;max-width:60ch}
+.journey-hero .jh-link{display:inline-block;margin-top:18px;font:600 15px var(--sans);color:#F6F3EC;border-bottom:1px solid #E3C07A;padding-bottom:2px}
+.journey-hero .jh-link:hover{color:#E3C07A}
+.journey-steps.two{grid-template-columns:repeat(2,1fr)}
+.res-card a:not(.btn){color:var(--teal);border-bottom:1px solid currentColor}
+@media (max-width:640px){.journey-steps.two{grid-template-columns:1fr}.journey-hero{padding:32px 24px}}
+
+.audit-facts{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.audit-fact{background:var(--sheet);border:1px solid var(--line);border-top:3px solid var(--teal);padding:28px 28px 30px}
+.audit-fact h3{font-size:21px;margin-bottom:14px}
+.audit-fact ul{list-style:none;margin:0;padding:0}
+.audit-fact li{position:relative;padding:7px 0 7px 22px;font-size:16px;line-height:1.5;color:var(--paper-dim)}
+.audit-fact li::before{content:"";position:absolute;left:2px;top:17px;width:8px;height:2px;background:var(--gold)}
+.audit-fact p{font-size:16px;line-height:1.6;color:var(--paper-dim)}
+.audit-fact p+p{margin-top:10px}
+.audit-fact strong{color:var(--paper);font-weight:600}
+@media (max-width:900px){.audit-facts{grid-template-columns:1fr}}
+
+/* Barra dei giorni sopra la timeline dell'Audit */
+.daybar{display:grid;grid-template-columns:repeat(7,1fr) 1.6fr;gap:4px;margin:0 0 8px;padding:0;list-style:none}
+.daybar li{height:44px;display:grid;place-items:center;font:500 14px var(--mono);background:rgba(14,58,95,.12);color:var(--teal)}
+.daybar li.b{background:var(--teal);color:#F6F3EC}
+.daybar li.c{background:none;border:1px dashed var(--line-strong);color:var(--paper-dim);font-family:var(--sans)}
+.daybar-key{display:grid;grid-template-columns:3fr 4fr 1.6fr;gap:4px;margin:0 0 12px;font-size:14px;color:var(--paper-dim)}
+.daybar-key span{padding-top:6px;border-top:2px solid rgba(14,58,95,.25)}
+.daybar-key span:nth-child(2){border-top-color:var(--teal)}
+.daybar-key span:nth-child(3){border-top:2px dashed var(--line-strong)}
+.daybar+.daybar-key+.timeline,.daybar-key+.timeline{margin-top:20px}
+@media (max-width:640px){.daybar li{height:36px;font-size:13px}.daybar-key{font-size:12.5px}}
+
+/* -- Esempio di report dell'Audit ----------------------------------------- */
+.doc-note{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:center;justify-content:space-between;margin:0 0 28px;padding:16px 20px;background:var(--ink-2);border-left:3px solid var(--gold);font-size:16px;line-height:1.5}
+.doc-note p{margin:0;max-width:62ch}
+.doc{background:var(--sheet);border:1px solid var(--line-strong);border-top:4px solid var(--teal);padding:56px 64px 48px;max-width:920px;margin:0 auto;box-shadow:0 24px 34px -26px rgba(22,32,43,.45)}
+.doc-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;padding-bottom:20px;border-bottom:2px solid var(--paper)}
+.doc-head h2{font-size:clamp(28px,3.4vw,40px);line-height:1.1;letter-spacing:-.015em}
+.doc-head p{margin:8px 0 0;font-size:16px;color:var(--paper-dim)}
+.doc-head .doc-meta{text-align:right;font-size:14px;color:var(--paper-faint);white-space:nowrap}
+.doc-sec{padding:36px 0 0}
+.doc h3{display:flex;gap:12px;align-items:baseline;font-size:22px;margin-bottom:12px}
+.doc h3 span{font:500 15px var(--mono);color:var(--gold)}
+.doc p{font-size:16px;line-height:1.65;color:var(--paper);max-width:70ch}
+.doc p+p{margin-top:10px}
+.doc p.muted{color:var(--paper-dim);font-size:15px}
+.doc-findings{list-style:none;margin:8px 0 0;padding:0;counter-reset:f}
+.doc-findings li{counter-increment:f;position:relative;padding:14px 0 14px 44px;border-top:1px solid var(--line);font-size:16px;line-height:1.55}
+.doc-findings li::before{content:counter(f);position:absolute;left:0;top:13px;width:28px;height:28px;display:grid;place-items:center;background:var(--teal);color:#F6F3EC;font:600 14px var(--sans)}
+.doc-findings strong{font-weight:600}
+.doc-table{width:100%;border-collapse:collapse;margin-top:14px;font-size:15px;font-variant-numeric:tabular-nums}
+.doc-table th,.doc-table td{padding:10px 0 10px 14px;text-align:right;border-bottom:1px solid var(--line);font-weight:400;vertical-align:top}
+.doc-table th:first-child,.doc-table td:first-child{text-align:left;padding-left:0}
+.doc-table td.l,.doc-table th.l{text-align:left}
+.doc-table thead th{font-size:13px;font-weight:600;color:var(--paper-faint)}
+.doc-table tbody th{font-weight:500}
+.doc-table tfoot th,.doc-table tfoot td{font-weight:700;border-bottom:0;border-top:2px solid var(--paper)}
+.doc-table tr.flag{background:var(--gold-dim)}
+.doc-table tr.flag th:first-child{padding-left:8px}
+.doc-table tr.flag td:last-child{padding-right:8px}
+.doc-table .down{color:var(--neg);font-weight:600}.doc-table .up{color:var(--secure);font-weight:600}
+.doc-scroll{overflow-x:auto}
+.doc-foot{margin-top:40px;padding-top:16px;border-top:1px solid var(--line-strong);font-size:14px;color:var(--paper-faint)}
+.tag-ok,.tag-mid{display:inline-block;padding:1px 8px;font:600 13px var(--sans);border:1px solid currentColor}
+.tag-ok{color:var(--secure)}.tag-mid{color:var(--gold)}
+@media (max-width:760px){
+  .doc{padding:28px 20px 28px}
+  .doc-head{display:block}
+  .doc-head .doc-meta{text-align:left;margin-top:10px;white-space:normal}
+  .doc-table{min-width:520px}
+}
+@media print{
+  header,footer,.mobile-nav,.skip-link,.final-cta,.doc-note,.page-hero,.vc{display:none !important}
+  body{background:#fff}
+  main section{padding:0 !important}
+  .doc{border:0;box-shadow:none;padding:0;max-width:none}
+  .doc-sec{break-inside:avoid}
+  [data-reveal],[data-reveal]>*{opacity:1 !important;transform:none !important}
+}

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Esempio di report del Veyron Audit — Veyron</title>
+<link rel="icon" href="favicon.ico?v=2" sizes="48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=2">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=2">
+<meta name="description" content="Un esempio completo del report che chiude il Veyron Audit, su dati fittizi: sintesi, fonti analizzate, margini per linea e per cliente, punti critici e raccomandazioni.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Veyron">
+<meta property="og:title" content="Esempio di report del Veyron Audit — Veyron">
+<meta property="og:description" content="Un esempio completo del report che chiude il Veyron Audit, su dati fittizi: sintesi, fonti analizzate, margini per linea e per cliente, punti critici e raccomandazioni.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.veyron.it/esempio-report.html">
+<meta name="theme-color" content="#F6F3EC">
+<meta property="og:url" content="https://www.veyron.it/esempio-report.html">
+<!-- Typefaces: Fraunces (titoli) + Inter (testo e UI) + IBM Plex Mono (solo numeri), self-hosted in /fonts -->
+<link rel="preload" href="fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts/fonts.css">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:image" content="https://www.veyron.it/og-image-v2.png">
+<meta name="twitter:image" content="https://www.veyron.it/og-image-v2.png">
+<link rel="stylesheet" href="style.css?v=f4224535">
+<noscript><style>[data-reveal],[data-reveal] > *{opacity:1 !important; transform:none !important;}</style></noscript>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://www.veyron.it/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Esempio di report",
+      "item": "https://www.veyron.it/esempio-report.html"
+    }
+  ]
+}
+</script>
+<script src="consent.js?v=2" data-ga="G-915X8EV10C" defer></script>
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Vai al contenuto</a>
+
+<header id="siteHeader">
+  <div class="wrap">
+    <nav>
+      <a class="logo" href="index.html"><svg class="logo-mark" viewBox="0 0 100 100" width="34" height="34" role="img" aria-label="Veyron"><rect width="100" height="100" rx="16" fill="#12385B"/><path fill="#FFFFFF" d="M59.97310947710914 25.26579991647175Q59.97310947710914 24.678460925966498 60.367558549419044 24.33923046298325Q60.76200762172895 24.0 61.583589122944645 24.0H73.67333890419985Q74.51027360248779 24.0 74.90695068703167 24.33724941992334Q75.30362777157553 24.674498839846677 75.30362777157553 25.25787574423211Q75.30362777157553 25.705066101891653 75.03669903271964 25.99180285322879Q74.76977029386376 26.27853960456593 74.18440690565322 26.535563128122263L73.02751765705645 26.982268615514037Q71.62946728507323 27.57555844298431 70.5250909423828 28.92779921557222Q69.42071459969239 30.280039988160134 68.63675704761275 32.885472856419426L57.54336159796587 68.58438326124634Q57.16946318369891 69.83434450571026 57.026589048643196 70.67252644279174Q56.88371491358748 71.51070837987321 56.88371491358748 72.41054826082927V74.68169813511626Q56.88371491358748 75.30964933959501 56.517989454322624 75.6548246697975Q56.152263995057766 76.0 55.54065507340644 76.0H43.96708376127694Q43.36290265539927 76.0 42.99544312224856 75.6548246697975Q42.62798358909785 75.30964933959501 42.62798358909785 74.6341567288552V72.39272068687848Q42.62798358909785 71.82765592451607 42.426423830453835 71.06524385933365Q42.22486407180982 70.30283179415123 41.92574183409768 69.38070468759963L28.82862583719194 29.37820289294634Q28.480476902095333 28.34960322307689 28.106080468871763 27.870465202225105Q27.731684035648193 27.39132718137332 27.061633059052483 27.107065411444218L25.747254589849284 26.62668506358351Q24.696372228424462 26.150274811961822 24.696372228424462 25.26579991647175Q24.696372228424462 24.678460925966498 25.1056782168895 24.33923046298325Q25.514984205354537 24.0 26.354394489579967 24.0H46.107354062210234Q46.96607842056879 24.0 47.363746328907354 24.33923046298325Q47.761414237245916 24.678460925966498 47.761414237245916 25.26579991647175Q47.761414237245916 25.74864663109183 47.47417999593275 26.030183503340396Q47.186945754619586 26.311720375588962 46.56790765703789 26.551410263542614L44.591860200603094 27.023866439163683Q43.640510933069244 27.340318836399483 43.419883540485586 28.005168800396575Q43.19925614790193 28.670018764393667 43.63902337492577 30.025968155200992L55.97596612486456 68.5749873997271L53.24972590185702 71.65087303295732L65.45145063682327 32.69134756337319Q66.08535373622817 30.651961591073444 65.50047793873719 29.19274819597602Q64.9156021412462 27.733534800878594 62.57114460552378 26.93670538076332L61.09530213433717 26.535563128122263Q60.53222476266325 26.306272998345747 60.2526671198862 26.035383382428968Q59.97310947710914 25.76449376651219 59.97310947710914 25.26579991647175Z"/></svg>VEYRON<span class="dot">.</span> <span>Consulenza Data &amp; AI</span></a>
+      <div class="nav-links">
+        <a href="chi-siamo.html">Chi Siamo</a>
+        <a href="metodo.html">Metodo</a>
+        <a href="percorsi.html" aria-current="page">Percorsi</a>
+        <a href="backtest.html">Benchmark</a>
+        <a href="contatti.html">Contatti</a>
+      </div>
+      <button class="nav-toggle" id="navToggle" type="button" aria-label="Apri il menu" aria-expanded="false" aria-controls="mobileNav"><span></span><span></span><span></span></button>
+      <div class="nav-trailing">
+        <a href="contatti.html" class="btn btn-ghost">Prenota una call</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<div class="mobile-nav" id="mobileNav" aria-hidden="true">
+  <nav aria-label="Menu mobile">
+    <a href="chi-siamo.html">Chi Siamo</a>
+      <a href="metodo.html">Metodo</a>
+      <a href="percorsi.html" aria-current="page">Percorsi</a>
+      <a href="backtest.html">Benchmark</a>
+      <a href="contatti.html">Contatti</a>
+    <a href="contatti.html" class="btn btn-primary">Prenota una call</a>
+  </nav>
+</div>
+
+<main id="main-content">
+
+  <section class="page-hero hero-x ph-x t-dark">
+    
+    <div class="wrap">
+      <p class="hx-kicker">Esempio di report</p>
+      <h1><span class="hx-l"><span>Cosa ricevi alla fine del Veyron Audit</span></span></h1>
+      <p class="hero-sub">Un report di poche pagine, scritto per chi decide: prima le conclusioni, poi i numeri che le sostengono. Qui sotto la struttura completa, su un'azienda inventata.</p>
+    </div>
+  </section>
+
+  <section class="t-dark">
+    <div class="wrap">
+      <div class="doc-note">
+        <p><strong>Esempio illustrativo.</strong> Azienda, clienti e numeri sono inventati: servono a mostrare com'è fatto il report, non risultati ottenuti.</p>
+        <button type="button" class="btn btn-ghost" id="printDoc">Stampa o salva in PDF</button>
+      </div>
+
+      <article class="doc">
+        <div class="doc-head">
+          <div>
+            <h2>Report dell'Audit</h2>
+            <p>Esempio S.r.l. — distribuzione all'ingrosso, 38 addetti</p>
+          </div>
+          <p class="doc-meta">Periodo analizzato: gen–set 2026<br>Confronto con gen–set 2025</p>
+        </div>
+
+        <div class="doc-sec">
+          <h3><span>1</span>In sintesi</h3>
+          <p>I ricavi crescono e il margine complessivo migliora (11,4%, +0,8 punti). Dietro la media ci sono però tre punti che da soli spiegano gran parte del margine perso.</p>
+          <ol class="doc-findings">
+            <li><strong>Due dei primi cinque clienti rendono meno della metà della media.</strong> I clienti 2 e 4 valgono il 21% dei ricavi ma, con sconti medi del 9-11%, lasciano un margine del 4-6%.</li>
+            <li><strong>La linea B è scesa sotto la soglia del 10%.</strong> Il margine è passato dal 10,5% all'8,4%: i costi d'acquisto sono saliti e i listini non sono stati aggiornati.</li>
+            <li><strong>Una parte del magazzino è ferma.</strong> 38 articoli non si muovono da oltre 180 giorni, per circa 96 mila € a valore di costo.</li>
+          </ol>
+        </div>
+
+        <div class="doc-sec">
+          <h3><span>2</span>I dati che abbiamo usato</h3>
+          <p>Prima di calcolare qualsiasi cosa verifichiamo le fonti: cosa c'è, cosa manca e quanto ci si può fidare.</p>
+          <div class="doc-scroll">
+          <table class="doc-table">
+            <thead><tr><th scope="col">Fonte</th><th scope="col" class="l">Contenuto</th><th scope="col" class="l">Affidabilità</th><th scope="col" class="l">Note</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Gestionale</th><td class="l">Fatture e ordini 2023–2026</td><td class="l"><span class="tag-ok">Buona</span></td><td class="l">Nessuna correzione necessaria</td></tr>
+              <tr><th scope="row">Foglio Excel sconti</th><td class="l">Condizioni per cliente</td><td class="l"><span class="tag-mid">Parziale</span></td><td class="l">14% delle righe senza codice cliente, ricostruite a mano</td></tr>
+              <tr><th scope="row">Magazzino</th><td class="l">Giacenze a fine mese</td><td class="l"><span class="tag-mid">Parziale</span></td><td class="l">Mensili, non giornaliere: i giorni di scorta sono una stima</td></tr>
+              <tr><th scope="row">Bilanci</th><td class="l">Esercizi 2021–2025</td><td class="l"><span class="tag-ok">Buona</span></td><td class="l">Usati per il confronto con il settore</td></tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+
+        <div class="doc-sec">
+          <h3><span>3</span>Margine per linea di prodotto</h3>
+          <p class="muted">Margine = ricavi meno costo del venduto, sconti e trasporti. Soglia di riferimento concordata: 10%.</p>
+          <div class="doc-scroll">
+          <table class="doc-table">
+            <thead><tr><th scope="col">Linea</th><th scope="col">Ricavi</th><th scope="col">Margine €</th><th scope="col">Margine %</th><th scope="col">vs 2025</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Linea A</th><td>€ 2,10 M</td><td>€ 277 k</td><td>13,2%</td><td class="up">+2,4 pt</td></tr>
+              <tr class="flag"><th scope="row">Linea B</th><td>€ 1,35 M</td><td>€ 113 k</td><td>8,4%</td><td class="down">−2,1 pt</td></tr>
+              <tr><th scope="row">Linea C</th><td>€ 0,80 M</td><td>€ 93 k</td><td>11,6%</td><td class="up">+1,3 pt</td></tr>
+            </tbody>
+            <tfoot><tr><th scope="row">Totale</th><td>€ 4,25 M</td><td>€ 483 k</td><td>11,4%</td><td class="up">+0,8 pt</td></tr></tfoot>
+          </table>
+          </div>
+        </div>
+
+        <div class="doc-sec">
+          <h3><span>4</span>Margine per cliente</h3>
+          <div class="doc-scroll">
+          <table class="doc-table">
+            <thead><tr><th scope="col">Cliente</th><th scope="col">Ricavi</th><th scope="col">Sconto medio</th><th scope="col">Margine €</th><th scope="col">Margine %</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Cliente 1</th><td>€ 620 k</td><td>4%</td><td>€ 87 k</td><td>14,1%</td></tr>
+              <tr class="flag"><th scope="row">Cliente 2</th><td>€ 540 k</td><td>11%</td><td>€ 23 k</td><td class="down">4,2%</td></tr>
+              <tr><th scope="row">Cliente 3</th><td>€ 410 k</td><td>5%</td><td>€ 52 k</td><td>12,8%</td></tr>
+              <tr class="flag"><th scope="row">Cliente 4</th><td>€ 365 k</td><td>9%</td><td>€ 22 k</td><td class="down">6,0%</td></tr>
+              <tr><th scope="row">Cliente 5</th><td>€ 290 k</td><td>3%</td><td>€ 44 k</td><td>15,3%</td></tr>
+              <tr><th scope="row">Altri 87 clienti</th><td>€ 2.025 k</td><td>5%</td><td>€ 255 k</td><td>12,6%</td></tr>
+            </tbody>
+            <tfoot><tr><th scope="row">Totale</th><td>€ 4.250 k</td><td>6%</td><td>€ 483 k</td><td>11,4%</td></tr></tfoot>
+          </table>
+          </div>
+        </div>
+
+        <div class="doc-sec">
+          <h3><span>5</span>Punti critici, in ordine di peso</h3>
+          <p class="muted">Le stime sono a volumi invariati e indicano un ordine di grandezza, non un risultato garantito.</p>
+          <div class="doc-scroll">
+          <table class="doc-table">
+            <thead><tr><th scope="col">Punto critico</th><th scope="col" class="l">Cosa dicono i numeri</th><th scope="col">Valore stimato</th><th scope="col" class="l">Difficoltà</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Listini della linea B</th><td class="l">Recuperare i 2,1 punti persi su € 1,35 M di ricavi</td><td>≈ € 28 k l'anno</td><td class="l">Media</td></tr>
+              <tr><th scope="row">Sconti ai clienti 2 e 4</th><td class="l">Portare lo sconto medio dal 10% al 7% su € 905 k</td><td>≈ € 27 k l'anno</td><td class="l">Alta: trattativa commerciale</td></tr>
+              <tr><th scope="row">Articoli fermi</th><td class="l">38 articoli senza movimenti da oltre 180 giorni</td><td>€ 96 k immobilizzati</td><td class="l">Bassa</td></tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+
+        <div class="doc-sec">
+          <h3><span>6</span>Cosa consigliamo</h3>
+          <ol class="doc-findings">
+            <li><strong>Subito, senza di noi.</strong> Rivedere i listini della linea B e decidere cosa fare dei 38 articoli fermi: l'elenco è in allegato.</li>
+            <li><strong>Nei prossimi due mesi.</strong> Un avviso settimanale quando il margine di una linea o di un cliente scende sotto la soglia, per non scoprirlo a fine trimestre.</li>
+            <li><strong>Più avanti, se serve.</strong> Una previsione degli ordini per linea, per ridurre le scorte senza restare scoperti.</li>
+          </ol>
+        </div>
+
+        <p class="doc-foot">Esempio illustrativo con dati fittizi · Veyron — Consulenza Data &amp; AI · www.veyron.it</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="final-cta t-dark">
+    <div class="wrap">
+      <div class="eyebrow jc-center">Parliamone</div>
+      <h2 data-reveal>Vuoi lo stesso report sui tuoi numeri?</h2>
+      <p>Una call conoscitiva di 30 minuti, senza impegno, per capire da dove partire.</p>
+      <a href="contatti.html" class="btn btn-primary btn-lg">Parla con Veyron</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="t-dark">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="logo" href="index.html"><svg class="logo-mark" viewBox="0 0 100 100" width="34" height="34" role="img" aria-label="Veyron"><rect width="100" height="100" rx="16" fill="#F6F3EC"/><path fill="#12385B" d="M59.97310947710914 25.26579991647175Q59.97310947710914 24.678460925966498 60.367558549419044 24.33923046298325Q60.76200762172895 24.0 61.583589122944645 24.0H73.67333890419985Q74.51027360248779 24.0 74.90695068703167 24.33724941992334Q75.30362777157553 24.674498839846677 75.30362777157553 25.25787574423211Q75.30362777157553 25.705066101891653 75.03669903271964 25.99180285322879Q74.76977029386376 26.27853960456593 74.18440690565322 26.535563128122263L73.02751765705645 26.982268615514037Q71.62946728507323 27.57555844298431 70.5250909423828 28.92779921557222Q69.42071459969239 30.280039988160134 68.63675704761275 32.885472856419426L57.54336159796587 68.58438326124634Q57.16946318369891 69.83434450571026 57.026589048643196 70.67252644279174Q56.88371491358748 71.51070837987321 56.88371491358748 72.41054826082927V74.68169813511626Q56.88371491358748 75.30964933959501 56.517989454322624 75.6548246697975Q56.152263995057766 76.0 55.54065507340644 76.0H43.96708376127694Q43.36290265539927 76.0 42.99544312224856 75.6548246697975Q42.62798358909785 75.30964933959501 42.62798358909785 74.6341567288552V72.39272068687848Q42.62798358909785 71.82765592451607 42.426423830453835 71.06524385933365Q42.22486407180982 70.30283179415123 41.92574183409768 69.38070468759963L28.82862583719194 29.37820289294634Q28.480476902095333 28.34960322307689 28.106080468871763 27.870465202225105Q27.731684035648193 27.39132718137332 27.061633059052483 27.107065411444218L25.747254589849284 26.62668506358351Q24.696372228424462 26.150274811961822 24.696372228424462 25.26579991647175Q24.696372228424462 24.678460925966498 25.1056782168895 24.33923046298325Q25.514984205354537 24.0 26.354394489579967 24.0H46.107354062210234Q46.96607842056879 24.0 47.363746328907354 24.33923046298325Q47.761414237245916 24.678460925966498 47.761414237245916 25.26579991647175Q47.761414237245916 25.74864663109183 47.47417999593275 26.030183503340396Q47.186945754619586 26.311720375588962 46.56790765703789 26.551410263542614L44.591860200603094 27.023866439163683Q43.640510933069244 27.340318836399483 43.419883540485586 28.005168800396575Q43.19925614790193 28.670018764393667 43.63902337492577 30.025968155200992L55.97596612486456 68.5749873997271L53.24972590185702 71.65087303295732L65.45145063682327 32.69134756337319Q66.08535373622817 30.651961591073444 65.50047793873719 29.19274819597602Q64.9156021412462 27.733534800878594 62.57114460552378 26.93670538076332L61.09530213433717 26.535563128122263Q60.53222476266325 26.306272998345747 60.2526671198862 26.035383382428968Q59.97310947710914 25.76449376651219 59.97310947710914 25.26579991647175Z"/></svg>VEYRON<span class="dot">.</span></a>
+        <p>Consulenza data &amp; AI per piccole e medie imprese. Margini, report automatici, previsioni e automazione al servizio delle decisioni.</p>
+      </div>
+      <div class="footer-col">
+        <span class="label">Azienda</span>
+        <a href="chi-siamo.html">Chi Siamo</a>
+        <a href="percorsi.html">Percorsi</a>
+        <a href="esempio-report.html">Esempio di report</a>
+        <a href="backtest.html">Benchmark</a>
+      </div>
+      <div class="footer-col">
+        <span class="label">Metodo</span>
+        <a href="metodo.html#passato">Analisi dei margini</a>
+        <a href="metodo.html#presente">Report e avvisi</a>
+        <a href="metodo.html#futuro">Previsioni</a>
+        <a href="metodo.html#azione">Automazione</a>
+      </div>
+      <div class="footer-col">
+        <span class="label">Contatti</span>
+        <a href="contatti.html">Prenota una call</a>
+        <a href="mailto:&#105;&#110;&#102;&#111;&#64;&#118;&#101;&#121;&#114;&#111;&#110;&#46;&#105;&#116;">&#105;&#110;&#102;&#111;&#64;&#118;&#101;&#121;&#114;&#111;&#110;&#46;&#105;&#116;</a>
+      </div>
+    </div>
+    <div class="footer-company">
+      <span>Samuele Rocchi, ditta individuale Veyron</span>
+    </div>
+    <div class="footer-row">
+      <span>© 2026 Veyron — Consulenza Data &amp; AI</span>
+      <div class="footer-legal-links">
+        <a href="privacy.html">Privacy</a>
+        <a href="termini.html">Termini</a>
+        <a href="privacy.html#cookie" data-cookie-prefs>Preferenze cookie</a>
+      </div>
+      <span>www.veyron.it</span>
+    </div>
+  </div>
+</footer>
+
+<script src="site.js?v=decb0ad2" defer></script>
+<script src="utm.js" defer></script>
+<script>
+(function(){var b=document.getElementById('printDoc');if(b)b.addEventListener('click',function(){window.print();});})();
+</script>
+</body>
+</html>
